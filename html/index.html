@@ -1,0 +1,2968 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<link rel="stylesheet" type="text/css" href="css/style.css" />
+		<title>概述</title>
+	</head>
+<body>
+
+<h1>概述</h1>
+
+<p>CartoCSS是一种语法类似CSS的制图样式描述语言。层叠样式表（Cascading Style Sheets，CSS）是一种对网页进行设计的样式语言。如果熟悉CSS的话，那么CartoCSS这种对地图进行样式设计的语言也会看起来不陌生，尽管二者所包含的要素、属性等内容和含义完全不同。</p>
+
+<h2>符号</h2>
+
+<p>higis中的地图渲染引擎提供了一组基本样式，基于这些基本样式可以构造出复杂的地图样式。这些基本样式被称为<strong>符号</strong>，每种符号都有一系列可配置的属性。</p>
+
+<p>higis中目前包含10种符号。每一种符号都可以应用于以下某一类或几类几何要素：</p>
+
+<p>1. 线符号（可用于线要素和面要素）</p>
+
+<p>2. 面符号（可用于面要素）</p>
+
+<p>3. 点符号（可用于点要素）</p>
+
+<p>4. 文本符号（可用于点要素、线要素和面要素）</p>
+
+<p>5. 盾标符号（可用于点要素和线要素）</p>
+
+<p>6. 线模式（可用于线要素和面要素）</p>
+
+<p>7. 面模式（可用于面要素）</p>
+
+<p>8. 栅格符号（可用于栅格）</p>
+
+<p>9. 注记符号（可用于点要素、线要素和面要素）</p>
+
+<p>10. 建筑物符号</p>
+
+<p>需要注意的是，尽管面符号可以用于定制线要素的样式，但往往会出现不可预期的不理想结果，因此不推荐使用。</p>
+
+<p>Multiple symbolizers can be applied to the same layer - some common combinations are line &amp; polygons, point &amp; text, line &amp; markers, and line &amp; line pattern.</p>
+
+<p>对同一个图层可以同时应用多种符号来定制样式。这种用法我们称之为“多符号”。常用的多符号组合包括：线符号加面符号，点符号、文本符号、线符号加注记符号，以及线符号加线模式等。</p>
+
+<p>A symbolizer is not present on the map unless it has a style defined, but once one of its style properties is added to the stylesheet default values will apply to the other properties for that symbolizer unless overridden. For example, the default line symbolizer color is black, so if you assign a line-width to a layer that line will be black unless you also assign a different color.</p>
+
+<p>一种符号只有在明确定义了它的样式之后才能被绘制在地图上。在每种符号的诸多属性中，除了显式赋值的属性以外，其它属性将全部被设置为默认值。例如，线符号中颜色属性的默认值为黑色，所以如果用户显式设置了线宽，那么图层中的线要素就将以用户设置的宽度被绘制成黑色。</p>
+
+<h2>多符号</h2>
+
+<p>A single layer is not limited to one of each symbolizer type. For example, multiple semi-transparent line symbolizers can be assigned to a polygon to achieve a soft glow or shadow effect. Multiple text symbolizers can be assigned to the same point with different offsets to label it with more than one field.</p>
+
+<p>对一个图层来说，它的样式可以不局限于仅使用单一的某种符号来定制。举例来说，为了在多边形的边界上获得一种柔和的光晕或阴影效果，可以定义多个半透明线符号，共同发挥作用达到渲染效果。再举一例，对点要素，可以通过定义多个文本符号将若干个属性字段以不同偏移的形式标注在点要素的周围。</p>
+
+<p>Normally when you assign a style to a layer, the style applies to a default symbolizer that is created. In the following example, the second rule overrides the first one because they both apply to the default symbolizer.</p>
+
+<p>通常，如果对一个图层定义了一种样式，那么这种样式就会应用于一种默认的符号。在下面的例子中，后一个样式规则就会将前一个覆盖，因为二者都应用了相同的默认符号，即线符号。</p>
+
+<pre><code>#layer {
+  line-color: #C00;
+  line-width: 1;
+}
+
+#layer {
+  line-color: #0AF;
+  line-opacity: 0.5;
+  line-width: 2;
+}
+</code></pre>
+
+<p>You can explicitly declare any number of new symbolizers for a layer that will be rendered in addition to styles they would otherwise conflict with. New symbolizers are defined using a double colon syntax inspired by pseudo-elements in CSS3:</p>
+
+<p>用户可以通过显式声明的方式为一个图层增加任意数量的<strong>新符号</strong>。由这些新符号所定义的样式之间只要不互相冲突，那么它们都将被用于渲染该图层。为图层定义新符号使用双冒号“::”语法，与CSS3中的伪元素定义类似：</p>
+
+<pre><code>#layer {
+  /* styles for the default symbolizers */
+}
+
+#layer::newsymbol {
+  /* styles for a new symbolizer named ‘newsymbol’ */
+}
+</code></pre>
+
+<p>Note that newsymbol is not a special keyword but an arbitrary name chosen by the user. To help keep track of different symbolizers you can name additional symbolizers whatever makes sense for the situation. Some examples: <code>#road::casing</code>, <code>#coastline::glow_inner</code>, <code>#building::shadow</code>.</p>
+
+<p>注意上面例子中的newsymbol不是关键字。用户可以为新符号自定义名字，但是为了便于理解，最好取一些有意义的名字，例如：<code>#road::casing</code>, <code>#coastline::glow_inner</code>, <code>#building::shadow</code>。</p>
+
+<p>Returning to our previous example, declaring the second rule will add a blue glow on top of the red line instead of replacing it:</p>
+
+<p>在上一个例子中，我们可以通过再声明一个新符号来实现一个蓝色光晕效果。而正是通过增加了这个新符号的声明，使得蓝色光晕能够被叠加渲染在之前的红色轮廓线之上，而不是覆盖了前面红色线样式（如图）。</p>
+
+<pre><code>#layer {
+  line-color: #C00;
+  line-width: 1;
+}
+
+#layer::glow {
+  line-color: #0AF;
+  line-opacity: 0.5;
+  line-width: 4;
+}
+</code></pre>
+
+<figure><img src="symbolizer-1.png"/></figure>
+
+<p>Symbolizers are rendered in the order they are defined, so here the <code>::glow</code> (blue line) appears on top of the first style (red line).</p>
+
+<p>在对所定义的符号进行渲染的时候，是按照其在样式脚本中出现的顺序进行的。所以上面例子中的新符号<code>::glow</code>（蓝色光晕线）会被绘制在之前定义的红色轮廓线之上。</p>
+
+<p>Named symbolizer styles can still be overridden by further styles that reference the same symbolizer name. In this example, the line color will be green, not green-on-yellow.</p>
+
+<p><strong>具名符号</strong>样式也同样会有同名覆盖问题，即后定义的具名符号会覆盖之前先定义的同名具名符号的样式设置。在下面的例子中，线的颜色最终将被渲染为绿色（RGB值为#3F6），而不是半透明黄色上叠加一层绿色效果（如图）。</p>
+
+<pre><code>.border::highlight {
+  line-color: #FF0;
+  line-opacity: 0.5;
+}
+
+.border::highlight {
+  line-color: #3F6;
+}
+</code></pre>
+
+<figure><img src="symbolizer-2.png"/></figure>
+
+<h1>CartoCSS参考手册</h1>
+
+<p>The following is a list of properties provided in CartoCSS that you can apply to map elements.</p>
+
+<p>CartoCSS提供了一系列用于定义地图样式的属性。以下列表中包含了这些属性的含义和所有可取的值。</p>
+
+<h2>所有符号的公共属性</h2>
+
+<h5>image-filters <code>functions</code></h5>
+
+<p>默认值： none</p>
+
+<p><em>(不使用图像过滤器)</em></p>
+
+<p>A list of image filters that will be applied to the active rendering canvas for a given style. The presence of one more more <code>image-filters</code> will trigger a new canvas to be created before starting to render a style and then this canvas will be composited back into the main canvas after rendering all features and after all <code>image-filters</code> have been applied. See <code>direct-image-filters</code> if you want to apply a filter directly to the main canvas.</p>
+
+<p>以函数形式提供的一组图像过滤器。图像过滤器会作用于处于活动状态的画布。如果设置了多个图像过滤器，那么每增加一个过滤器都会触发创建一个新的画布，当这个新的画布被渲染完成后，再通过合成的方式与主画布合并。如果要直接在主画布上应用图像过滤器，那么需要使用<code>direct-image-filters</code>属性。</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>direct-image-filters <code>functions</code></h5>
+
+<p>默认值： none</p>
+
+<p><em>(不使用图像过滤器)</em></p>
+
+<p>A list of image filters to apply to the main canvas (see the <code>image-filters</code> doc for how they work on a separate canvas)</p>
+
+<p>作用于主画布上的图像过滤器（参见<code>image-filters</code>）</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>comp-op <code>keyword</code></h5>
+
+<p><code>clear</code><code>src</code><code>dst</code><code>src-over</code><code>dst-over</code><code>src-in</code><code>dst-in</code><code>src-out</code><code>dst-out</code><code>src-atop</code><code>dst-atop</code><code>xor</code><code>plus</code><code>minus</code><code>multiply</code><code>screen</code><code>overlay</code><code>darken</code><code>lighten</code><code>color-dodge</code><code>color-burn</code><code>hard-light</code><code>soft-light</code><code>difference</code><code>exclusion</code><code>contrast</code><code>invert</code><code>invert-rgb</code><code>grain-merge</code><code>grain-extract</code><code>hue</code><code>saturation</code><code>color</code><code>value</code></p>
+
+<p>默认值： src-over</p>
+
+<p><em>(把当前图层覆盖在其它图层之上)</em></p>
+
+<p>Composite operation. This defines how this layer should behave relative to layers atop or below it.</p>
+
+<p>合成操作。该属性用于定义当前图层与其相邻图层如何合成。关于合成运算，请参见图像合成（Image Compositing）技术的相关内容。</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>opacity <code>float</code></h5>
+
+<p>默认值： 1</p>
+
+<p><em>(no separate buffer will be used and no alpha will be applied to the style after rendering)</em></p>
+
+<p>不使用单独缓冲区，不设置alpha通道</p>
+
+<p>An alpha value for the style (which means an alpha applied to all features in separate buffer and then composited back to main buffer)</p>
+
+<p>为样式设置alpha值（首先，创建一个独立的缓冲区，在这个缓冲区中为所有要素应用alpha实现透明化，然后再把这个独立缓冲区合成到主缓冲区中）</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h2>地图（map）的属性</h2>
+
+<h5>background-color <code>color</code></h5>
+
+<p>默认值： none</p>
+
+<p><em>(透明色)</em></p>
+
+<p>Map Background color</p>
+
+<p>设置地图的背景颜色</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>background-image <code>uri</code></h5>
+
+<p>默认值： </p>
+
+<p><em>(透明色)</em></p>
+
+<p>An image that is repeated below all features on a map as a background.</p>
+
+<p>一张以平铺形式置于最底层的背景图片。</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>background-image-comp-op <code>keyword</code></h5>
+
+<p><code>clear</code><code>src</code><code>dst</code><code>src-over</code><code>dst-over</code><code>src-in</code><code>dst-in</code><code>src-out</code><code>dst-out</code><code>src-atop</code><code>dst-atop</code><code>xor</code><code>plus</code><code>minus</code><code>multiply</code><code>screen</code><code>overlay</code><code>darken</code><code>lighten</code><code>color-dodge</code><code>color-burn</code><code>hard-light</code><code>soft-light</code><code>difference</code><code>exclusion</code><code>contrast</code><code>invert</code><code>invert-rgb</code><code>grain-merge</code><code>grain-extract</code><code>hue</code><code>saturation</code><code>color</code><code>value</code></p>
+
+<p>默认值： src-over</p>
+
+<p><em>(The background-image will be blended with the background normally (placed on top of any existing background-color))</em></p>
+
+<p>背景图片被置于所设置的背景色上一层。</p>
+
+<p>Set the compositing operation used to blend the image into the background</p>
+
+<p>设置背景图片与背景颜色之间的合成操作方式。</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>background-image-opacity <code>float</code></h5>
+
+<p>默认值： 1</p>
+
+<p><em>(The image opacity will not be changed when applied to the map background)</em></p>
+
+<p>背景图片的透明度保持不变。</p>
+
+<p>Set the opacity of the image</p>
+
+<p>设置图片的透明度</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>srs <code>string</code></h5>
+
+<p>默认值： +proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs</p>
+
+<p><em>(The proj4 literal of EPSG:4326 is assumed to be the Map&amp;#x27;s spatial reference and all data from layers within this map will be plotted using this coordinate system. If any layers do not declare an srs value then they will be assumed to be in the same srs as the Map and not transformations will be needed to plot them in the Map&amp;#x27;s coordinate space)</em></p>
+
+<p>这是EPSG:4326空间参考系的proj4表达形式。地图中所有图层的数据都会采用这同一种参考系来绘制。如果地图中的某一图层没有显式声明自己所使用的参考系，那么这个图层将被认为与地图的参考系相同，并且在绘制的时候不会对这个图层中包含的数据进行座标变换。</p>
+
+<p>Map spatial reference (proj4 string)</p>
+
+<p>地图的空间参考系（以proj4字符串表达）</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>buffer-size <code>float</code></h5>
+
+<p>默认值： 0</p>
+
+<p><em>(无缓冲区)</em></p>
+
+<p>Extra tolerance around the map (in pixels) used to ensure labels crossing tile boundaries are equally rendered in each tile (e.g. cut in each tile). Not intended to be used in combination with &amp;quot;avoid-edges&amp;quot;.</p>
+
+<p>在地图周围增加一圈额外的绘制区域（以像素数表达）。这个属性的设置是为了保证那些出现在地图边界附近的文本标注不至于在渲染时被截断。注意这个属性不应该与“avoid-edges”同时使用。</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>base <code>string</code></h5>
+
+<p>默认值： </p>
+
+<p><em>(This base path defaults to an empty string meaning that any relative paths to files referenced in styles or layers will be interpreted relative to the application process.)</em></p>
+
+<p>工作路径默认为空。此时在样式定义中所有通过相对路径的方式引用的外部资源文件都会以应用程序所在的路径为父目录去寻址。</p>
+
+<p>Any relative paths used to reference files will be understood as relative to this directory path if the map is loaded from an in memory object rather than from the filesystem. If the map is loaded from the filesystem and this option is not provided it will be set to the directory of the stylesheet.</p>
+
+<p>如果map是从内存中加载的（？），那么所有以相对路径方式引用的外部资源则均为相对于由该base属性定义的路径。如果map是从文件系统中加载的，并且这个base属性没有被显式设置，那么base的值就是样式文件所在的目录。</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>font-directory <code>uri</code></h5>
+
+<p>默认值： none</p>
+
+<p><em>(No map-specific fonts will be registered)</em></p>
+
+<p>不注册专门用于当前map的字体</p>
+
+<p>Path to a directory which holds fonts which should be registered when the Map is loaded (in addition to any fonts that may be automatically registered).</p>
+
+<p>指定专门用于当前map的字体目录（自动加载的默认字体除外）</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h2>线符号（line）的属性</h2>
+
+<h5>line-color <code>color</code></h5>
+
+<p>默认值： rgba(0,0,0,1)</p>
+
+<p><em>(black and fully opaque (alpha = 1), same as rgb(0,0,0))</em></p>
+
+<p>完全不透明的黑色</p>
+
+<p>The color of a drawn line</p>
+
+<p>设置线要素的线条颜色。</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>line-width <code>float</code></h5>
+
+<p>默认值： 1</p>
+
+<p>The width of a line in pixels</p>
+
+<p>设置线要素的线条宽度，单位为像素。</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>line-opacity <code>float</code></h5>
+
+<p>默认值： 1</p>
+
+<p><em>(opaque)</em></p>
+
+<p>不透明</p>
+
+<p>The opacity of a line</p>
+
+<p>设置线要素的透明度。</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>line-join <code>keyword</code></h5>
+
+<p>取值范围：<code>miter</code><code>round</code><code>bevel</code></p>
+
+<p>默认值： miter</p>
+
+<p>The behavior of lines when joining</p>
+
+<p>设置线要素之间在交汇点处如何绘制。三种绘制方法的比较如下图所示。</p>
+
+<figure><img src="linejoin.png"/></figure>
+
+<p>（图片来源：<a href="http://www.w3.org/TR/SVG/painting.html" title="line join">www.w3.org</a>）</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>line-cap <code>keyword</code></h5>
+
+<p><code>butt</code><code>round</code><code>square</code></p>
+
+<p>默认值： butt</p>
+
+<p>The display of line endings</p>
+
+<p>设置线要素的端点形状。</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>line-gamma <code>float</code></h5>
+
+<p>默认值： 1</p>
+
+<p><em>(fully antialiased)</em></p>
+
+<p>完全抗锯齿</p>
+
+<p>Range: 0-1</p>
+
+<p>取值范围：0到1</p>
+
+<p>Level of antialiasing of stroke line</p>
+
+<p>设置绘制线要素时的抗锯齿级别。</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>line-gamma-method <code>keyword</code></h5>
+
+<p><code>power</code><code>linear</code><code>none</code><code>threshold</code><code>multiply</code></p>
+
+<p>默认值： power</p>
+
+<p><em>(pow(x,gamma) is used to calculate pixel gamma, which produces slightly smoother line and polygon antialiasing than the &amp;#x27;linear&amp;#x27; method, while other methods are usually only used to disable AA)</em></p>
+
+<p>使用pow(x, gamma)来计算像素gamma值。与linear相比，应用power值绘制出来的线与面要素更加平滑。而其它的取值通常只是用来关闭抗锯齿。</p>
+
+<p>An Antigrain Geometry specific rendering hint to control the quality of antialiasing. Under the hood in Mapnik this method is used in combination with the &amp;#x27;gamma&amp;#x27; value (which defaults to 1). The methods are in the AGG source at https:&amp;#x2F;&amp;#x2F;github.com&amp;#x2F;mapnik&amp;#x2F;mapnik&amp;#x2F;blob&amp;#x2F;master&amp;#x2F;deps&amp;#x2F;agg&amp;#x2F;include&amp;#x2F;agg<em>gamma</em>functions.h</p>
+
+<p>设置抗锯齿的具体算法，控制绘制质量。</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>line-dasharray <code>numbers</code></h5>
+
+<p>默认值： none</p>
+
+<p><em>(solid line)</em></p>
+
+<p>实线（无虚线效果）</p>
+
+<p>A pair of length values [a,b], where (a) is the dash length and (b) is the gap length respectively. More than two values are supported for more complex patterns.</p>
+
+<p>通过设置[a,b]的值设置虚线样式。其中a为虚线段的长度，b为虚线段间隔的长度。此外，还可以设置更多的值，从而获得更加复杂的绘制效果。</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>line-miterlimit <code>float</code></h5>
+
+<p>默认值： 4</p>
+
+<p><em>(Will auto-convert miters to bevel line joins when theta is less than 29 degrees as per the SVG spec: &amp;#x27;miterLength &amp;#x2F; stroke-width = 1 &amp;#x2F; sin ( theta &amp;#x2F; 2 )&amp;#x27;)</em></p>
+
+<p>当theta角小于29度时，自动将线要素交汇样式从miter改为bevel</p>
+
+<p>The limit on the ratio of the miter length to the stroke-width. Used to automatically convert miter joins to bevel joins for sharp angles to avoid the miter extending beyond the thickness of the stroking path. Normally will not need to be set, but a larger value can sometimes help avoid jaggy artifacts.</p>
+
+<p>设置线端的切角长度与线宽的比例上限。当线要素交汇处出现尖锐的锐角时，由于切角与线宽比例失调会导致错误的绘制结果。设置了该属性则会在出现上述情况时自动将线要素交汇样式从miter改为bevel。一般情况下，这个属性不需要显式设置，但有时可以通过设定一个较大的值可以避免出现参差不齐的不良绘制效果。</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>line-clip <code>boolean</code></h5>
+
+<p>默认值： true</p>
+
+<p><em>(geometry will be clipped to map bounds before rendering)</em></p>
+
+<p>几何要素会根据地图的地理范围进行切割。</p>
+
+<p>geometries are clipped to map bounds by default for best rendering performance. In some cases users may wish to disable this to avoid rendering artifacts.</p>
+
+<p>为了提高绘制效率，可以先将矢量要素中所有超出地图边界的部分切掉，再进行绘制。但在某些情况下，为了防止出现绘制错误，也可以通过将该值设为false而不采用这个策略。</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>line-simplify <code>float</code></h5>
+
+<p>默认值： 0</p>
+
+<p><em>(geometry will not be simplified)</em></p>
+
+<p>不对几何要素进行简化</p>
+
+<p>geometries are simplified by the given tolerance</p>
+
+<p>如果要对几何要素按照地图综合的方法进行简化，那么通过该属性来设定阈值。</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>line-simplify-algorithm <code>keyword</code></h5>
+
+<p><code>radial-distance</code><code>zhao-saalfeld</code><code>visvalingam-whyatt</code></p>
+
+<p>默认值： radial-distance</p>
+
+<p><em>(geometry will not be simplified using the radial distance algorithm)</em></p>
+
+<p>不使用radial-distance算法进行简化（？）</p>
+
+<p>geometries are simplified by the given algorithm</p>
+
+<p>设置对线要素进行综合的简化算法。</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>line-smooth <code>float</code></h5>
+
+<p>默认值： 0</p>
+
+<p><em>(no smoothing)</em></p>
+
+<p>不对拐点进行平滑</p>
+
+<p>Range: 0-1</p>
+
+<p>取值范围：0到1</p>
+
+<p>Smooths out geometry angles. 0 is no smoothing, 1 is fully smoothed. Values greater than 1 will produce wild, looping geometries.</p>
+
+<p>对线的拐点进行平滑处理。0表示不进行平滑，1表示完全平滑。如果取值大于1，会导致绘制的几何要素扭曲变形。</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>line-offset <code>float</code></h5>
+
+<p>默认值： 0</p>
+
+<p><em>(no offset)</em></p>
+
+<p>无偏移</p>
+
+<p>Offsets a line a number of pixels parallel to its actual path. Positive values move the line left, negative values move it right (relative to the directionality of the line).</p>
+
+<p>将线要素相对于其原有位置向左（沿着线的走向）或向右偏移一定量的像素绘制。正值表示左偏，负值表示右偏。</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>line-rasterizer <code>keyword</code></h5>
+
+<p><code>full</code><code>fast</code></p>
+
+<p>默认值： full</p>
+
+<p>Exposes an alternate AGG rendering method that sacrifices some accuracy for speed.</p>
+
+<p>设置线渲染方式，可以通过牺牲部分精确度以换取绘制速度。</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>line-geometry-transform <code>functions</code></h5>
+
+<p>默认值： none</p>
+
+<p><em>(geometry will not be transformed)</em></p>
+
+<p>不对几何要素进行变换</p>
+
+<p>Allows transformation functions to be applied to the geometry.</p>
+
+<p>为几何要素定义变换函数。</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>line-comp-op <code>keyword</code></h5>
+
+<p><code>clear</code><code>src</code><code>dst</code><code>src-over</code><code>dst-over</code><code>src-in</code><code>dst-in</code><code>src-out</code><code>dst-out</code><code>src-atop</code><code>dst-atop</code><code>xor</code><code>plus</code><code>minus</code><code>multiply</code><code>screen</code><code>overlay</code><code>darken</code><code>lighten</code><code>color-dodge</code><code>color-burn</code><code>hard-light</code><code>soft-light</code><code>difference</code><code>exclusion</code><code>contrast</code><code>invert</code><code>invert-rgb</code><code>grain-merge</code><code>grain-extract</code><code>hue</code><code>saturation</code><code>color</code><code>value</code></p>
+
+<p>默认值： src-over</p>
+
+<p><em>(add the current symbolizer on top of other symbolizer)</em></p>
+
+<p>将当前符号置于其它符号的上一层</p>
+
+<p>Composite operation. This defines how this symbolizer should behave relative to symbolizers atop or below it.</p>
+
+<p>这也是一个合成操作。它定义了当前的符号应该如何与其相邻图层进行合成。</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h2>面符号（polygon）的属性</h2>
+
+<h5>polygon-fill <code>color</code></h5>
+
+<p>默认值： rgba(128,128,128,1)</p>
+
+<p><em>(gray and fully opaque (alpha = 1), same as rgb(128,128,128))</em></p>
+
+<p>完全不透明的灰色</p>
+
+<p>Fill color to assign to a polygon</p>
+
+<p>设置面要素的填充色</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>polygon-opacity <code>float</code></h5>
+
+<p>默认值： 1</p>
+
+<p><em>(opaque)</em></p>
+
+<p>不透明</p>
+
+<p>The opacity of the polygon</p>
+
+<p>面要素的透明度（0为完全透明，1为完全不透明）</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>polygon-gamma <code>float</code></h5>
+
+<p>默认值： 1</p>
+
+<p><em>(fully antialiased)</em></p>
+
+<p>完全抗锯齿</p>
+
+<p>Range: 0-1</p>
+
+<p>取值范围：0到1</p>
+
+<p>Level of antialiasing of polygon edges</p>
+
+<p>设置面要素边缘的抗锯齿级别，影响绘制效果和速度。抗锯齿级别越高（最高为1），绘制效果越好，但绘制速度最慢；反之，绘制效果最差，但绘制速度最快。注意这里所说的绘制速度的快慢只是理论上的，实际效果与软硬件环境密切相关。</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>polygon-gamma-method <code>keyword</code></h5>
+
+<p><code>power</code><code>linear</code><code>none</code><code>threshold</code><code>multiply</code></p>
+
+<p>默认值： power</p>
+
+<p><em>(pow(x,gamma) is used to calculate pixel gamma, which produces slightly smoother line and polygon antialiasing than the &amp;#x27;linear&amp;#x27; method, while other methods are usually only used to disable AA)</em></p>
+
+<p>使用pow(x, gamma)来计算像素gamma值。与linear相比，应用power值绘制出来的线与面要素更加平滑。而其它的取值通常只是用来关闭抗锯齿。</p>
+
+<p>An Antigrain Geometry specific rendering hint to control the quality of antialiasing. Under the hood in Mapnik this method is used in combination with the &amp;#x27;gamma&amp;#x27; value (which defaults to 1). The methods are in the AGG source at https:&amp;#x2F;&amp;#x2F;github.com&amp;#x2F;mapnik&amp;#x2F;mapnik&amp;#x2F;blob&amp;#x2F;master&amp;#x2F;deps&amp;#x2F;agg&amp;#x2F;include&amp;#x2F;agg<em>gamma</em>functions.h</p>
+
+<p>设置抗锯齿的具体算法，控制绘制质量。</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>polygon-clip <code>boolean</code></h5>
+
+<p>默认值： true</p>
+
+<p><em>(geometry will be clipped to map bounds before rendering)</em></p>
+
+<p>几何要素会根据地图的地理范围进行切割。</p>
+
+<p>geometries are clipped to map bounds by default for best rendering performance. In some cases users may wish to disable this to avoid rendering artifacts.</p>
+
+<p>为了提高绘制效率，可以先将矢量要素中所有超出地图边界的部分切掉，再进行绘制。但在某些情况下，为了防止出现绘制错误，也可以通过将该值设为false而不采用这个策略。</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>polygon-simplify <code>float</code></h5>
+
+<p>默认值： 0</p>
+
+<p><em>(geometry will not be simplified)</em></p>
+
+<p>不对面要素的边线进行简化</p>
+
+<p>geometries are simplified by the given tolerance</p>
+
+<p>如果要对面要素的边线按照地图综合的方法进行简化，那么通过该属性来设定阈值。（参见地图综合中的线简化算法，如Douglas-Peuker算法）</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>polygon-simplify-algorithm <code>keyword</code></h5>
+
+<p><code>radial-distance</code><code>zhao-saalfeld</code><code>visvalingam-whyatt</code></p>
+
+<p>默认值： radial-distance</p>
+
+<p><em>(geometry will not be simplified using the radial distance algorithm)</em></p>
+
+<p>不使用radial-distance算法进行简化（？为什么是不简化？）</p>
+
+<p>geometries are simplified by the given algorithm</p>
+
+<p>设置对面要素的边线进行综合的简化算法。</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>polygon-smooth <code>float</code></h5>
+
+<p>默认值： 0</p>
+
+<p><em>(no smoothing)</em></p>
+
+<p>不对拐点进行平滑</p>
+
+<p>Range: 0-1</p>
+
+<p>取值范围：0到1</p>
+
+<p>Smooths out geometry angles. 0 is no smoothing, 1 is fully smoothed. Values greater than 1 will produce wild, looping geometries.</p>
+
+<p>对线的拐点进行平滑处理。0表示不进行平滑，1表示完全平滑。如果取值大于1，会导致绘制的几何要素扭曲变形。</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>polygon-geometry-transform <code>functions</code></h5>
+
+<p>默认值： none</p>
+
+<p><em>(geometry will not be transformed)</em></p>
+
+<p>不对几何要素进行变换。</p>
+
+<p>Allows transformation functions to be applied to the geometry.</p>
+
+<p>为几何要素定义变换函数。</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>polygon-comp-op <code>keyword</code></h5>
+
+<p><code>clear</code><code>src</code><code>dst</code><code>src-over</code><code>dst-over</code><code>src-in</code><code>dst-in</code><code>src-out</code><code>dst-out</code><code>src-atop</code><code>dst-atop</code><code>xor</code><code>plus</code><code>minus</code><code>multiply</code><code>screen</code><code>overlay</code><code>darken</code><code>lighten</code><code>color-dodge</code><code>color-burn</code><code>hard-light</code><code>soft-light</code><code>difference</code><code>exclusion</code><code>contrast</code><code>invert</code><code>invert-rgb</code><code>grain-merge</code><code>grain-extract</code><code>hue</code><code>saturation</code><code>color</code><code>value</code></p>
+
+<p>默认值： src-over</p>
+
+<p><em>(add the current symbolizer on top of other symbolizer)</em></p>
+
+<p>将当前符号置于其它符号的上一层</p>
+
+<p>Composite operation. This defines how this symbolizer should behave relative to symbolizers atop or below it.</p>
+
+<p>这也是一个合成操作。它定义了当前的符号应该如何与其相邻图层进行合成。</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h2>点符号（point）的属性</h2>
+
+<h5>point-file <code>uri</code></h5>
+
+<p>默认值： none</p>
+
+<p>Image file to represent a point</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>point-allow-overlap <code>boolean</code></h5>
+
+<p>默认值： false</p>
+
+<p><em>(Do not allow points to overlap with each other - overlapping markers will not be shown.)</em></p>
+
+<p>Control whether overlapping points are shown or hidden.</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>point-ignore-placement <code>boolean</code></h5>
+
+<p>默认值： false</p>
+
+<p><em>(do not store the bbox of this geometry in the collision detector cache)</em></p>
+
+<p>value to control whether the placement of the feature will prevent the placement of other features</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>point-opacity <code>float</code></h5>
+
+<p>默认值： 1</p>
+
+<p><em>(Fully opaque)</em></p>
+
+<p>A value from 0 to 1 to control the opacity of the point</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>point-placement <code>keyword</code></h5>
+
+<p><code>centroid</code><code>interior</code></p>
+
+<p>默认值： centroid</p>
+
+<p>How this point should be placed. Centroid calculates the geometric center of a polygon, which can be outside of it, while interior always places inside of a polygon.</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>point-transform <code>functions</code></h5>
+
+<p>默认值： </p>
+
+<p><em>(No transformation)</em></p>
+
+<p>SVG transformation definition</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>point-comp-op <code>keyword</code></h5>
+
+<p><code>clear</code><code>src</code><code>dst</code><code>src-over</code><code>dst-over</code><code>src-in</code><code>dst-in</code><code>src-out</code><code>dst-out</code><code>src-atop</code><code>dst-atop</code><code>xor</code><code>plus</code><code>minus</code><code>multiply</code><code>screen</code><code>overlay</code><code>darken</code><code>lighten</code><code>color-dodge</code><code>color-burn</code><code>hard-light</code><code>soft-light</code><code>difference</code><code>exclusion</code><code>contrast</code><code>invert</code><code>invert-rgb</code><code>grain-merge</code><code>grain-extract</code><code>hue</code><code>saturation</code><code>color</code><code>value</code></p>
+
+<p>默认值： src-over</p>
+
+<p><em>(add the current symbolizer on top of other symbolizer)</em></p>
+
+<p>Composite operation. This defines how this symbolizer should behave relative to symbolizers atop or below it.</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h2>文本符号（text）的属性</h2>
+
+<h5>text-name <code>expression</code></h5>
+
+<p>默认值： </p>
+
+<p>Value to use for a text label. Data columns are specified using brackets like <a href="">column_name</a></p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>text-face-name <code>string</code></h5>
+
+<p>默认值： undefined</p>
+
+<p>Font name and style to render a label in</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>text-size <code>float</code></h5>
+
+<p>默认值： 10</p>
+
+<p>Text size in pixels</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>text-ratio <code>unsigned</code></h5>
+
+<p>默认值： 0</p>
+
+<p>Define the amount of text (of the total) present on successive lines when wrapping occurs</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>text-wrap-width <code>unsigned</code></h5>
+
+<p>默认值： 0</p>
+
+<p>Length of a chunk of text in characters before wrapping text</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>text-wrap-before <code>boolean</code></h5>
+
+<p>默认值： false</p>
+
+<p>Wrap text before wrap-width is reached. If false, wrapped lines will be a bit longer than wrap-width.</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>text-wrap-character <code>string</code></h5>
+
+<p>默认值： </p>
+
+<p>Use this character instead of a space to wrap long text.</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>text-spacing <code>unsigned</code></h5>
+
+<p>默认值： undefined</p>
+
+<p>Distance between repeated text labels on a line (aka. label-spacing)</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>text-character-spacing <code>float</code></h5>
+
+<p>默认值： 0</p>
+
+<p>Horizontal spacing adjustment between characters in pixels</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>text-line-spacing <code>unsigned</code></h5>
+
+<p>默认值： 0</p>
+
+<p>Vertical spacing adjustment between lines in pixels</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>text-label-position-tolerance <code>unsigned</code></h5>
+
+<p>默认值： 0</p>
+
+<p>Allows the label to be displaced from its ideal position by a number of pixels (only works with placement:line)</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>text-max-char-angle-delta <code>float</code></h5>
+
+<p>默认值： 22.5</p>
+
+<p>The maximum angle change, in degrees, allowed between adjacent characters in a label. This value internally is converted to radians to the default is 22.5<em>math.pi&amp;#x2F;180.0. The higher the value the fewer labels will be placed around around sharp corners.</em></p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>text-fill <code>color</code></h5>
+
+<p>默认值： #000000</p>
+
+<p>Specifies the color for the text</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>text-opacity <code>float</code></h5>
+
+<p>默认值： 1</p>
+
+<p><em>(Fully opaque)</em></p>
+
+<p>A number from 0 to 1 specifying the opacity for the text</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>text-halo-fill <code>color</code></h5>
+
+<p>默认值： #FFFFFF</p>
+
+<p><em>(white)</em></p>
+
+<p>Specifies the color of the halo around the text.</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>text-halo-radius <code>float</code></h5>
+
+<p>默认值： 0</p>
+
+<p><em>(no halo)</em></p>
+
+<p>Specify the radius of the halo in pixels</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>text-halo-rasterizer <code>keyword</code></h5>
+
+<p><code>full</code><code>fast</code></p>
+
+<p>默认值： full</p>
+
+<p>Exposes an alternate text halo rendering method that sacrifices quality for speed.</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>text-dx <code>float</code></h5>
+
+<p>默认值： 0</p>
+
+<p>Displace text by fixed amount, in pixels, +&amp;#x2F;- along the X axis. A positive value will shift the text right</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>text-dy <code>float</code></h5>
+
+<p>默认值： 0</p>
+
+<p>Displace text by fixed amount, in pixels, +&amp;#x2F;- along the Y axis. A positive value will shift the text down</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>text-vertical-alignment <code>keyword</code></h5>
+
+<p><code>top</code><code>middle</code><code>bottom</code><code>auto</code></p>
+
+<p>默认值： auto</p>
+
+<p><em>(Default affected by value of dy; &amp;quot;bottom&amp;quot; for dy&amp;gt;0, &amp;quot;top&amp;quot; for dy&amp;lt;0.)</em></p>
+
+<p>Position of label relative to point position.</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>text-avoid-edges <code>boolean</code></h5>
+
+<p>默认值： false</p>
+
+<p>Avoid placing labels that intersect with tile boundaries.</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>text-min-distance <code>float</code></h5>
+
+<p>默认值： undefined</p>
+
+<p>Minimum permitted distance to the next text symbolizer.</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>text-min-padding <code>float</code></h5>
+
+<p>默认值： undefined</p>
+
+<p>Minimum distance a text label will be placed from the edge of a metatile.</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>text-min-path-length <code>float</code></h5>
+
+<p>默认值： 0</p>
+
+<p><em>(place labels on all paths)</em></p>
+
+<p>Place labels only on paths longer than this value.</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>text-allow-overlap <code>boolean</code></h5>
+
+<p>默认值： false</p>
+
+<p><em>(Do not allow text to overlap with other text - overlapping markers will not be shown.)</em></p>
+
+<p>Control whether overlapping text is shown or hidden.</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>text-orientation <code>expression</code></h5>
+
+<p>默认值： undefined</p>
+
+<p>Rotate the text.</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>text-placement <code>keyword</code></h5>
+
+<p><code>point</code><code>line</code><code>vertex</code><code>interior</code></p>
+
+<p>默认值： point</p>
+
+<p>Control the style of placement of a point versus the geometry it is attached to.</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>text-placement-type <code>keyword</code></h5>
+
+<p><code>dummy</code><code>simple</code></p>
+
+<p>默认值： dummy</p>
+
+<p>Re-position and&amp;#x2F;or re-size text to avoid overlaps. &amp;quot;simple&amp;quot; for basic algorithm (using text-placements string,) &amp;quot;dummy&amp;quot; to turn this feature off.</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>text-placements <code>string</code></h5>
+
+<p>默认值： </p>
+
+<p>If &amp;quot;placement-type&amp;quot; is set to &amp;quot;simple&amp;quot;, use this &amp;quot;POSITIONS,<a href="">SIZES</a>&amp;quot; string. An example is <code>text-placements: &amp;quot;E,NE,SE,W,NW,SW&amp;quot;;</code> </p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>text-transform <code>keyword</code></h5>
+
+<p><code>none</code><code>uppercase</code><code>lowercase</code><code>capitalize</code></p>
+
+<p>默认值： none</p>
+
+<p>Transform the case of the characters</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>text-horizontal-alignment <code>keyword</code></h5>
+
+<p><code>left</code><code>middle</code><code>right</code><code>auto</code></p>
+
+<p>默认值： auto</p>
+
+<p>The text&amp;#x27;s horizontal alignment from its centerpoint</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>text-align <code>keyword</code></h5>
+
+<p><code>left</code><code>right</code><code>center</code><code>auto</code></p>
+
+<p>默认值： auto</p>
+
+<p><em>(Auto alignment means that text will be centered by default except when using the <code>placement-type</code> parameter - in that case either right or left justification will be used automatically depending on where the text could be fit given the <code>text-placements</code> directives)</em></p>
+
+<p>Define how text is justified</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>text-clip <code>boolean</code></h5>
+
+<p>默认值： true</p>
+
+<p><em>(geometry will be clipped to map bounds before rendering)</em></p>
+
+<p>geometries are clipped to map bounds by default for best rendering performance. In some cases users may wish to disable this to avoid rendering artifacts.</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>text-comp-op <code>keyword</code></h5>
+
+<p><code>clear</code><code>src</code><code>dst</code><code>src-over</code><code>dst-over</code><code>src-in</code><code>dst-in</code><code>src-out</code><code>dst-out</code><code>src-atop</code><code>dst-atop</code><code>xor</code><code>plus</code><code>minus</code><code>multiply</code><code>screen</code><code>overlay</code><code>darken</code><code>lighten</code><code>color-dodge</code><code>color-burn</code><code>hard-light</code><code>soft-light</code><code>difference</code><code>exclusion</code><code>contrast</code><code>invert</code><code>invert-rgb</code><code>grain-merge</code><code>grain-extract</code><code>hue</code><code>saturation</code><code>color</code><code>value</code></p>
+
+<p>默认值： src-over</p>
+
+<p><em>(add the current symbolizer on top of other symbolizer)</em></p>
+
+<p>Composite operation. This defines how this symbolizer should behave relative to symbolizers atop or below it.</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h2>盾标符号（shield）的属性</h2>
+
+<h5>shield-name <code>expression</code></h5>
+
+<p>默认值： undefined</p>
+
+<p>Value to use for a shield&amp;quot;s text label. Data columns are specified using brackets like [column_name]</p>
+
+<p>设置盾标上显示的标注文字。可以通过用中括号括起来的字段名来指定要使用的数据字段，例如[column_name]。</p>
+
+<ul>
+	<li><ul>
+			<li><em>
+				</em></li>
+		</ul></li>
+</ul>
+
+<h5>shield-file <code>uri</code></h5>
+
+<p>默认值： none</p>
+
+<p>Image file to render behind the shield text</p>
+
+<p>设置显示在盾标文本后面的背景图片。</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>shield-face-name <code>string</code></h5>
+
+<p>默认值： </p>
+
+<p>Font name and style to use for the shield text</p>
+
+<p>设置盾标上标注文字的字体与样式。</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>shield-unlock-image <code>boolean</code></h5>
+
+<p>默认值： false</p>
+
+<p><em>(text alignment relative to the shield image uses the center of the image as the anchor for text positioning.)</em></p>
+
+<p>盾标文字将被置于盾标背景图片的中心位置</p>
+
+<p>This parameter should be set to true if you are trying to position text beside rather than on top of the shield image</p>
+
+<p>设置盾标文字与背景图片之间的位置关系。如果不想把盾标文本绘制在背景图的中心，那么就应该将该属性值设置为true。</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>shield-size <code>float</code></h5>
+
+<p>默认值： undefined</p>
+
+<p>The size of the shield text in pixels</p>
+
+<p>设置盾标文字的大小，以像素为单位。</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>shield-fill <code>color</code></h5>
+
+<p>默认值： undefined</p>
+
+<p>The color of the shield text</p>
+
+<p>设置盾标文字的颜色。</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>shield-placement <code>keyword</code></h5>
+
+<p><code>point</code><code>line</code><code>vertex</code><code>interior</code></p>
+
+<p>默认值： point</p>
+
+<p>How this shield should be placed. Point placement attempts to place it on top of points, line places along lines multiple times per feature, vertex places on the vertexes of polygons, and interior attempts to place inside of polygons.</p>
+
+<p>设置盾标的放置方式。point方式是将盾标置于点要素的位置，line方式是将盾标在线要素上沿线绘制多次，vertex方式是将盾标置于多边形的顶点位置，而interior方式则是将盾标置于面要素的内部。</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>shield-avoid-edges <code>boolean</code></h5>
+
+<p>默认值： false</p>
+
+<p>Avoid placing shields that intersect with tile boundaries.</p>
+
+<p>设置是否避免在地图或瓦片的边缘处绘制盾标。</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>shield-allow-overlap <code>boolean</code></h5>
+
+<p>默认值： false</p>
+
+<p><em>(Do not allow shields to overlap with other map elements already placed.)</em></p>
+
+<p>不允许盾标与其它现有地图要素重叠</p>
+
+<p>Control whether overlapping shields are shown or hidden.</p>
+
+<p>该属性用于设置在盾标与地图上其它符号出现压盖时，是否显示盾标。</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>shield-min-distance <code>float</code></h5>
+
+<p>默认值： 0</p>
+
+<p>Minimum distance to the next shield symbol, not necessarily the same shield.</p>
+
+<p>设置相邻两个盾标符号（可以是相同的盾标，也可以是不同的）之间的最小距离</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>shield-spacing <code>float</code></h5>
+
+<p>默认值： 0</p>
+
+<p>The spacing between repeated occurrences of the same shield on a line</p>
+
+<p>设置在同一线要素上多次绘制的盾标之间的间隔。</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>shield-min-padding <code>float</code></h5>
+
+<p>默认值： 0</p>
+
+<p>Minimum distance a shield will be placed from the edge of a metatile.</p>
+
+<p>设置盾标在瓦片上绘制时的最小边距。</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>shield-wrap-width <code>unsigned</code></h5>
+
+<p>默认值： 0</p>
+
+<p>Length of a chunk of text in characters before wrapping text</p>
+
+<p>设置盾标文本多长的时候需要折行。</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>shield-wrap-before <code>boolean</code></h5>
+
+<p>默认值： false</p>
+
+<p>Wrap text before wrap-width is reached. If false, wrapped lines will be a bit longer than wrap-width.</p>
+
+<p>控制盾标文本的折行动作。如果该值为false，那么每一行文本都会比wrap-width属性设定的值略长。</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>shield-wrap-character <code>string</code></h5>
+
+<p>默认值： </p>
+
+<p>Use this character instead of a space to wrap long names.</p>
+
+<p>设置盾标文本的折行字符。</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>shield-halo-fill <code>color</code></h5>
+
+<p>默认值： #FFFFFF</p>
+
+<p><em>(white)</em></p>
+
+<p>白色</p>
+
+<p>Specifies the color of the halo around the text.</p>
+
+<p>设置盾标文本的光晕颜色。</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>shield-halo-radius <code>float</code></h5>
+
+<p>默认值： 0</p>
+
+<p><em>(no halo)</em></p>
+
+<p>盾标文本无光晕效果</p>
+
+<p>Specify the radius of the halo in pixels</p>
+
+<p>设置盾标文本光晕的大小，单位为像素。</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>shield-character-spacing <code>unsigned</code></h5>
+
+<p>默认值： 0</p>
+
+<p>Horizontal spacing between characters (in pixels). Currently works for point placement only, not line placement.</p>
+
+<p>设置盾标文字的字间距。该属性目前仅适用于点要素上的盾标。</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>shield-line-spacing <code>unsigned</code></h5>
+
+<p>默认值： undefined</p>
+
+<p>Vertical spacing between lines of multiline labels (in pixels)</p>
+
+<p>设置盾标文本中的行距。</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>shield-text-dx <code>float</code></h5>
+
+<p>默认值： 0</p>
+
+<p>Displace text within shield by fixed amount, in pixels, +&amp;#x2F;- along the X axis. A positive value will shift the text right</p>
+
+<p>设置盾标文本的水平偏移量，以像素为单位。正值表示向右偏移。</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>shield-text-dy <code>float</code></h5>
+
+<p>默认值： 0</p>
+
+<p>Displace text within shield by fixed amount, in pixels, +&amp;#x2F;- along the Y axis. A positive value will shift the text down</p>
+
+<p>设置盾标文本的垂直偏移量，以像素为单位。正值表示向下偏移。</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>shield-dx <code>float</code></h5>
+
+<p>默认值： 0</p>
+
+<p>Displace shield by fixed amount, in pixels, +&amp;#x2F;- along the X axis. A positive value will shift the text right</p>
+
+<p>设置盾标本身的水平偏移量，以像素为单位。正值表示向右偏移。</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>shield-dy <code>float</code></h5>
+
+<p>默认值： 0</p>
+
+<p>Displace shield by fixed amount, in pixels, +&amp;#x2F;- along the Y axis. A positive value will shift the text down</p>
+
+<p>设置盾标本身的垂直偏移量，以像素为单位。正值表示向下偏移。</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>shield-opacity <code>float</code></h5>
+
+<p>默认值： 1</p>
+
+<p>The opacity of the image used for the shield</p>
+
+<p>设置盾标背景图片的透明度。</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>shield-text-opacity <code>float</code></h5>
+
+<p>默认值： 1</p>
+
+<p>The opacity of the text placed on top of the shield</p>
+
+<p>设置盾标文本的透明度。</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>shield-horizontal-alignment <code>keyword</code></h5>
+
+<p><code>left</code><code>middle</code><code>right</code><code>auto</code></p>
+
+<p>默认值： auto</p>
+
+<p>The shield&amp;#x27;s horizontal alignment from its centerpoint</p>
+
+<p>设置盾标相对于其中心点的水平对齐方式。</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>shield-vertical-alignment <code>keyword</code></h5>
+
+<p><code>top</code><code>middle</code><code>bottom</code><code>auto</code></p>
+
+<p>默认值： middle</p>
+
+<p>The shield&amp;#x27;s vertical alignment from its centerpoint</p>
+
+<p>设置盾标相对于其中心点的垂直对齐方式。</p>
+
+<ul>
+	<li><ul>
+			<li><em>
+				</em></li>
+		</ul></li>
+</ul>
+
+<h5>shield-placement-type <code>keyword</code></h5>
+
+<p><code>dummy</code><code>simple</code></p>
+
+<p>默认值： dummy</p>
+
+<p>Re-position and&amp;#x2F;or re-size shield to avoid overlaps. &amp;quot;simple&amp;quot; for basic algorithm (using shield-placements string,) &amp;quot;dummy&amp;quot; to turn this feature off.</p>
+
+<p>设置盾标之间相互避让的算法。simple表示使用由shield-placements属性指定的基本算法。而dummy则表示不使用该特性。</p>
+
+<ul>
+	<li><ul>
+			<li><em>
+				</em></li>
+		</ul></li>
+</ul>
+
+<h5>shield-placements <code>string</code></h5>
+
+<p>默认值： </p>
+
+<p>If &amp;quot;placement-type&amp;quot; is set to &amp;quot;simple&amp;quot;, use this &amp;quot;POSITIONS,<a href="">SIZES</a>&amp;quot; string. An example is <code>shield-placements: &amp;quot;E,NE,SE,W,NW,SW&amp;quot;;</code></p>
+
+<p>如果shield-placement-type属性被设置为simple，那么就会依据该属性的值（即形如“POSITIONS, [SIZES]”的字符串）执行盾标相互避让算法。例如：<code>shield-placements: &quot;E,NE,SE,W,NW,SW&quot;;</code></p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>shield-text-transform <code>keyword</code></h5>
+
+<p><code>none</code><code>uppercase</code><code>lowercase</code><code>capitalize</code></p>
+
+<p>默认值： none</p>
+
+<p>Transform the case of the characters</p>
+
+<p>设置是否对盾标字符进行大小写转换。</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>shield-justify-alignment <code>keyword</code></h5>
+
+<p><code>left</code><code>center</code><code>right</code><code>auto</code></p>
+
+<p>默认值： auto</p>
+
+<p>Define how text in a shield&amp;#x27;s label is justified</p>
+
+<p>设置盾标文本的对齐方式。</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>shield-transform <code>functions</code></h5>
+
+<p>默认值： </p>
+
+<p><em>(No transformation)</em></p>
+
+<p>SVG transformation definition</p>
+
+<p>设置SVG的变换函数。</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>shield-clip <code>boolean</code></h5>
+
+<p>默认值： true</p>
+
+<p><em>(geometry will be clipped to map bounds before rendering)</em></p>
+
+<p>几何要素会根据地图的地理范围进行切割。</p>
+
+<p>geometries are clipped to map bounds by default for best rendering performance. In some cases users may wish to disable this to avoid rendering artifacts.</p>
+
+<p>为了提高绘制效率，可以先将矢量要素中所有超出地图边界的部分切掉，再进行绘制。但在某些情况下，为了防止出现绘制错误，也可以通过将该值设为false而不采用这个策略。</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>shield-comp-op <code>keyword</code></h5>
+
+<p><code>clear</code><code>src</code><code>dst</code><code>src-over</code><code>dst-over</code><code>src-in</code><code>dst-in</code><code>src-out</code><code>dst-out</code><code>src-atop</code><code>dst-atop</code><code>xor</code><code>plus</code><code>minus</code><code>multiply</code><code>screen</code><code>overlay</code><code>darken</code><code>lighten</code><code>color-dodge</code><code>color-burn</code><code>hard-light</code><code>soft-light</code><code>difference</code><code>exclusion</code><code>contrast</code><code>invert</code><code>invert-rgb</code><code>grain-merge</code><code>grain-extract</code><code>hue</code><code>saturation</code><code>color</code><code>value</code></p>
+
+<p>默认值： src-over</p>
+
+<p><em>(add the current symbolizer on top of other symbolizer)</em></p>
+
+<p>将当前符号置于其它符号的上一层</p>
+
+<p>Composite operation. This defines how this symbolizer should behave relative to symbolizers atop or below it.</p>
+
+<p>这也是一个合成操作。它定义了当前的符号应该如何与其相邻图层进行合成。</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h2>线模式（line-pattern）的属性</h2>
+
+<h5>line-pattern-file <code>uri</code></h5>
+
+<p>默认值： none</p>
+
+<p>An image file to be repeated and warped along a line</p>
+
+<p>设置沿线重复绘制的图像文件。</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>line-pattern-clip <code>boolean</code></h5>
+
+<p>默认值： true</p>
+
+<p><em>(geometry will be clipped to map bounds before rendering)</em></p>
+
+<p>几何要素会根据地图的地理范围进行切割。</p>
+
+<p>geometries are clipped to map bounds by default for best rendering performance. In some cases users may wish to disable this to avoid rendering artifacts.</p>
+
+<p>为了提高绘制效率，可以先将矢量要素中所有超出地图边界的部分切掉，再进行绘制。但在某些情况下，为了防止出现绘制错误，也可以通过将该值设为false而不采用这个策略。</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>line-pattern-simplify <code>float</code></h5>
+
+<p>默认值： 0</p>
+
+<p><em>(geometry will not be simplified)</em></p>
+
+<p>不对几何要素进行简化</p>
+
+<p>geometries are simplified by the given tolerance</p>
+
+<p>如果要对几何要素按照地图综合的方法进行简化，那么通过该属性来设定阈值。</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>line-pattern-simplify-algorithm <code>keyword</code></h5>
+
+<p><code>radial-distance</code><code>zhao-saalfeld</code><code>visvalingam-whyatt</code></p>
+
+<p>默认值： radial-distance</p>
+
+<p><em>(geometry will not be simplified using the radial distance algorithm)</em></p>
+
+<p>不使用radial-distance算法进行简化</p>
+
+<p>geometries are simplified by the given algorithm</p>
+
+<p>设置对线要素进行综合的简化算法。</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>line-pattern-smooth <code>float</code></h5>
+
+<p>默认值： 0</p>
+
+<p><em>(no smoothing)</em></p>
+
+<p>不进行平滑处理</p>
+
+<p>Range: 0-1</p>
+
+<p>取值范围：0到1</p>
+
+<p>Smooths out geometry angles. 0 is no smoothing, 1 is fully smoothed. Values greater than 1 will produce wild, looping geometries.</p>
+
+<p>对线的拐点进行平滑处理。0表示不进行平滑，1表示完全平滑。如果取值大于1，会导致绘制的几何要素扭曲变形。</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>line-pattern-offset <code>float</code></h5>
+
+<p>默认值： 0</p>
+
+<p><em>(no offset)</em></p>
+
+<p>无偏移</p>
+
+<p>Offsets a line a number of pixels parallel to its actual path. Positive values move the line left, negative values move it right (relative to the directionality of the line).</p>
+
+<p>将线要素相对于其原有位置向左（沿着线的走向）或向右偏移一定量的像素绘制。正值表示左偏，负值表示右偏。</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>line-pattern-geometry-transform <code>functions</code></h5>
+
+<p>默认值： none</p>
+
+<p><em>(geometry will not be transformed)</em></p>
+
+<p>不对几何要素进行变换</p>
+
+<p>Allows transformation functions to be applied to the geometry.</p>
+
+<p>为几何要素定义变换函数。</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>line-pattern-comp-op <code>keyword</code></h5>
+
+<p><code>clear</code><code>src</code><code>dst</code><code>src-over</code><code>dst-over</code><code>src-in</code><code>dst-in</code><code>src-out</code><code>dst-out</code><code>src-atop</code><code>dst-atop</code><code>xor</code><code>plus</code><code>minus</code><code>multiply</code><code>screen</code><code>overlay</code><code>darken</code><code>lighten</code><code>color-dodge</code><code>color-burn</code><code>hard-light</code><code>soft-light</code><code>difference</code><code>exclusion</code><code>contrast</code><code>invert</code><code>invert-rgb</code><code>grain-merge</code><code>grain-extract</code><code>hue</code><code>saturation</code><code>color</code><code>value</code></p>
+
+<p>默认值： src-over</p>
+
+<p><em>(add the current symbolizer on top of other symbolizer)</em></p>
+
+<p>将当前符号置于其它符号的上一层</p>
+
+<p>Composite operation. This defines how this symbolizer should behave relative to symbolizers atop or below it.</p>
+
+<p>这也是一个合成操作。它定义了当前的符号应该如何与其相邻图层进行合成。</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h2>面模式（polygon-pattern）的属性</h2>
+
+<h5>polygon-pattern-file <code>uri</code></h5>
+
+<p>默认值： none</p>
+
+<p>Image to use as a repeated pattern fill within a polygon</p>
+
+<p>设置用于平铺填充面要素的图像文件。</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>polygon-pattern-alignment <code>keyword</code></h5>
+
+<p><code>local</code><code>global</code></p>
+
+<p>默认值： local</p>
+
+<p>Specify whether to align pattern fills to the layer or to the map.</p>
+
+<p>设置填充时的对齐方式，local指在当前图层中对齐，global指在整个地图中对齐。</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>polygon-pattern-gamma <code>float</code></h5>
+
+<p>默认值： 1</p>
+
+<p><em>(fully antialiased)</em></p>
+
+<p>完全抗锯齿</p>
+
+<p>Range: 0-1</p>
+
+<p>Level of antialiasing of polygon pattern edges</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>polygon-pattern-opacity <code>float</code></h5>
+
+<p>默认值： 1</p>
+
+<p><em>(The image is rendered without modifications)</em></p>
+
+<p>Apply an opacity level to the image used for the pattern</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>polygon-pattern-clip <code>boolean</code></h5>
+
+<p>默认值： true</p>
+
+<p><em>(geometry will be clipped to map bounds before rendering)</em></p>
+
+<p>geometries are clipped to map bounds by default for best rendering performance. In some cases users may wish to disable this to avoid rendering artifacts.</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>polygon-pattern-simplify <code>float</code></h5>
+
+<p>默认值： 0</p>
+
+<p><em>(geometry will not be simplified)</em></p>
+
+<p>geometries are simplified by the given tolerance</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>polygon-pattern-simplify-algorithm <code>keyword</code></h5>
+
+<p><code>radial-distance</code><code>zhao-saalfeld</code><code>visvalingam-whyatt</code></p>
+
+<p>默认值： radial-distance</p>
+
+<p><em>(geometry will not be simplified using the radial distance algorithm)</em></p>
+
+<p>geometries are simplified by the given algorithm</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>polygon-pattern-smooth <code>float</code></h5>
+
+<p>默认值： 0</p>
+
+<p><em>(no smoothing)</em></p>
+
+<p>Range: 0-1</p>
+
+<p>Smooths out geometry angles. 0 is no smoothing, 1 is fully smoothed. Values greater than 1 will produce wild, looping geometries.</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>polygon-pattern-geometry-transform <code>functions</code></h5>
+
+<p>默认值： none</p>
+
+<p><em>(geometry will not be transformed)</em></p>
+
+<p>Allows transformation functions to be applied to the geometry.</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>polygon-pattern-comp-op <code>keyword</code></h5>
+
+<p><code>clear</code><code>src</code><code>dst</code><code>src-over</code><code>dst-over</code><code>src-in</code><code>dst-in</code><code>src-out</code><code>dst-out</code><code>src-atop</code><code>dst-atop</code><code>xor</code><code>plus</code><code>minus</code><code>multiply</code><code>screen</code><code>overlay</code><code>darken</code><code>lighten</code><code>color-dodge</code><code>color-burn</code><code>hard-light</code><code>soft-light</code><code>difference</code><code>exclusion</code><code>contrast</code><code>invert</code><code>invert-rgb</code><code>grain-merge</code><code>grain-extract</code><code>hue</code><code>saturation</code><code>color</code><code>value</code></p>
+
+<p>默认值： src-over</p>
+
+<p><em>(add the current symbolizer on top of other symbolizer)</em></p>
+
+<p>Composite operation. This defines how this symbolizer should behave relative to symbolizers atop or below it.</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h2>栅格符号（raster）的属性</h2>
+
+<h5>raster-opacity <code>float</code></h5>
+
+<p>默认值： 1</p>
+
+<p><em>(opaque)</em></p>
+
+<p>The opacity of the raster symbolizer on top of other symbolizers.</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>raster-filter-factor <code>float</code></h5>
+
+<p>默认值： -1</p>
+
+<p><em>(Allow the datasource to choose appropriate downscaling.)</em></p>
+
+<p>This is used by the Raster or Gdal datasources to pre-downscale images using overviews. Higher numbers can sometimes cause much better scaled image output, at the cost of speed.</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>raster-scaling <code>keyword</code></h5>
+
+<p><code>near</code><code>fast</code><code>bilinear</code><code>bilinear8</code><code>bicubic</code><code>spline16</code><code>spline36</code><code>hanning</code><code>hamming</code><code>hermite</code><code>kaiser</code><code>quadric</code><code>catrom</code><code>gaussian</code><code>bessel</code><code>mitchell</code><code>sinc</code><code>lanczos</code><code>blackman</code></p>
+
+<p>默认值： near</p>
+
+<p>The scaling algorithm used to making different resolution versions of this raster layer. Bilinear is a good compromise between speed and accuracy, while lanczos gives the highest quality.</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>raster-mesh-size <code>unsigned</code></h5>
+
+<p>默认值： 16</p>
+
+<p><em>(Reprojection mesh will be 1&amp;#x2F;16 of the resolution of the source image)</em></p>
+
+<p>A reduced resolution mesh is used for raster reprojection, and the total image size is divided by the mesh-size to determine the quality of that mesh. Values for mesh-size larger than the default will result in faster reprojection but might lead to distortion.</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>raster-comp-op <code>keyword</code></h5>
+
+<p><code>clear</code><code>src</code><code>dst</code><code>src-over</code><code>dst-over</code><code>src-in</code><code>dst-in</code><code>src-out</code><code>dst-out</code><code>src-atop</code><code>dst-atop</code><code>xor</code><code>plus</code><code>minus</code><code>multiply</code><code>screen</code><code>overlay</code><code>darken</code><code>lighten</code><code>color-dodge</code><code>color-burn</code><code>hard-light</code><code>soft-light</code><code>difference</code><code>exclusion</code><code>contrast</code><code>invert</code><code>invert-rgb</code><code>grain-merge</code><code>grain-extract</code><code>hue</code><code>saturation</code><code>color</code><code>value</code></p>
+
+<p>默认值： src-over</p>
+
+<p><em>(add the current symbolizer on top of other symbolizer)</em></p>
+
+<p>Composite operation. This defines how this symbolizer should behave relative to symbolizers atop or below it.</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>raster-colorizer-default-mode <code>keyword</code></h5>
+
+<p><code>discrete</code><code>linear</code><code>exact</code></p>
+
+<p>默认值： undefined</p>
+
+<p>TODO</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>raster-colorizer-default-color <code>color</code></h5>
+
+<p>默认值： undefined</p>
+
+<p>TODO</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>raster-colorizer-epsilon <code>float</code></h5>
+
+<p>默认值： undefined</p>
+
+<p>TODO</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>raster-colorizer-stops <code>tags</code></h5>
+
+<p>默认值： undefined</p>
+
+<p>TODO</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h2>注记符号（markers）的属性</h2>
+
+<h5>marker-file <code>uri</code></h5>
+
+<p>默认值： </p>
+
+<p><em>(An ellipse or circle, if width equals height)</em></p>
+
+<p>一个椭圆或正圆形符号</p>
+
+<p>An SVG file that this marker shows at each placement. If no file is given, the marker will show an ellipse.</p>
+
+<p>设置绘制注记符号所使用的SVG文件。如果没有指定具体的文件，则默认使用一个椭圆形符号对每个位置的注记进行渲染。</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>marker-opacity <code>float</code></h5>
+
+<p>默认值： 1</p>
+
+<p><em>(The stroke-opacity and fill-opacity will be used)</em></p>
+
+<p>边缘和填充均不透明</p>
+
+<p>The overall opacity of the marker, if set, overrides both the opacity of both the fill and stroke</p>
+
+<p>设置注记符号整体的透明度。如果设置了该属性，则会覆盖在marker-fill-opacity和marker-line-opacity属性中设置的透明度。</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>marker-fill-opacity <code>float</code></h5>
+
+<p>默认值： 1</p>
+
+<p><em>(opaque)</em></p>
+
+<p>注记符号填充部分为不透明</p>
+
+<p>The fill opacity of the marker</p>
+
+<p>设置注记符号填充部分的透明度。</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>marker-line-color <code>color</code></h5>
+
+<p>默认值： black</p>
+
+<p>The color of the stroke around a marker shape.</p>
+
+<p>设置注记符号边线的颜色。</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>marker-line-width <code>float</code></h5>
+
+<p>默认值： undefined</p>
+
+<p>The width of the stroke around a marker shape, in pixels. This is positioned on the boundary, so high values can cover the area itself.</p>
+
+<p>设置注记符号边线的宽度，以像素为单位。但如果该值设置过大会导致注记本身被过粗的边线覆盖。</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>marker-line-opacity <code>float</code></h5>
+
+<p>默认值： 1</p>
+
+<p><em>(opaque)</em></p>
+
+<p>注记符号边线完全不透明</p>
+
+<p>The opacity of a line</p>
+
+<p>设置注记符号边线的透明度。</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>marker-placement <code>keyword</code></h5>
+
+<p><code>point</code><code>line</code><code>interior</code></p>
+
+<p>默认值： point</p>
+
+<p><em>(Place markers at the center point (centroid) of the geometry)</em></p>
+
+<p>注记符号被置于几何要素的重心（形心）位置</p>
+
+<p>Attempt to place markers on a point, in the center of a polygon, or if markers-placement:line, then multiple times along a line. &amp;#x27;interior&amp;#x27; placement can be used to ensure that points placed on polygons are forced to be inside the polygon interior</p>
+
+<p>设置注记在几何要素上的放置方式，可以位于点要素上，或者在面要素的中心位置，还可以沿着线要素反复出现（通过设置markers-placement:line实现）。如果取值interior，那么可以确保注记符号被绘制在多边形的内部。</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>marker-multi-policy <code>keyword</code></h5>
+
+<p><code>each</code><code>whole</code><code>largest</code></p>
+
+<p>默认值： each</p>
+
+<p><em>(If a feature contains multiple geometries and the placement type is either point or interior then a marker will be rendered for each)</em></p>
+
+<p>如果一个要素包含了多个几何形状，而且放置方式是point或interior，那么注记符号就会在每个几何形状处都会被绘制一次</p>
+
+<p>A special setting to allow the user to control rendering behavior for &amp;#x27;multi-geometries&amp;#x27; (when a feature contains multiple geometries). This setting does not apply to markers placed along lines. The &amp;#x27;each&amp;#x27; policy is default and means all geometries will get a marker. The &amp;#x27;whole&amp;#x27; policy means that the aggregate centroid between all geometries will be used. The &amp;#x27;largest&amp;#x27; policy means that only the largest (by bounding box areas) feature will get a rendered marker (this is how text labeling behaves by default).</p>
+
+<p>该属性是为包含多个几何形状的地理（multi-geometries）要素准备的，对沿线放置的注记符号不起作用。其默认值为each，也就是每个几何形状上都会被绘制一个注记；whole表示注记将被绘制在所有几何形状组合后的重心位置；而largest表示注记将被绘制在最大（依据最小包围框的面积）的那个几何形状上（这也同样是文本标注在多几何要素上绘制的默认方法）。</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>marker-type <code>keyword</code></h5>
+
+<p><code>arrow</code><code>ellipse</code></p>
+
+<p>默认值： ellipse</p>
+
+<p>The default marker-type. If a SVG file is not given as the marker-file parameter, the renderer provides either an arrow or an ellipse (a circle if height is equal to width)</p>
+
+<p>设置默认的注记符号类型。如果没有指定用于渲染注记的SVG文件，那么内置的渲染引擎可以提供两种选择：箭头或椭圆。</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>marker-width <code>expression</code></h5>
+
+<p>默认值： 10</p>
+
+<p>The width of the marker, if using one of the default types.</p>
+
+<p>设置注记符号的宽度。这个属性只适用于两种内置的默认注记样式。</p>
+
+<ul>
+	<li><ul>
+			<li><em>
+				</em></li>
+		</ul></li>
+</ul>
+
+<h5>marker-height <code>expression</code></h5>
+
+<p>默认值： 10</p>
+
+<p>The height of the marker, if using one of the default types.</p>
+
+<p>设置注记符号的高度。这个属性只适用于两种内置的默认注记样式。</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>marker-fill <code>color</code></h5>
+
+<p>默认值： blue</p>
+
+<p>The color of the area of the marker.</p>
+
+<p>设置注记的填充色。</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>marker-allow-overlap <code>boolean</code></h5>
+
+<p>默认值： false</p>
+
+<p><em>(Do not allow makers to overlap with each other - overlapping markers will not be shown.)</em></p>
+
+<p>不允许注记符号相互压盖（被压盖的注记将不被显式）</p>
+
+<p>Control whether overlapping markers are shown or hidden.</p>
+
+<p>设置被压盖的注记符号是否被显式在地图上。</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>marker-ignore-placement <code>boolean</code></h5>
+
+<p>默认值： false</p>
+
+<p><em>(do not store the bbox of this geometry in the collision detector cache)</em></p>
+
+<p>不在冲突检测器的缓存中存储几何形状的外包框</p>
+
+<p>value to control whether the placement of the feature will prevent the placement of other features</p>
+
+<p>设置是否允许在与当前要素重叠的位置放置其它要素。（？）</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>marker-spacing <code>float</code></h5>
+
+<p>默认值： 100</p>
+
+<p>Space between repeated markers in pixels. If the spacing is less than the marker size or larger than the line segment length then no marker will be placed</p>
+
+<p>设置重复绘制的注记之间的间距，单位为像素。如果设定的间距小于注记符号本身的尺寸，或者大于线要素的长度，那么注记就绘制不出来。</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>marker-max-error <code>float</code></h5>
+
+<p>默认值： 0.2</p>
+
+<p>The maximum difference between actual marker placement and the marker-spacing parameter. Setting a high value can allow the renderer to try to resolve placement conflicts with other symbolizers.</p>
+
+<p>设置实际的注记位置与marker-spacing属性值之间的最大误差。如果将该属性值调高，那么渲染引擎就会尝试处理与其它注记符号之间的位置冲突。</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>marker-transform <code>functions</code></h5>
+
+<p>默认值： </p>
+
+<p><em>(No transformation)</em></p>
+
+<p>无变换</p>
+
+<p>SVG transformation definition</p>
+
+<p>设置SVG图形的变换方法</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>marker-clip <code>boolean</code></h5>
+
+<p>默认值： true</p>
+
+<p><em>(geometry will be clipped to map bounds before rendering)</em></p>
+
+<p>几何要素会根据地图的地理范围进行切割。</p>
+
+<p>geometries are clipped to map bounds by default for best rendering performance. In some cases users may wish to disable this to avoid rendering artifacts.</p>
+
+<p>为了提高绘制效率，可以先将矢量要素中所有超出地图边界的部分切掉，再进行绘制。但在某些情况下，为了防止出现绘制错误，也可以通过将该值设为false而不采用这个策略。</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>marker-smooth <code>float</code></h5>
+
+<p>默认值： 0</p>
+
+<p><em>(no smoothing)</em></p>
+
+<p>不对拐点进行平滑</p>
+
+<p>Range: 0-1</p>
+
+<p>取值范围：0到1</p>
+
+<p>Smooths out geometry angles. 0 is no smoothing, 1 is fully smoothed. Values greater than 1 will produce wild, looping geometries.</p>
+
+<p>对线的拐点进行平滑处理。0表示不进行平滑，1表示完全平滑。如果取值大于1，会导致绘制的几何要素扭曲变形。</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>marker-geometry-transform <code>functions</code></h5>
+
+<p>默认值： none</p>
+
+<p><em>(geometry will not be transformed)</em></p>
+
+<p>不对几何要素进行变换</p>
+
+<p>Allows transformation functions to be applied to the geometry.</p>
+
+<p>为几何要素定义变换函数。</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>marker-comp-op <code>keyword</code></h5>
+
+<p><code>clear</code><code>src</code><code>dst</code><code>src-over</code><code>dst-over</code><code>src-in</code><code>dst-in</code><code>src-out</code><code>dst-out</code><code>src-atop</code><code>dst-atop</code><code>xor</code><code>plus</code><code>minus</code><code>multiply</code><code>screen</code><code>overlay</code><code>darken</code><code>lighten</code><code>color-dodge</code><code>color-burn</code><code>hard-light</code><code>soft-light</code><code>difference</code><code>exclusion</code><code>contrast</code><code>invert</code><code>invert-rgb</code><code>grain-merge</code><code>grain-extract</code><code>hue</code><code>saturation</code><code>color</code><code>value</code></p>
+
+<p>默认值： src-over</p>
+
+<p><em>(add the current symbolizer on top of other symbolizer)</em></p>
+
+<p>将当前符号置于其它符号的上一层</p>
+
+<p>Composite operation. This defines how this symbolizer should behave relative to symbolizers atop or below it.</p>
+
+<p>这也是一个合成操作。它定义了当前的符号应该如何与其相邻图层进行合成。</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h2>建筑物符号（building）的属性</h2>
+
+<h5>building-fill <code>color</code></h5>
+
+<p>默认值： #FFFFFF</p>
+
+<p>The color of the buildings walls.</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>building-fill-opacity <code>float</code></h5>
+
+<p>默认值： 1</p>
+
+<p>The opacity of the building as a whole, including all walls.</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h5>building-height <code>expression</code></h5>
+
+<p>默认值： 0</p>
+
+<p>The height of the building in pixels.</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h2>调试模式下的属性</h2>
+
+<h5>debug-mode <code>string</code></h5>
+
+<p>默认值： collision</p>
+
+<p>The mode for debug rendering</p>
+
+<ul>
+	<li><ul>
+			<li><em></em></li>
+		</ul></li>
+</ul>
+
+<h2>关于取值类型的说明</h2>
+
+<p>Below is a list of values and an explanation of any expression that can be applied to properties in CartCSS.</p>
+
+<h3>Color</h3>
+
+<p>CartoCSS accepts a variety of syntaxes for colors - HTML-style hex values, rgb, rgba, hsl, and hsla. It also supports the predefined HTML colors names, like <code>yellow</code> and <code>blue</code>.</p>
+
+<p><code></code><code> css</code></p>
+
+<h1>line </h1>
+
+<p>line-color: #ff0;</p>
+
+<p>line-color: #ffff00;</p>
+
+<p>line-color: rgb(255, 255, 0);</p>
+
+<p>line-color: rgba(255, 255, 0, 1);</p>
+
+<p>line-color: hsl(100, 50%, 50%);</p>
+
+<p>line-color: hsla(100, 50%, 50%, 1);</p>
+
+<p>line-color: yellow;</p>
+
+<p>}</p>
+
+<p><code></code><code></code></p>
+
+<p>Especially of note is the support for hsl, which can be <a href="">easier to reason about than rgb()</a>(http://mothereffinghsl.com/). Carto also includes several color functions <a href="">borrowed from less</a>(http://lesscss.org/#-color-functions):</p>
+
+<p><code></code><code> css</code></p>
+
+<p>// lighten and darken colors</p>
+
+<p>lighten(#ace, 10%);</p>
+
+<p>darken(#ace, 10%);</p>
+
+<p>// saturate and desaturate</p>
+
+<p>saturate(#550000, 10%);</p>
+
+<p>desaturate(#00ff00, 10%);</p>
+
+<p>// increase or decrease the opacity of a color</p>
+
+<p>fadein(#fafafa, 10%);</p>
+
+<p>fadeout(#fefefe, 14%);</p>
+
+<p>// spin rotates a color around the color wheel by degrees</p>
+
+<p>spin(#ff00ff, 10);</p>
+
+<p>// mix generates a color in between two other colors.</p>
+
+<p>mix(#fff, #000, 50%);</p>
+
+<p><code></code><code></code></p>
+
+<p>These functions all take arguments which can be color variables, literal colors, or the results of other functions operating on colors.</p>
+
+<h3>Float</h3>
+
+<p>Float is a fancy way of saying &#39;number&#39;. In CartoCSS, you specify <em>just a number</em> - unlike CSS, there are no units, but everything is specified in pixels.</p>
+
+<p><code></code><code> css</code></p>
+
+<h1>line </h1>
+
+<p>line-width: 2;</p>
+
+<p>}</p>
+
+<p><code></code><code></code></p>
+
+<p>It&#39;s also possible to do simple math with number values:</p>
+
+<p><code></code><code> css</code></p>
+
+<h1>line </h1>
+
+<p>line-width: 4 / 2; // division</p>
+
+<p>line-width: 4 + 2; // addition</p>
+
+<p>line-width: 4 - 2; // subtraction</p>
+
+<p>line-width: 4 <em> 2; // multiplication</em></p>
+
+<p>line-width: 4 % 2; // modulus</p>
+
+<p>}</p>
+
+<p><code></code><code></code></p>
+
+<h3>URI</h3>
+
+<p>URI is a fancy way of saying URL. When an argument is a URI, you use the same kind of <code>url(&#39;place.png&#39;)</code> notation that you would with HTML. Quotes around the URL aren&#39;t required, but are highly recommended. URIs can be paths to places on your computer, or on the internet.</p>
+
+<p><code></code><code>css</code></p>
+
+<h1>markers </h1>
+
+<p>marker-file: url(&#39;marker.png&#39;);</p>
+
+<p>}</p>
+
+<p><code></code><code></code></p>
+
+<h3>String</h3>
+
+<p>A string is basically just text. In the case of CartoCSS, you&#39;re going to put it in quotes. Strings can be anything, though pay attention to the cases of <code>text-name</code> and <code>shield-name</code> - they actually will refer to features, which you refer to by putting them in brackets, as seen in the example below.</p>
+
+<p><code></code><code>css</code></p>
+
+<h1>labels </h1>
+
+<p>text-name: &quot;<a href="">MY<em>FIELD</em></a>&quot;;</p>
+
+<p>}</p>
+
+<p><code></code><code></code></p>
+
+<h3>Boolean</h3>
+
+<p>Boolean means yes or no, so it accepts the values <code>true</code> or <code>false</code>.</p>
+
+<p><code></code><code>css</code></p>
+
+<h1>markers </h1>
+
+<p>marker-allow-overlap:true;</p>
+
+<p>}</p>
+
+<p><code></code><code></code></p>
+
+<h3>Expressions</h3>
+
+<p>Expressions are statements that can include fields, numbers, and other types in a really flexible way. You have run into expressions before, in the realm of &#39;fields&#39;, where you&#39;d specify <code>&quot;[FIELD]&quot;</code>, but expressions allow you to drop the quotes and also do quick addition, division, multiplication, and concatenation from within Carto syntax.</p>
+
+<p><code></code><code>css</code></p>
+
+<h1>buildings </h1>
+
+<p>building-height: <a href="">HEIGHT<em>FIELD</em></a> <em> 10;</em></p>
+
+<p>}</p>
+
+<p><code></code><code></code></p>
+
+<h3>Numbers</h3>
+
+<p>Numbers are comma-separated lists of one or more number in a specific order. They&#39;re used in line dash arrays, in which the numbers specify intervals of line, break, and line again.</p>
+
+<p><code></code><code>css</code></p>
+
+<h1>disputedboundary </h1>
+
+<p>line-dasharray: 1, 4, 2;</p>
+
+<p>}</p>
+
+<p><code></code><code></code></p>
+
+<h3>Percentages</h3>
+
+<p>In Carto, the percentage symbol, <code>%</code> universally means <code>value/100</code>. It&#39;s meant to be used with ratio-related properties, like opacity rules.</p>
+
+<p><em>You should not use percentages as widths, heights, or other properties - unlike CSS, percentages are not relative to cascaded classes or page size, they&#39;re, as stated, simply the value divided by one hundred.</em></p>
+
+<p><code></code><code>css</code></p>
+
+<h1>world </h1>
+
+<p>// this syntax</p>
+
+<p>polygon-opacity: 50%;</p>
+
+<p>// is equivalent to</p>
+
+<p>polygon-opacity: 0.5;</p>
+
+<p>}</p>
+
+<p><code></code><code></code></p>
+
+<h3>Functions</h3>
+
+<p>Functions are comma-separated lists of one or more functions. For instance, transforms use the <code>functions</code> type to allow for transforms within Carto, which are optionally chainable.</p>
+
+<p><code></code><code>css</code></p>
+
+<h1>point </h1>
+
+<p>point-transform: scale(2, 2);</p>
+
+<p>}</p>
+
+<p><code></code><code></code></p>
+
+</body>
+</html>
