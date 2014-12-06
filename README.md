@@ -5,4 +5,4 @@ CartoCSS参考手册
 
 我会尽力保证这份文档与官方英文文档同步。这个仓库中保存了中文版文档的markdown格式版本，以及通过[Ulysses](http://www.ulyssesapp.com/)生成的pdf与html版本。html的在线版本可以直接从[这里](http://luliu.me/projects/carto_zh-cn/)查看。
 
-关于翻译的更多信息请参考这篇[博客](http://luliu/?p=40)，有问题请与Lu Liu(nudtlliu#gmail.com, luliu.me)联系。
+关于翻译的更多信息请参考这篇[博客](http://luliu.me/?p=40)，有问题请与Lu Liu(nudtlliu#gmail.com, luliu.me)联系。
