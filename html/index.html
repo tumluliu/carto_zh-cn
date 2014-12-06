@@ -3,11 +3,11 @@
 	<head>
 		<meta charset="utf-8" />
 		<link rel="stylesheet" type="text/css" href="css/style.css" />
-		<title>概述</title>
+		<title>CartoCSS概述</title>
 	</head>
 <body>
 
-<h1>概述</h1>
+<h1>CartoCSS概述</h1>
 
 <p>CartoCSS是一种语法类似CSS的制图样式描述语言。层叠样式表（Cascading Style Sheets，CSS）是一种对网页进行设计的样式语言。如果熟悉CSS的话，那么CartoCSS这种对地图进行样式设计的语言也会看起来不陌生，尽管二者所包含的要素、属性等内容和含义完全不同。</p>
 
@@ -962,6 +962,8 @@
 
 <p>Value to use for a text label. Data columns are specified using brackets like <a href="">column_name</a></p>
 
+<p>设置文本符号上显示的文字。可以通过用中括号括起来的字段名来指定要使用的数据字段，例如[column_name]。</p>
+
 <ul>
 	<li><ul>
 			<li><em></em></li>
@@ -973,6 +975,8 @@
 <p>默认值： undefined</p>
 
 <p>Font name and style to render a label in</p>
+
+<p>设置文本符号所使用的字体。</p>
 
 <ul>
 	<li><ul>
@@ -986,6 +990,8 @@
 
 <p>Text size in pixels</p>
 
+<p>设置文本符号中文字的字号，以像素为单位。</p>
+
 <ul>
 	<li><ul>
 			<li><em></em></li>
@@ -997,6 +1003,8 @@
 <p>默认值： 0</p>
 
 <p>Define the amount of text (of the total) present on successive lines when wrapping occurs</p>
+
+<p>设置折行后的文本所占比例（译注：这解释的好扭曲，到底什么意思，有什么意义？）</p>
 
 <ul>
 	<li><ul>
@@ -1010,6 +1018,8 @@
 
 <p>Length of a chunk of text in characters before wrapping text</p>
 
+<p>设置文本块在多长的时候进行折行，以字符为单位</p>
+
 <ul>
 	<li><ul>
 			<li><em></em></li>
@@ -1021,6 +1031,8 @@
 <p>默认值： false</p>
 
 <p>Wrap text before wrap-width is reached. If false, wrapped lines will be a bit longer than wrap-width.</p>
+
+<p>控制文本文字的折行动作。如果该值为false，那么每一行文本都会比wrap-width属性设定的值略长。</p>
 
 <ul>
 	<li><ul>
@@ -1034,6 +1046,8 @@
 
 <p>Use this character instead of a space to wrap long text.</p>
 
+<p>设置盾标文本的折行字符。</p>
+
 <ul>
 	<li><ul>
 			<li><em></em></li>
@@ -1046,9 +1060,12 @@
 
 <p>Distance between repeated text labels on a line (aka. label-spacing)</p>
 
+<p>设置沿线绘制文本符号时每两个文本符号之间的间距。</p>
+
 <ul>
 	<li><ul>
-			<li><em></em></li>
+			<li><em>
+				</em></li>
 		</ul></li>
 </ul>
 
@@ -1058,9 +1075,12 @@
 
 <p>Horizontal spacing adjustment between characters in pixels</p>
 
+<p>设置文本文字的字间距，以像素为单位。</p>
+
 <ul>
 	<li><ul>
-			<li><em></em></li>
+			<li><em>
+				</em></li>
 		</ul></li>
 </ul>
 
@@ -1069,6 +1089,8 @@
 <p>默认值： 0</p>
 
 <p>Vertical spacing adjustment between lines in pixels</p>
+
+<p>设置文本文字的行间距。</p>
 
 <ul>
 	<li><ul>
@@ -1082,6 +1104,8 @@
 
 <p>Allows the label to be displaced from its ideal position by a number of pixels (only works with placement:line)</p>
 
+<p>设置文本标注相对于其理想位置的偏移量，以像素为单位（目前仅适用于线要素）</p>
+
 <ul>
 	<li><ul>
 			<li><em></em></li>
@@ -1092,7 +1116,9 @@
 
 <p>默认值： 22.5</p>
 
-<p>The maximum angle change, in degrees, allowed between adjacent characters in a label. This value internally is converted to radians to the default is 22.5<em>math.pi&amp;#x2F;180.0. The higher the value the fewer labels will be placed around around sharp corners.</em></p>
+<p>The maximum angle change, in degrees, allowed between adjacent characters in a label. This value internally is converted to radians to the default is 22.5*math.pi&amp;#x2F;180.0. The higher the value the fewer labels will be placed around around sharp corners.</p>
+
+<p>设置文本文字的最大折转角，以十进制角度为单位。这个值会在绘制时被换算成弧度，例如默认的22.5度会按照22.5/math.pi*180.0公式被换算成0.3925弧度。这个值越大，则被绘制在尖锐转角处的文本符号会越少。</p>
 
 <ul>
 	<li><ul>
@@ -1104,7 +1130,13 @@
 
 <p>默认值： #000000</p>
 
+<p><em>(black)</em></p>
+
+<p>黑色</p>
+
 <p>Specifies the color for the text</p>
+
+<p>设置文本文字的颜色。</p>
 
 <ul>
 	<li><ul>
@@ -1118,7 +1150,11 @@
 
 <p><em>(Fully opaque)</em></p>
 
+<p>不透明</p>
+
 <p>A number from 0 to 1 specifying the opacity for the text</p>
+
+<p>设置文本文字的透明度，取值范围为0到1。</p>
 
 <ul>
 	<li><ul>
@@ -1132,11 +1168,16 @@
 
 <p><em>(white)</em></p>
 
+<p>白色</p>
+
 <p>Specifies the color of the halo around the text.</p>
+
+<p>设置文本文字边缘的光晕颜色。</p>
 
 <ul>
 	<li><ul>
-			<li><em></em></li>
+			<li><em>
+				</em></li>
 		</ul></li>
 </ul>
 
@@ -1146,11 +1187,16 @@
 
 <p><em>(no halo)</em></p>
 
+<p>无光晕</p>
+
 <p>Specify the radius of the halo in pixels</p>
+
+<p>设置文本文字边缘的光晕大小，以像素为单位。</p>
 
 <ul>
 	<li><ul>
-			<li><em></em></li>
+			<li><em>
+				</em></li>
 		</ul></li>
 </ul>
 
@@ -1161,6 +1207,8 @@
 <p>默认值： full</p>
 
 <p>Exposes an alternate text halo rendering method that sacrifices quality for speed.</p>
+
+<p>设置用于渲染文字光晕的方法，速度优先还是质量优先。</p>
 
 <ul>
 	<li><ul>
@@ -1174,6 +1222,8 @@
 
 <p>Displace text by fixed amount, in pixels, +&amp;#x2F;- along the X axis. A positive value will shift the text right</p>
 
+<p>设置文本文字的水平偏移量，以像素为单位。正值表示向右偏移。</p>
+
 <ul>
 	<li><ul>
 			<li><em></em></li>
@@ -1185,6 +1235,8 @@
 <p>默认值： 0</p>
 
 <p>Displace text by fixed amount, in pixels, +&amp;#x2F;- along the Y axis. A positive value will shift the text down</p>
+
+<p>设置文本文字的垂直偏移量，以像素为单位。正值表示向下偏移。</p>
 
 <ul>
 	<li><ul>
@@ -1200,7 +1252,11 @@
 
 <p><em>(Default affected by value of dy; &amp;quot;bottom&amp;quot; for dy&amp;gt;0, &amp;quot;top&amp;quot; for dy&amp;lt;0.)</em></p>
 
+<p>自动，但受到dy值的影响。当dy&gt;0时，取bottom；而当dy&lt;0时，取top</p>
+
 <p>Position of label relative to point position.</p>
+
+<p>设置文本符号相对于点要素座标的位置。</p>
 
 <ul>
 	<li><ul>
@@ -1214,9 +1270,12 @@
 
 <p>Avoid placing labels that intersect with tile boundaries.</p>
 
+<p>设置是否避免将文本标注置于绘制区域（通常为瓦片）的边缘处。</p>
+
 <ul>
 	<li><ul>
-			<li><em></em></li>
+			<li><em>
+				</em></li>
 		</ul></li>
 </ul>
 
@@ -1225,6 +1284,8 @@
 <p>默认值： undefined</p>
 
 <p>Minimum permitted distance to the next text symbolizer.</p>
+
+<p>设置文本符号之间的最小间距。</p>
 
 <ul>
 	<li><ul>
@@ -1238,6 +1299,8 @@
 
 <p>Minimum distance a text label will be placed from the edge of a metatile.</p>
 
+<p>设置文本符号在元瓦片中的最小边距。</p>
+
 <ul>
 	<li><ul>
 			<li><em></em></li>
@@ -1250,7 +1313,11 @@
 
 <p><em>(place labels on all paths)</em></p>
 
+<p>无论路线长度是多少，都要绘制文本符号</p>
+
 <p>Place labels only on paths longer than this value.</p>
+
+<p>如果设置了该值，那么只有在当路线长度大于该值的时候才绘制文本符号。</p>
 
 <ul>
 	<li><ul>
@@ -1264,7 +1331,11 @@
 
 <p><em>(Do not allow text to overlap with other text - overlapping markers will not be shown.)</em></p>
 
+<p>不允许文本符号相互压盖</p>
+
 <p>Control whether overlapping text is shown or hidden.</p>
+
+<p>设置是否显式相互压盖的文本符号。</p>
 
 <ul>
 	<li><ul>
@@ -1277,6 +1348,8 @@
 <p>默认值： undefined</p>
 
 <p>Rotate the text.</p>
+
+<p>设置文本旋转。</p>
 
 <ul>
 	<li><ul>
@@ -1292,6 +1365,8 @@
 
 <p>Control the style of placement of a point versus the geometry it is attached to.</p>
 
+<p>设置文本符号在对应几何要素上的放置方式。</p>
+
 <ul>
 	<li><ul>
 			<li><em></em></li>
@@ -1306,6 +1381,8 @@
 
 <p>Re-position and&amp;#x2F;or re-size text to avoid overlaps. &amp;quot;simple&amp;quot; for basic algorithm (using text-placements string,) &amp;quot;dummy&amp;quot; to turn this feature off.</p>
 
+<p>设置文本符号之间相互避让的算法。simple表示使用由text-placements属性指定的基本算法。而dummy则表示不使用该特性。</p>
+
 <ul>
 	<li><ul>
 			<li><em></em></li>
@@ -1317,6 +1394,8 @@
 <p>默认值： </p>
 
 <p>If &amp;quot;placement-type&amp;quot; is set to &amp;quot;simple&amp;quot;, use this &amp;quot;POSITIONS,<a href="">SIZES</a>&amp;quot; string. An example is <code>text-placements: &amp;quot;E,NE,SE,W,NW,SW&amp;quot;;</code> </p>
+
+<p>如果placement-type属性被设置为simple，那么就会依据该属性的值（即形如“POSITIONS, [SIZES]”的字符串）执行文本符号相互避让算法。例如：<code>text-placements: &quot;E,NE,SE,W,NW,SW&quot;;</code></p>
 
 <ul>
 	<li><ul>
@@ -1332,6 +1411,8 @@
 
 <p>Transform the case of the characters</p>
 
+<p>设置是否对文本字符进行大小写转换。</p>
+
 <ul>
 	<li><ul>
 			<li><em></em></li>
@@ -1345,6 +1426,8 @@
 <p>默认值： auto</p>
 
 <p>The text&amp;#x27;s horizontal alignment from its centerpoint</p>
+
+<p>设置文本文字的水平对齐方式。</p>
 
 <ul>
 	<li><ul>
@@ -1360,7 +1443,11 @@
 
 <p><em>(Auto alignment means that text will be centered by default except when using the <code>placement-type</code> parameter - in that case either right or left justification will be used automatically depending on where the text could be fit given the <code>text-placements</code> directives)</em></p>
 
+<p>默认的自动方式是居中对齐，但如果已经设置了<code>placement-type</code>属性，那么就会依据<code>text-placements</code>属性的值来对文字进行靠左或靠右对齐</p>
+
 <p>Define how text is justified</p>
+
+<p>设置文本文字的对齐方式。</p>
 
 <ul>
 	<li><ul>
@@ -1374,7 +1461,11 @@
 
 <p><em>(geometry will be clipped to map bounds before rendering)</em></p>
 
+<p>几何要素会根据地图的地理范围进行切割</p>
+
 <p>geometries are clipped to map bounds by default for best rendering performance. In some cases users may wish to disable this to avoid rendering artifacts.</p>
+
+<p>为了提高绘制效率，可以先将矢量要素中所有超出地图边界的部分切掉，再进行绘制。但在某些情况下，为了防止出现绘制错误，也可以通过将该值设为false而不采用这个策略。</p>
 
 <ul>
 	<li><ul>
@@ -1390,7 +1481,11 @@
 
 <p><em>(add the current symbolizer on top of other symbolizer)</em></p>
 
+<p>将当前符号置于其它符号的上一层</p>
+
 <p>Composite operation. This defines how this symbolizer should behave relative to symbolizers atop or below it.</p>
+
+<p>这也是一个合成操作。它定义了当前的符号应该如何与其相邻图层进行合成。</p>
 
 <ul>
 	<li><ul>
@@ -2113,6 +2208,8 @@
 
 <p>Level of antialiasing of polygon pattern edges</p>
 
+<p>设置面要素边缘的抗锯齿级别，影响绘制效果和速度。</p>
+
 <ul>
 	<li><ul>
 			<li><em></em></li>
@@ -2125,11 +2222,16 @@
 
 <p><em>(The image is rendered without modifications)</em></p>
 
+<p>保持填充图片的透明度不变</p>
+
 <p>Apply an opacity level to the image used for the pattern</p>
+
+<p>设置填充图片的透明度。</p>
 
 <ul>
 	<li><ul>
-			<li><em></em></li>
+			<li><em>
+				</em></li>
 		</ul></li>
 </ul>
 
@@ -2139,7 +2241,11 @@
 
 <p><em>(geometry will be clipped to map bounds before rendering)</em></p>
 
+<p>几何要素会根据地图的地理范围进行切割</p>
+
 <p>geometries are clipped to map bounds by default for best rendering performance. In some cases users may wish to disable this to avoid rendering artifacts.</p>
+
+<p>为了提高绘制效率，可以先将矢量要素中所有超出地图边界的部分切掉，再进行绘制。但在某些情况下，为了防止出现绘制错误，也可以通过将该值设为false而不采用这个策略。</p>
 
 <ul>
 	<li><ul>
@@ -2153,7 +2259,11 @@
 
 <p><em>(geometry will not be simplified)</em></p>
 
+<p>不对面要素的边线进行简化</p>
+
 <p>geometries are simplified by the given tolerance</p>
+
+<p>如果要对面要素的边线按照地图综合的方法进行简化，那么通过该属性来设定阈值。</p>
 
 <ul>
 	<li><ul>
@@ -2169,7 +2279,11 @@
 
 <p><em>(geometry will not be simplified using the radial distance algorithm)</em></p>
 
+<p>不使用radial-distance算法进行简化（？）</p>
+
 <p>geometries are simplified by the given algorithm</p>
+
+<p>设置对面要素的边线进行综合的简化算法。</p>
 
 <ul>
 	<li><ul>
@@ -2183,9 +2297,15 @@
 
 <p><em>(no smoothing)</em></p>
 
+<p>不对拐点进行平滑</p>
+
 <p>Range: 0-1</p>
 
+<p>取值范围：0到1</p>
+
 <p>Smooths out geometry angles. 0 is no smoothing, 1 is fully smoothed. Values greater than 1 will produce wild, looping geometries.</p>
+
+<p>对线的拐点进行平滑处理。0表示不进行平滑，1表示完全平滑。如果取值大于1，会导致绘制的几何要素扭曲变形。</p>
 
 <ul>
 	<li><ul>
@@ -2199,7 +2319,11 @@
 
 <p><em>(geometry will not be transformed)</em></p>
 
+<p>不对几何要素进行变换。</p>
+
 <p>Allows transformation functions to be applied to the geometry.</p>
+
+<p>为几何要素定义变换函数。</p>
 
 <ul>
 	<li><ul>
@@ -2215,7 +2339,11 @@
 
 <p><em>(add the current symbolizer on top of other symbolizer)</em></p>
 
+<p>将当前符号置于其它符号的上一层</p>
+
 <p>Composite operation. This defines how this symbolizer should behave relative to symbolizers atop or below it.</p>
+
+<p>这也是一个合成操作。它定义了当前的符号应该如何与其相邻图层进行合成。</p>
 
 <ul>
 	<li><ul>
@@ -2231,7 +2359,11 @@
 
 <p><em>(opaque)</em></p>
 
+<p>不透明</p>
+
 <p>The opacity of the raster symbolizer on top of other symbolizers.</p>
+
+<p>设置栅格符号的透明度。</p>
 
 <ul>
 	<li><ul>
@@ -2245,7 +2377,11 @@
 
 <p><em>(Allow the datasource to choose appropriate downscaling.)</em></p>
 
+<p>允许数据源自行选用缩小图像尺寸（重采样？）的方法</p>
+
 <p>This is used by the Raster or Gdal datasources to pre-downscale images using overviews. Higher numbers can sometimes cause much better scaled image output, at the cost of speed.</p>
+
+<p>用于栅格或GDAL数据源（译注：这个是mapnik概念），对图像尺寸进行预先缩小。将该值调高可以得到更好（译注：什么叫“好”？）的缩略图效果，但相应的处理时间也会变长。</p>
 
 <ul>
 	<li><ul>
@@ -2261,6 +2397,8 @@
 
 <p>The scaling algorithm used to making different resolution versions of this raster layer. Bilinear is a good compromise between speed and accuracy, while lanczos gives the highest quality.</p>
 
+<p>设置对栅格数据进行重采样的算法。Bilinear可以在速度和质量方面得到不错的平衡，而lanczos则能够得到最高的绘制质量。</p>
+
 <ul>
 	<li><ul>
 			<li><em></em></li>
@@ -2273,7 +2411,11 @@
 
 <p><em>(Reprojection mesh will be 1&amp;#x2F;16 of the resolution of the source image)</em></p>
 
+<p>取原始图像分辨率的1/16作为栅格的重投影网格大小（译注：对于256*256的瓦片，网格的大小就是256/16=16，也就是16*16这么大。不知道这么理解对不对，不过至少从之前绘制过的栅格，特别是出现那些奇怪小网格的栅格数据情况来看，应该是这样的。）</p>
+
 <p>A reduced resolution mesh is used for raster reprojection, and the total image size is divided by the mesh-size to determine the quality of that mesh. Values for mesh-size larger than the default will result in faster reprojection but might lead to distortion.</p>
+
+<p>在对原始图像进行重投影时，是先将图像切分成若干网格，对网格中的小图像片分别重投影。如果设定该值使得网格的尺寸变大（译注：即把该属性的值调小），那么重投影的速度会加快，但可能会导致图像变形。</p>
 
 <ul>
 	<li><ul>
@@ -2289,7 +2431,11 @@
 
 <p><em>(add the current symbolizer on top of other symbolizer)</em></p>
 
+<p>将当前符号置于其它符号的上一层</p>
+
 <p>Composite operation. This defines how this symbolizer should behave relative to symbolizers atop or below it.</p>
+
+<p>这也是一个合成操作。它定义了当前的符号应该如何与其相邻图层进行合成。</p>
 
 <ul>
 	<li><ul>
@@ -2714,7 +2860,11 @@
 
 <p>默认值： #FFFFFF</p>
 
+<p><em>(白色)</em></p>
+
 <p>The color of the buildings walls.</p>
+
+<p>设置建筑物的外墙填充色</p>
 
 <ul>
 	<li><ul>
@@ -2728,6 +2878,8 @@
 
 <p>The opacity of the building as a whole, including all walls.</p>
 
+<p>设置建筑物整体的透明度，包括建筑物所有的面。</p>
+
 <ul>
 	<li><ul>
 			<li><em></em></li>
@@ -2739,6 +2891,8 @@
 <p>默认值： 0</p>
 
 <p>The height of the building in pixels.</p>
+
+<p>设置建筑物的高度，以像素为单位。</p>
 
 <ul>
 	<li><ul>
@@ -2754,6 +2908,8 @@
 
 <p>The mode for debug rendering</p>
 
+<p>设置调试模式渲染（？）</p>
+
 <ul>
 	<li><ul>
 			<li><em></em></li>
@@ -2764,205 +2920,182 @@
 
 <p>Below is a list of values and an explanation of any expression that can be applied to properties in CartCSS.</p>
 
-<h3>Color</h3>
+<p>这里列出了CartoCSS中所有属性的取值类型及其说明。</p>
+
+<h3>颜色型（Color）</h3>
 
 <p>CartoCSS accepts a variety of syntaxes for colors - HTML-style hex values, rgb, rgba, hsl, and hsla. It also supports the predefined HTML colors names, like <code>yellow</code> and <code>blue</code>.</p>
 
-<p><code></code><code> css</code></p>
+<p>CartoCSS可以使用一系列不同的方法表示颜色：HTML风格的16进制值，RGB值，RGBA值，HSL值或HSLA值都可以，还可以使用HTML预定义颜色名，像<code>yellow</code>、<code>blue</code>等。</p>
 
-<h1>line </h1>
+<pre><code>
+#line {
+ line-color: #ff0;
+ line-color: #ffff00;
+ line-color: rgb(255, 255, 0);
+ line-color: rgba(255, 255, 0, 1);
+ line-color: hsl(100, 50%, 50%);
+ line-color: hsla(100, 50%, 50%, 1);
+ line-color: yellow;
+}
 
-<p>line-color: #ff0;</p>
-
-<p>line-color: #ffff00;</p>
-
-<p>line-color: rgb(255, 255, 0);</p>
-
-<p>line-color: rgba(255, 255, 0, 1);</p>
-
-<p>line-color: hsl(100, 50%, 50%);</p>
-
-<p>line-color: hsla(100, 50%, 50%, 1);</p>
-
-<p>line-color: yellow;</p>
-
-<p>}</p>
-
-<p><code></code><code></code></p>
+</code></pre>
 
 <p>Especially of note is the support for hsl, which can be <a href="">easier to reason about than rgb()</a>(http://mothereffinghsl.com/). Carto also includes several color functions <a href="">borrowed from less</a>(http://lesscss.org/#-color-functions):</p>
 
-<p><code></code><code> css</code></p>
+<p>这里特别需要强调的是对HSL值的支持，这其实是比RGB值更易用的颜色表达方式（参见<a href="http://mothereffinghsl.com/">这里</a>）。CartoCSS中还支持几种颜色函数，这是从LESS中借用的概念（参见<a href="http://lesscss.org/#-color-functions">这里</a>），例子如下：</p>
 
-<p>// lighten and darken colors</p>
+<pre><code>
+// 把颜色调亮或调暗
+lighten(#ace, 10%);
+darken(#ace, 10%);
 
-<p>lighten(#ace, 10%);</p>
+// 饱和度调高或调低
+saturate(#550000, 10%);
+desaturate(#00ff00, 10%);
 
-<p>darken(#ace, 10%);</p>
+// 提高或降低颜色的透明度
+fadein(#fafafa, 10%);
+fadeout(#fefefe, 14%);
 
-<p>// saturate and desaturate</p>
+// 按照一定角度旋转色盘
+spin(#ff00ff, 10);
 
-<p>saturate(#550000, 10%);</p>
+// 将两种颜色混合
+mix(#fff, #000, 50%);
 
-<p>desaturate(#00ff00, 10%);</p>
-
-<p>// increase or decrease the opacity of a color</p>
-
-<p>fadein(#fafafa, 10%);</p>
-
-<p>fadeout(#fefefe, 14%);</p>
-
-<p>// spin rotates a color around the color wheel by degrees</p>
-
-<p>spin(#ff00ff, 10);</p>
-
-<p>// mix generates a color in between two other colors.</p>
-
-<p>mix(#fff, #000, 50%);</p>
-
-<p><code></code><code></code></p>
+</code></pre>
 
 <p>These functions all take arguments which can be color variables, literal colors, or the results of other functions operating on colors.</p>
 
-<h3>Float</h3>
+<p>以上这些函数的参数可以是颜色值，也可以是颜色名，还可以是其它颜色函数。</p>
+
+<h3>浮点型（Float）</h3>
 
 <p>Float is a fancy way of saying &#39;number&#39;. In CartoCSS, you specify <em>just a number</em> - unlike CSS, there are no units, but everything is specified in pixels.</p>
 
-<p><code></code><code> css</code></p>
+<p>浮点数是数值类型的时髦说法。在CartoCSS中，这指的就是一个数值，没有单位，但其实所有的单位都是像素。</p>
 
-<h1>line </h1>
+<pre><code>
+#line {
+ line-width: 2;
+}
 
-<p>line-width: 2;</p>
-
-<p>}</p>
-
-<p><code></code><code></code></p>
+</code></pre>
 
 <p>It&#39;s also possible to do simple math with number values:</p>
 
-<p><code></code><code> css</code></p>
+<p>还可以对数值类型做简单运算：</p>
 
-<h1>line </h1>
+<pre><code>
+#line {
+ line-width: 4 / 2; // 除
+ line-width: 4 + 2; // 加
+ line-width: 4 - 2; // 减
+ line-width: 4 * 2; // 乘
+ line-width: 4 % 2; // 取余
+}
 
-<p>line-width: 4 / 2; // division</p>
+</code></pre>
 
-<p>line-width: 4 + 2; // addition</p>
-
-<p>line-width: 4 - 2; // subtraction</p>
-
-<p>line-width: 4 <em> 2; // multiplication</em></p>
-
-<p>line-width: 4 % 2; // modulus</p>
-
-<p>}</p>
-
-<p><code></code><code></code></p>
-
-<h3>URI</h3>
+<h3>统一资源描述符型（URI）</h3>
 
 <p>URI is a fancy way of saying URL. When an argument is a URI, you use the same kind of <code>url(&#39;place.png&#39;)</code> notation that you would with HTML. Quotes around the URL aren&#39;t required, but are highly recommended. URIs can be paths to places on your computer, or on the internet.</p>
 
-<p><code></code><code>css</code></p>
+<p>URI是URL的一种时髦说法（译注：这实在不敢苟同，在http协议和REST架构中，URI和URL都有明确的定义，它们是<strong>不同的</strong>）。当一个属性的值类型是URI时，用户可以像在HTML中使用<code>url(&#39;place.png&#39;)</code>一样的表示方法。URL地址上的引号不是必需的，但最好加上。URI可以指向本地文件系统，也可以是互联网上资源的链接地址。</p>
 
-<h1>markers </h1>
+<pre><code>
+#markers {
+ marker-file: url(&#39;marker.png&#39;);
+}
 
-<p>marker-file: url(&#39;marker.png&#39;);</p>
+</code></pre>
 
-<p>}</p>
-
-<p><code></code><code></code></p>
-
-<h3>String</h3>
+<h3>字符串型（String）</h3>
 
 <p>A string is basically just text. In the case of CartoCSS, you&#39;re going to put it in quotes. Strings can be anything, though pay attention to the cases of <code>text-name</code> and <code>shield-name</code> - they actually will refer to features, which you refer to by putting them in brackets, as seen in the example below.</p>
 
-<p><code></code><code>css</code></p>
+<p>字符串也就是文本类型。在CartoCSS中，字符串应该有引号包围。字符串可以是任意文本，但在<code>text-name</code>和<code>shield-name</code>属性中，可以使用中括号包围的数据字段名来表示。例如：</p>
 
-<h1>labels </h1>
+<pre><code>
+#labels {
+ text-name: &quot;[MY_FIELD]&quot;;
+}
 
-<p>text-name: &quot;<a href="">MY<em>FIELD</em></a>&quot;;</p>
+</code></pre>
 
-<p>}</p>
-
-<p><code></code><code></code></p>
-
-<h3>Boolean</h3>
+<h3>布尔型（Boolean）</h3>
 
 <p>Boolean means yes or no, so it accepts the values <code>true</code> or <code>false</code>.</p>
 
-<p><code></code><code>css</code></p>
+<p>布尔类型即是或否，取值为<code>true</code>或<code>false</code>。</p>
 
-<h1>markers </h1>
+<pre><code>
+#markers {
+ marker-allow-overlap:true;
+}
 
-<p>marker-allow-overlap:true;</p>
+</code></pre>
 
-<p>}</p>
-
-<p><code></code><code></code></p>
-
-<h3>Expressions</h3>
+<h3>表达式型（Expressions）</h3>
 
 <p>Expressions are statements that can include fields, numbers, and other types in a really flexible way. You have run into expressions before, in the realm of &#39;fields&#39;, where you&#39;d specify <code>&quot;[FIELD]&quot;</code>, but expressions allow you to drop the quotes and also do quick addition, division, multiplication, and concatenation from within Carto syntax.</p>
 
-<p><code></code><code>css</code></p>
+<p>表达式是一种语句，它可以将数据字段、数值以及其它类型灵活的组合起来。前面提到的<code>&quot;[FIELD]&quot;</code>形式包含了表达式。实际的表达式可以不用加引号就执行加、减、乘、除、连接等CartoCSS语法支持的操作。</p>
 
-<h1>buildings </h1>
+<pre><code>
+#buildings {
+ building-height: [HEIGHT_FIELD] * 10;
+}
 
-<p>building-height: <a href="">HEIGHT<em>FIELD</em></a> <em> 10;</em></p>
+</code></pre>
 
-<p>}</p>
-
-<p><code></code><code></code></p>
-
-<h3>Numbers</h3>
+<h3>数列型（Numbers）</h3>
 
 <p>Numbers are comma-separated lists of one or more number in a specific order. They&#39;re used in line dash arrays, in which the numbers specify intervals of line, break, and line again.</p>
 
-<p><code></code><code>css</code></p>
+<p>数列型是逗号分隔的一组有序数值。数列类型在用于配置虚线样式时，其中的数字交替表示的是实线段长度、间隔长度和实线段长度。</p>
 
-<h1>disputedboundary </h1>
+<pre><code>
+#disputedboundary {
+ line-dasharray: 1, 4, 2;
+}
 
-<p>line-dasharray: 1, 4, 2;</p>
+</code></pre>
 
-<p>}</p>
-
-<p><code></code><code></code></p>
-
-<h3>Percentages</h3>
+<h3>百分数型（Percentages）</h3>
 
 <p>In Carto, the percentage symbol, <code>%</code> universally means <code>value/100</code>. It&#39;s meant to be used with ratio-related properties, like opacity rules.</p>
 
+<p>在CartoCSS中，百分号<code>%</code>表示<code>值/100</code>。它可以用于表示比例的属性，例如透明度。</p>
+
 <p><em>You should not use percentages as widths, heights, or other properties - unlike CSS, percentages are not relative to cascaded classes or page size, they&#39;re, as stated, simply the value divided by one hundred.</em></p>
 
-<p><code></code><code>css</code></p>
+<p><em>注意，百分数不能用于定义宽度、高度等属性。这一点与CSS不同，因为在CartoCSS中没有CSS中层次化的页面要素和页宽。它们在这里只是除以100以后的值。</em></p>
 
-<h1>world </h1>
+<pre><code>
+#world {
+ // 这种表达方式与...
+ polygon-opacity: 50%;
 
-<p>// this syntax</p>
+ // ...这种方式效果一样
+ polygon-opacity: 0.5;
+}
 
-<p>polygon-opacity: 50%;</p>
+</code></pre>
 
-<p>// is equivalent to</p>
-
-<p>polygon-opacity: 0.5;</p>
-
-<p>}</p>
-
-<p><code></code><code></code></p>
-
-<h3>Functions</h3>
+<h3>函数型（Functions）</h3>
 
 <p>Functions are comma-separated lists of one or more functions. For instance, transforms use the <code>functions</code> type to allow for transforms within Carto, which are optionally chainable.</p>
 
-<p><code></code><code>css</code></p>
+<p>这种类型可以包含一组逗号分隔的函数。例如，各种变换都是用<code>functions</code>作为值类型，而且这些函数还可以串接起来（？）。</p>
 
-<h1>point </h1>
+<pre><code>
+#point {
+ point-transform: scale(2, 2);
+}
 
-<p>point-transform: scale(2, 2);</p>
-
-<p>}</p>
-
-<p><code></code><code></code></p>
+</code></pre>
 
 </body>
 </html>
