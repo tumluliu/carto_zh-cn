@@ -1,4 +1,4 @@
-# 概述
+# CartoCSS概述
 
 CartoCSS是一种语法类似CSS的制图样式描述语言。层叠样式表（Cascading Style Sheets，CSS）是一种对网页进行设计的样式语言。如果熟悉CSS的话，那么CartoCSS这种对地图进行样式设计的语言也会看起来不陌生，尽管二者所包含的要素、属性等内容和含义完全不同。
 
