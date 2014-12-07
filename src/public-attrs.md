@@ -1,8 +1,8 @@
-# CartoCSS语言参考
+# 2. CartoCSS语言参考
 
 CartoCSS提供了一系列用于定义地图样式的属性。本节给出这些属性的含义和所有可取的值。
 
-## 所有符号的公共属性
+## 2.1 所有符号的公共属性
 
 ##### image-filters `functions`
 
@@ -22,7 +22,7 @@ CartoCSS提供了一系列用于定义地图样式的属性。本节给出这些
 
 ##### comp-op `keyword`
 
-取值范围：`clear``src``dst``src-over``dst-over``src-in``dst-in``src-out``dst-out``src-atop``dst-atop``xor``plus``minus``multiply``screen``overlay``darken``lighten``color-dodge``color-burn``hard-light``soft-light``difference``exclusion``contrast``invert``invert-rgb``grain-merge``grain-extract``hue``saturation``color``value`
+取值范围：`clear` `src` `dst` `src-over` `dst-over` `src-in` `dst-in` `src-out` `dst-out` `src-atop` `dst-atop` `xor` `plus` `minus` `multiply` `screen` `overlay` `darken` `lighten` `color-dodge` `color-burn` `hard-light` `soft-light` `difference` `exclusion` `contrast` `invert` `invert-rgb` `grain-merge` `grain-extract` `hue` `saturation` `color` `value`
 
 默认值： src-over _(把当前图层覆盖在其它图层之上)_
 
