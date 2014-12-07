@@ -3,13 +3,13 @@
 	<head>
 		<meta charset="utf-8" />
 		<link rel="stylesheet" type="text/css" href="css/style.css" />
-		<title>1. CartoCSS概述</title>
+		<title>1. higis制图语言概述</title>
 	</head>
 <body>
 
-<h1>1. CartoCSS概述</h1>
+<h1>1. higis制图语言概述</h1>
 
-<p>CartoCSS是一种语法类似CSS（Cascading Style Sheets，层叠样式表，一种对网页进行设计的样式语言）的制图样式描述语言。如果熟悉CSS的话，那么CartoCSS这种对地图进行样式设计的语言也会看起来不陌生，尽管二者所包含的要素、属性等内容和含义完全不同。</p>
+<p>higis制图语言是一种语法类似CSS（Cascading Style Sheets，层叠样式表，一种对网页进行设计的样式语言）的制图样式描述语言。如果熟悉CSS的话，那么higis制图语言这种对地图进行样式设计的语言也会看起来不陌生，尽管二者所包含的要素、属性等内容和含义完全不同。</p>
 
 <h2>1.1 符号</h2>
 
@@ -116,9 +116,9 @@
 
 <p><em>图片来源：<a href="https://www.mapbox.com/tilemill/docs/manual/carto/">Mapbox</a></em></p>
 
-<h1>2. CartoCSS语言参考</h1>
+<h1>2. higis制图语言参考</h1>
 
-<p>CartoCSS提供了一系列用于定义地图样式的属性。本节给出这些属性的含义和所有可取的值。</p>
+<p>higis制图语言提供了一系列用于定义地图样式的属性。本节给出这些属性的含义和所有可取的值。</p>
 
 <h2>2.1 所有符号的公共属性</h2>
 
@@ -1226,11 +1226,11 @@
 
 <h2>2.14 关于取值类型的说明</h2>
 
-<p>这里列出了CartoCSS中所有属性的取值类型及其说明。</p>
+<p>这里列出了higis制图语言中所有属性的取值类型及其说明。</p>
 
 <h3>颜色型（Color）</h3>
 
-<p>CartoCSS可以使用一系列不同的方法表示颜色：HTML风格的16进制值，RGB值，RGBA值，HSL值或HSLA值都可以，还可以使用HTML预定义颜色名，像<code>yellow</code>、<code>blue</code>等。</p>
+<p>higis制图语言可以使用一系列不同的方法表示颜色：HTML风格的16进制值，RGB值，RGBA值，HSL值或HSLA值都可以，还可以使用HTML预定义颜色名，像<code>yellow</code>、<code>blue</code>等。</p>
 
 <pre><code>
 #line {
@@ -1245,7 +1245,7 @@
 
 </code></pre>
 
-<p>这里特别需要强调的是对HSL值的支持，这其实是比RGB值更易用的颜色表达方式（参见<a href="http://mothereffinghsl.com/">这里</a>）。CartoCSS中还支持几种颜色函数，这是从LESS中借用的概念（参见<a href="http://lesscss.org/#-color-functions">这里</a>），例子如下：</p>
+<p>这里特别需要强调的是对HSL值的支持，这其实是比RGB值更易用的颜色表达方式（参见<a href="http://mothereffinghsl.com/">这里</a>）。higis制图语言中还支持几种颜色函数，这是从LESS中借用的概念（参见<a href="http://lesscss.org/#-color-functions">这里</a>），例子如下：</p>
 
 <pre><code>
 // 把颜色调亮或调暗
@@ -1272,7 +1272,7 @@ mix(#fff, #000, 50%);
 
 <h3>浮点型（Float）</h3>
 
-<p>浮点数是数值类型的时髦说法。在CartoCSS中，这指的就是一个数值，没有单位，但其实所有的单位都是像素。</p>
+<p>浮点数是数值类型的时髦说法。在higis制图语言中，这指的就是一个数值，没有单位，但其实所有的单位都是像素。</p>
 
 <pre><code>
 #line {
@@ -1307,7 +1307,7 @@ mix(#fff, #000, 50%);
 
 <h3>字符串型（String）</h3>
 
-<p>字符串也就是文本类型。在CartoCSS中，字符串应该有引号包围。字符串可以是任意文本，但在<code>text-name</code>和<code>shield-name</code>属性中，可以使用中括号包围的数据字段名来表示。例如：</p>
+<p>字符串也就是文本类型。在higis制图语言中，字符串应该有引号包围。字符串可以是任意文本，但在<code>text-name</code>和<code>shield-name</code>属性中，可以使用中括号包围的数据字段名来表示。例如：</p>
 
 <pre><code>
 #labels {
@@ -1329,7 +1329,7 @@ mix(#fff, #000, 50%);
 
 <h3>表达式型（Expressions）</h3>
 
-<p>表达式是一种语句，它可以将数据字段、数值以及其它类型灵活的组合起来。前面提到的<code>&quot;[FIELD]&quot;</code>形式包含了表达式。实际的表达式可以不用加引号就执行加、减、乘、除、连接等CartoCSS语法支持的操作。</p>
+<p>表达式是一种语句，它可以将数据字段、数值以及其它类型灵活的组合起来。前面提到的<code>&quot;[FIELD]&quot;</code>形式包含了表达式。实际的表达式可以不用加引号就执行加、减、乘、除、连接等higis制图语言语法支持的操作。</p>
 
 <pre><code>
 #buildings {
@@ -1351,9 +1351,9 @@ mix(#fff, #000, 50%);
 
 <h3>百分数型（Percentages）</h3>
 
-<p>在CartoCSS中，百分号<code>%</code>表示<code>值/100</code>。它可以用于表示比例的属性，例如透明度。</p>
+<p>在higis制图语言中，百分号<code>%</code>表示<code>值/100</code>。它可以用于表示比例的属性，例如透明度。</p>
 
-<p><em>注意，百分数不能用于定义宽度、高度等属性。这一点与CSS不同，因为在CartoCSS中没有CSS中层次化的页面要素和页宽。它们在这里只是除以100以后的值。</em></p>
+<p><em>注意，百分数不能用于定义宽度、高度等属性。这一点与CSS不同，因为在higis制图语言中没有CSS中层次化的页面要素和页宽。它们在这里只是除以100以后的值。</em></p>
 
 <pre><code>
 #world {
