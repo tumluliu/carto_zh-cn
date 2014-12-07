@@ -11,7 +11,7 @@
 
 <p>CartoCSS是一种语法类似CSS（Cascading Style Sheets，层叠样式表，一种对网页进行设计的样式语言）的制图样式描述语言。如果熟悉CSS的话，那么CartoCSS这种对地图进行样式设计的语言也会看起来不陌生，尽管二者所包含的要素、属性等内容和含义完全不同。</p>
 
-<h2>符号</h2>
+<h2>1.1 符号</h2>
 
 <p>higis中的地图渲染引擎提供了一组基本样式，基于这些基本样式可以配制出复杂的地图样式。这些基本样式被称为<strong>符号</strong>，每种符号都包含一系列属性。</p>
 
@@ -43,7 +43,7 @@
 
 <p>一种符号只有在明确定义了它的样式之后才能被绘制在地图上。在每种符号的诸多属性中，除了显式赋值的属性以外，其它属性将全部被设置为默认值。例如，线符号中颜色属性的默认值为黑色，所以如果用户显式设置了线宽，那么图层中的线要素就将以用户设置的宽度被绘制成黑色。</p>
 
-<h2>多符号</h2>
+<h2>1.2 多符号</h2>
 
 <p>对一个图层来说，它的样式可以不局限于仅使用单一的某种符号来定制。举例来说，为了在多边形的边界上获得一种柔和的光晕或阴影效果，可以定义多个半透明线符号，共同发挥作用达到渲染效果。再举一例，对点要素，可以通过定义多个文本符号将若干个属性字段以不同偏移的形式标注在点要素的周围。</p>
 
@@ -120,7 +120,7 @@
 
 <p>CartoCSS提供了一系列用于定义地图样式的属性。本节给出这些属性的含义和所有可取的值。</p>
 
-<h2>所有符号的公共属性</h2>
+<h2>2.1 所有符号的公共属性</h2>
 
 <h5>image-filters <code>functions</code></h5>
 
@@ -128,37 +128,19 @@
 
 <p>说明：以函数形式提供的一组图像过滤器。图像过滤器会作用于处于活动状态的画布。如果设置了多个图像过滤器，那么每增加一个过滤器都会触发创建一个新的画布，当这个新的画布被渲染完成后，再通过合成的方式与主画布合并。如果要直接在主画布上应用图像过滤器，那么需要使用<code>direct-image-filters</code>属性。</p>
 
-<ul>
-	<li><ul>
-			<li><em></em></li>
-		</ul></li>
-</ul>
-
 <h5>direct-image-filters <code>functions</code></h5>
 
 <p>默认值： none <em>(不使用图像过滤器)</em></p>
 
 <p>说明：作用于主画布上的图像过滤器（参见<code>image-filters</code>）</p>
 
-<ul>
-	<li><ul>
-			<li><em></em></li>
-		</ul></li>
-</ul>
-
 <h5>comp-op <code>keyword</code></h5>
 
-<p>取值范围：<code>clear</code><code>src</code><code>dst</code><code>src-over</code><code>dst-over</code><code>src-in</code><code>dst-in</code><code>src-out</code><code>dst-out</code><code>src-atop</code><code>dst-atop</code><code>xor</code><code>plus</code><code>minus</code><code>multiply</code><code>screen</code><code>overlay</code><code>darken</code><code>lighten</code><code>color-dodge</code><code>color-burn</code><code>hard-light</code><code>soft-light</code><code>difference</code><code>exclusion</code><code>contrast</code><code>invert</code><code>invert-rgb</code><code>grain-merge</code><code>grain-extract</code><code>hue</code><code>saturation</code><code>color</code><code>value</code></p>
+<p>取值范围：<code>clear</code> <code>src</code> <code>dst</code> <code>src-over</code> <code>dst-over</code> <code>src-in</code> <code>dst-in</code> <code>src-out</code> <code>dst-out</code> <code>src-atop</code> <code>dst-atop</code> <code>xor</code> <code>plus</code> <code>minus</code> <code>multiply</code> <code>screen</code> <code>overlay</code> <code>darken</code> <code>lighten</code> <code>color-dodge</code> <code>color-burn</code> <code>hard-light</code> <code>soft-light</code> <code>difference</code> <code>exclusion</code> <code>contrast</code> <code>invert</code> <code>invert-rgb</code> <code>grain-merge</code> <code>grain-extract</code> <code>hue</code> <code>saturation</code> <code>color</code> <code>value</code></p>
 
 <p>默认值： src-over <em>(把当前图层覆盖在其它图层之上)</em></p>
 
 <p>说明：合成操作。该属性用于定义当前图层与其相邻图层如何合成。关于合成操作，请参见<a href="https://www.mapbox.com/mapbox-studio/compositing-reference/">图像合成（image compositing）技术</a>的相关内容。</p>
-
-<ul>
-	<li><ul>
-			<li><em></em></li>
-		</ul></li>
-</ul>
 
 <h5>opacity <code>float</code></h5>
 
@@ -168,13 +150,7 @@
 
 <p>说明：设置透明度。为样式设置alpha值（首先，创建一个独立的缓冲区，在这个缓冲区中为所有要素应用alpha实现透明化，然后再把这个独立缓冲区合成到主缓冲区中）</p>
 
-<ul>
-	<li><ul>
-			<li><em></em></li>
-		</ul></li>
-</ul>
-
-<h2>2.1 地图（map）的属性</h2>
+<h2>2.2 地图（map）的属性</h2>
 
 <p>与其它十种符号不同，本节列出的是用于配置地图整体样式的属性。</p>
 
@@ -184,37 +160,19 @@
 
 <p>说明：设置地图的背景颜色。</p>
 
-<ul>
-	<li><ul>
-			<li><em></em></li>
-		</ul></li>
-</ul>
-
 <h5>background-image <code>uri</code></h5>
 
 <p>默认值：<em>(透明色)</em></p>
 
 <p>说明：设置一张以平铺形式置于最底层的背景图片。</p>
 
-<ul>
-	<li><ul>
-			<li><em></em></li>
-		</ul></li>
-</ul>
-
 <h5>background-image-comp-op <code>keyword</code></h5>
 
-<p>取值范围：<code>clear</code><code>src</code><code>dst</code><code>src-over</code><code>dst-over</code><code>src-in</code><code>dst-in</code><code>src-out</code><code>dst-out</code><code>src-atop</code><code>dst-atop</code><code>xor</code><code>plus</code><code>minus</code><code>multiply</code><code>screen</code><code>overlay</code><code>darken</code><code>lighten</code><code>color-dodge</code><code>color-burn</code><code>hard-light</code><code>soft-light</code><code>difference</code><code>exclusion</code><code>contrast</code><code>invert</code><code>invert-rgb</code><code>grain-merge</code><code>grain-extract</code><code>hue</code><code>saturation</code><code>color</code><code>value</code></p>
+<p>取值范围：<code>clear</code> <code>src</code> <code>dst</code> <code>src-over</code> <code>dst-over</code> <code>src-in</code> <code>dst-in</code> <code>src-out</code> <code>dst-out</code> <code>src-atop</code> <code>dst-atop</code> <code>xor</code> <code>plus</code> <code>minus</code> <code>multiply</code> <code>screen</code> <code>overlay</code> <code>darken</code> <code>lighten</code> <code>color-dodge</code> <code>color-burn</code> <code>hard-light</code> <code>soft-light</code> <code>difference</code> <code>exclusion</code> <code>contrast</code> <code>invert</code> <code>invert-rgb</code> <code>grain-merge</code> <code>grain-extract</code> <code>hue</code> <code>saturation</code> <code>color</code> <code>value</code></p>
 
 <p>默认值： src-over <em>(背景图片被置于所设置的背景色上一层)</em></p>
 
 <p>说明：设置背景图片与背景颜色之间的合成操作方式。</p>
-
-<ul>
-	<li><ul>
-			<li><em></em></li>
-		</ul></li>
-</ul>
 
 <h5>background-image-opacity <code>float</code></h5>
 
@@ -222,25 +180,11 @@
 
 <p>说明：设置背景图片的透明度。</p>
 
-<ul>
-	<li><ul>
-			<li><em></em></li>
-		</ul></li>
-</ul>
-
 <h5>srs <code>string</code></h5>
 
-<p>默认值： +proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs</p>
-
-<p><em>(这是EPSG:4326空间参考系的proj4表达形式。地图中所有图层的数据都会采用这同一种参考系来绘制。如果地图中的某一图层没有显式声明自己所使用的参考系，那么这个图层将被认为与地图的参考系相同，并且在绘制的时候不会对这个图层中包含的数据进行座标变换。)</em></p>
+<p>默认值： +proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs <em>(这是EPSG:4326空间参考系的proj4表达形式。地图中所有图层的数据都会采用这同一种参考系来绘制。如果地图中的某一图层没有显式声明自己所使用的参考系，那么这个图层将被认为与地图的参考系相同，并且在绘制的时候不会对这个图层中包含的数据进行座标变换。)</em></p>
 
 <p>说明：设置地图的空间参考系（以proj4字符串表达）。</p>
-
-<ul>
-	<li><ul>
-			<li><em></em></li>
-		</ul></li>
-</ul>
 
 <h5>buffer-size <code>float</code></h5>
 
@@ -248,41 +192,19 @@
 
 <p>说明：在地图周围增加一圈额外的绘制区域（以像素数表达）。这个属性的设置是为了保证那些出现在地图边界附近的文本标注不至于在渲染时被截断。注意这个属性不应该与<code>avoid-edges</code>同时使用。</p>
 
-<ul>
-	<li><ul>
-			<li><em></em></li>
-		</ul></li>
-</ul>
-
 <h5>base <code>string</code></h5>
 
-<p>默认值： </p>
-
-<p><em>(工作路径默认为空。此时在样式定义中所有通过相对路径的方式引用的外部资源文件都会以应用程序所在的路径为父目录去寻址。)</em></p>
+<p>默认值： <em>(工作路径默认为空。此时在样式定义中所有通过相对路径的方式引用的外部资源文件都会以应用程序所在的路径为父目录去寻址。)</em></p>
 
 <p>说明：如果map是从内存中加载的，那么所有以相对路径方式引用的外部资源则均为相对于由该base属性定义的路径。如果map是从文件系统中加载的，并且这个base属性没有被显式设置，那么base的值就是样式文件所在的目录。</p>
 
-<ul>
-	<li><ul>
-			<li><em></em></li>
-		</ul></li>
-</ul>
-
 <h5>font-directory <code>uri</code></h5>
 
-<p>默认值： none</p>
-
-<p><em>(不注册专门用于当前map的字体)</em></p>
+<p>默认值： none <em>(不注册专门用于当前map的字体)</em></p>
 
 <p>说明：指定专门用于当前map的字体目录（自动加载的默认字体除外）</p>
 
-<ul>
-	<li><ul>
-			<li><em></em></li>
-		</ul></li>
-</ul>
-
-<h2>2.2 线符号（line）的属性</h2>
+<h2>2.3 线符号（line）的属性</h2>
 
 <h5>line-color <code>color</code></h5>
 
@@ -290,23 +212,11 @@
 
 <p>说明：设置线要素的线条颜色。</p>
 
-<ul>
-	<li><ul>
-			<li><em></em></li>
-		</ul></li>
-</ul>
-
 <h5>line-width <code>float</code></h5>
 
 <p>默认值： 1</p>
 
 <p>说明：设置线要素的线条宽度，单位为像素。</p>
-
-<ul>
-	<li><ul>
-			<li><em></em></li>
-		</ul></li>
-</ul>
 
 <h5>line-opacity <code>float</code></h5>
 
@@ -314,15 +224,9 @@
 
 <p>说明：设置线要素的透明度。</p>
 
-<ul>
-	<li><ul>
-			<li><em></em></li>
-		</ul></li>
-</ul>
-
 <h5>line-join <code>keyword</code></h5>
 
-<p>取值范围：<code>miter</code><code>round</code><code>bevel</code></p>
+<p>取值范围：<code>miter</code> <code>round</code> <code>bevel</code></p>
 
 <p>默认值： miter</p>
 
@@ -332,25 +236,13 @@
 
 <p><em>图片来源：<a href="http://www.w3.org/TR/SVG/painting.html" title="line join">w3.org</a></em></p>
 
-<ul>
-	<li><ul>
-			<li><em></em></li>
-		</ul></li>
-</ul>
-
 <h5>line-cap <code>keyword</code></h5>
 
-<p>取值范围：<code>butt</code><code>round</code><code>square</code></p>
+<p>取值范围：<code>butt</code> <code>round</code> <code>square</code></p>
 
 <p>默认值： butt</p>
 
 <p>说明：设置线要素的端点形状。</p>
-
-<ul>
-	<li><ul>
-			<li><em></em></li>
-		</ul></li>
-</ul>
 
 <h5>line-gamma <code>float</code></h5>
 
@@ -360,25 +252,13 @@
 
 <p>说明：设置绘制线要素时的抗锯齿级别。</p>
 
-<ul>
-	<li><ul>
-			<li><em></em></li>
-		</ul></li>
-</ul>
-
 <h5>line-gamma-method <code>keyword</code></h5>
 
-<p>取值范围：<code>power</code><code>linear</code><code>none</code><code>threshold</code><code>multiply</code></p>
+<p>取值范围：<code>power</code> <code>linear</code> <code>none</code> <code>threshold</code> <code>multiply</code></p>
 
 <p>默认值： power <em>(使用pow(x, gamma)来计算像素gamma值。与linear相比，应用power值绘制出来的线与面要素更加平滑。而其它的取值通常只是用来关闭抗锯齿。)</em></p>
 
 <p>说明：设置抗锯齿的具体算法，控制绘制质量。</p>
-
-<ul>
-	<li><ul>
-			<li><em></em></li>
-		</ul></li>
-</ul>
 
 <h5>line-dasharray <code>numbers</code></h5>
 
@@ -386,23 +266,11 @@
 
 <p>说明：通过设置[a,b]的值设置虚线样式。其中a为虚线段的长度，b为虚线段间隔的长度。此外，还可以设置更多的值，从而获得更加复杂的绘制效果。</p>
 
-<ul>
-	<li><ul>
-			<li><em></em></li>
-		</ul></li>
-</ul>
-
 <h5>line-miterlimit <code>float</code></h5>
 
 <p>默认值： 4 <em>(当theta角小于29度时，自动将线要素交汇样式从miter改为bevel)</em></p>
 
 <p>说明：设置线端的切角长度与线宽的比例上限。当线要素交汇处出现尖锐的锐角时，由于切角与线宽比例失调会导致错误的绘制结果。设置了该属性则会在出现上述情况时自动将线要素交汇样式从miter改为bevel。一般情况下，这个属性不需要显式设置，但有时可以通过设定一个较大的值可以避免出现参差不齐的不良绘制效果。</p>
-
-<ul>
-	<li><ul>
-			<li><em></em></li>
-		</ul></li>
-</ul>
 
 <h5>line-clip <code>boolean</code></h5>
 
@@ -410,37 +278,19 @@
 
 <p>说明：为了提高绘制效率，可以先将矢量要素中所有超出地图边界的部分切掉，再进行绘制。但在某些情况下，为了防止出现绘制错误，也可以通过将该值设为false而不采用这个策略。</p>
 
-<ul>
-	<li><ul>
-			<li><em></em></li>
-		</ul></li>
-</ul>
-
 <h5>line-simplify <code>float</code></h5>
 
 <p>默认值： 0 <em>(不对几何要素进行简化)</em></p>
 
 <p>说明：如果要对几何要素按照地图综合的方法进行简化，那么通过该属性来设定阈值。</p>
 
-<ul>
-	<li><ul>
-			<li><em></em></li>
-		</ul></li>
-</ul>
-
 <h5>line-simplify-algorithm <code>keyword</code></h5>
 
-<p>取值范围：<code>radial-distance</code><code>zhao-saalfeld</code><code>visvalingam-whyatt</code></p>
+<p>取值范围：<code>radial-distance</code> <code>zhao-saalfeld</code> <code>visvalingam-whyatt</code></p>
 
 <p>默认值： radial-distance <em>(不使用radial-distance算法进行简化)</em></p>
 
 <p>说明：设置对线要素进行综合的简化算法。</p>
-
-<ul>
-	<li><ul>
-			<li><em></em></li>
-		</ul></li>
-</ul>
 
 <h5>line-smooth <code>float</code></h5>
 
@@ -450,37 +300,19 @@
 
 <p>说明：对线的拐点进行平滑处理。0表示不进行平滑，1表示完全平滑。如果取值大于1，会导致绘制的几何要素扭曲变形。</p>
 
-<ul>
-	<li><ul>
-			<li><em></em></li>
-		</ul></li>
-</ul>
-
 <h5>line-offset <code>float</code></h5>
 
 <p>默认值： 0 <em>(无偏移)</em></p>
 
 <p>说明：将线要素相对于其原有位置向左（沿着线的走向）或向右偏移一定量的像素绘制。正值表示左偏，负值表示右偏。</p>
 
-<ul>
-	<li><ul>
-			<li><em></em></li>
-		</ul></li>
-</ul>
-
 <h5>line-rasterizer <code>keyword</code></h5>
 
-<p>取值范围：<code>full</code><code>fast</code></p>
+<p>取值范围：<code>full</code> <code>fast</code></p>
 
 <p>默认值： full</p>
 
 <p>说明：设置线渲染方式，可以通过牺牲部分精确度以换取绘制速度。</p>
-
-<ul>
-	<li><ul>
-			<li><em></em></li>
-		</ul></li>
-</ul>
 
 <h5>line-geometry-transform <code>functions</code></h5>
 
@@ -488,27 +320,15 @@
 
 <p>说明：为几何要素定义变换函数。</p>
 
-<ul>
-	<li><ul>
-			<li><em></em></li>
-		</ul></li>
-</ul>
-
 <h5>line-comp-op <code>keyword</code></h5>
 
-<p>取值范围：<code>clear</code><code>src</code><code>dst</code><code>src-over</code><code>dst-over</code><code>src-in</code><code>dst-in</code><code>src-out</code><code>dst-out</code><code>src-atop</code><code>dst-atop</code><code>xor</code><code>plus</code><code>minus</code><code>multiply</code><code>screen</code><code>overlay</code><code>darken</code><code>lighten</code><code>color-dodge</code><code>color-burn</code><code>hard-light</code><code>soft-light</code><code>difference</code><code>exclusion</code><code>contrast</code><code>invert</code><code>invert-rgb</code><code>grain-merge</code><code>grain-extract</code><code>hue</code><code>saturation</code><code>color</code><code>value</code></p>
+<p>取值范围：<code>clear</code> <code>src</code> <code>dst</code> <code>src-over</code> <code>dst-over</code> <code>src-in</code> <code>dst-in</code> <code>src-out</code> <code>dst-out</code> <code>src-atop</code> <code>dst-atop</code> <code>xor</code> <code>plus</code> <code>minus</code> <code>multiply</code> <code>screen</code> <code>overlay</code> <code>darken</code> <code>lighten</code> <code>color-dodge</code> <code>color-burn</code> <code>hard-light</code> <code>soft-light</code> <code>difference</code> <code>exclusion</code> <code>contrast</code> <code>invert</code> <code>invert-rgb</code> <code>grain-merge</code> <code>grain-extract</code> <code>hue</code> <code>saturation</code> <code>color</code> <code>value</code></p>
 
 <p>默认值： src-over <em>(将当前符号置于其它符号的上一层)</em></p>
 
 <p>说明：这也是一个合成操作。它定义了当前的符号应该如何与其相邻图层进行合成。</p>
 
-<ul>
-	<li><ul>
-			<li><em></em></li>
-		</ul></li>
-</ul>
-
-<h2>2.3 面符号（polygon）的属性</h2>
+<h2>2.4 面符号（polygon）的属性</h2>
 
 <h5>polygon-fill <code>color</code></h5>
 
@@ -516,23 +336,11 @@
 
 <p>说明：设置面要素的填充色</p>
 
-<ul>
-	<li><ul>
-			<li><em></em></li>
-		</ul></li>
-</ul>
-
 <h5>polygon-opacity <code>float</code></h5>
 
 <p>默认值： 1 <em>(不透明)</em></p>
 
 <p>说明：面要素的透明度（0为完全透明，1为完全不透明）</p>
-
-<ul>
-	<li><ul>
-			<li><em></em></li>
-		</ul></li>
-</ul>
 
 <h5>polygon-gamma <code>float</code></h5>
 
@@ -542,25 +350,13 @@
 
 <p>说明：设置面要素边缘的抗锯齿级别，影响绘制效果和速度。抗锯齿级别越高（最高为1），绘制效果越好，但绘制速度最慢；反之，绘制效果最差，但绘制速度最快。注意这里所说的绘制速度的快慢只是理论上的，实际效果与软硬件环境密切相关。</p>
 
-<ul>
-	<li><ul>
-			<li><em></em></li>
-		</ul></li>
-</ul>
-
 <h5>polygon-gamma-method <code>keyword</code></h5>
 
-<p>取值范围：<code>power</code><code>linear</code><code>none</code><code>threshold</code><code>multiply</code></p>
+<p>取值范围：<code>power</code> <code>linear</code> <code>none</code> <code>threshold</code> <code>multiply</code></p>
 
 <p>默认值： power <em>(使用pow(x, gamma)来计算像素gamma值。与linear相比，应用power值绘制出来的线与面要素更加平滑。而其它的取值通常只是用来关闭抗锯齿。)</em></p>
 
 <p>说明：设置抗锯齿的具体算法，控制绘制质量。</p>
-
-<ul>
-	<li><ul>
-			<li><em></em></li>
-		</ul></li>
-</ul>
 
 <h5>polygon-clip <code>boolean</code></h5>
 
@@ -568,37 +364,19 @@
 
 <p>说明：为了提高绘制效率，可以先将矢量要素中所有超出地图边界的部分切掉，再进行绘制。但在某些情况下，为了防止出现绘制错误，也可以通过将该值设为false而不采用这个策略。</p>
 
-<ul>
-	<li><ul>
-			<li><em></em></li>
-		</ul></li>
-</ul>
-
 <h5>polygon-simplify <code>float</code></h5>
 
 <p>默认值： 0 <em>(不对面要素的边线进行简化)</em></p>
 
 <p>说明：如果要对面要素的边线按照地图综合的方法进行简化，那么通过该属性来设定阈值。（参见地图综合中的线简化算法，如Douglas-Peuker算法）</p>
 
-<ul>
-	<li><ul>
-			<li><em></em></li>
-		</ul></li>
-</ul>
-
 <h5>polygon-simplify-algorithm <code>keyword</code></h5>
 
-<p>取值范围：<code>radial-distance</code><code>zhao-saalfeld</code><code>visvalingam-whyatt</code></p>
+<p>取值范围：<code>radial-distance</code> <code>zhao-saalfeld</code> <code>visvalingam-whyatt</code></p>
 
 <p>默认值： radial-distance <em>(不使用radial-distance算法进行简化)</em></p>
 
 <p>说明：设置对面要素的边线进行综合的简化算法。</p>
-
-<ul>
-	<li><ul>
-			<li><em></em></li>
-		</ul></li>
-</ul>
 
 <h5>polygon-smooth <code>float</code></h5>
 
@@ -608,39 +386,21 @@
 
 <p>说明：对边线的拐点进行平滑处理。0表示不进行平滑，1表示完全平滑。如果取值大于1，会导致绘制的几何要素扭曲变形。</p>
 
-<ul>
-	<li><ul>
-			<li><em></em></li>
-		</ul></li>
-</ul>
-
 <h5>polygon-geometry-transform <code>functions</code></h5>
 
 <p>默认值： none <em>(不对几何要素进行变换)</em></p>
 
 <p>说明：为几何要素定义变换函数。</p>
 
-<ul>
-	<li><ul>
-			<li><em></em></li>
-		</ul></li>
-</ul>
-
 <h5>polygon-comp-op <code>keyword</code></h5>
 
-<p>取值范围：<code>clear</code><code>src</code><code>dst</code><code>src-over</code><code>dst-over</code><code>src-in</code><code>dst-in</code><code>src-out</code><code>dst-out</code><code>src-atop</code><code>dst-atop</code><code>xor</code><code>plus</code><code>minus</code><code>multiply</code><code>screen</code><code>overlay</code><code>darken</code><code>lighten</code><code>color-dodge</code><code>color-burn</code><code>hard-light</code><code>soft-light</code><code>difference</code><code>exclusion</code><code>contrast</code><code>invert</code><code>invert-rgb</code><code>grain-merge</code><code>grain-extract</code><code>hue</code><code>saturation</code><code>color</code><code>value</code></p>
+<p>取值范围：<code>clear</code> <code>src</code> <code>dst</code> <code>src-over</code> <code>dst-over</code> <code>src-in</code> <code>dst-in</code> <code>src-out</code> <code>dst-out</code> <code>src-atop</code> <code>dst-atop</code> <code>xor</code> <code>plus</code> <code>minus</code> <code>multiply</code> <code>screen</code> <code>overlay</code> <code>darken</code> <code>lighten</code> <code>color-dodge</code> <code>color-burn</code> <code>hard-light</code> <code>soft-light</code> <code>difference</code> <code>exclusion</code> <code>contrast</code> <code>invert</code> <code>invert-rgb</code> <code>grain-merge</code> <code>grain-extract</code> <code>hue</code> <code>saturation</code> <code>color</code> <code>value</code></p>
 
 <p>默认值： src-over <em>(将当前符号置于其它符号的上一层)</em></p>
 
 <p>说明：这也是一个合成操作。它定义了当前的符号应该如何与其相邻图层进行合成。</p>
 
-<ul>
-	<li><ul>
-			<li><em></em></li>
-		</ul></li>
-</ul>
-
-<h2>2.4 点符号（point）的属性</h2>
+<h2>2.5 点符号（point）的属性</h2>
 
 <h5>point-file <code>uri</code></h5>
 
@@ -648,35 +408,17 @@
 
 <p>说明：设置用于绘制点符号的图像文件。</p>
 
-<ul>
-	<li><ul>
-			<li><em></em></li>
-		</ul></li>
-</ul>
-
 <h5>point-allow-overlap <code>boolean</code></h5>
 
 <p>默认值： false <em>(不允许点符号相互压盖)</em></p>
 
 <p>说明：设置是否显式相互压盖的点符号。</p>
 
-<ul>
-	<li><ul>
-			<li><em></em></li>
-		</ul></li>
-</ul>
-
 <h5>point-ignore-placement <code>boolean</code></h5>
 
 <p>默认值： false <em>(不在冲突检测器的缓存中存储几何形状的外包框)</em></p>
 
 <p>说明：设置是否允许在与当前要素重叠的位置放置其它要素。</p>
-
-<ul>
-	<li><ul>
-			<li><em></em></li>
-		</ul></li>
-</ul>
 
 <h5>point-opacity <code>float</code></h5>
 
@@ -686,25 +428,13 @@
 
 <p>说明：设置点符号的透明度。</p>
 
-<ul>
-	<li><ul>
-			<li><em></em></li>
-		</ul></li>
-</ul>
-
 <h5>point-placement <code>keyword</code></h5>
 
-<p>取值范围：<code>centroid</code><code>interior</code></p>
+<p>取值范围：<code>centroid</code> <code>interior</code></p>
 
 <p>默认值： centroid</p>
 
 <p>说明：设置点符号的放置方式。</p>
-
-<ul>
-	<li><ul>
-			<li><em></em></li>
-		</ul></li>
-</ul>
 
 <h5>point-transform <code>functions</code></h5>
 
@@ -712,27 +442,15 @@
 
 <p>说明：设置SVG图形的变换方法。</p>
 
-<ul>
-	<li><ul>
-			<li><em></em></li>
-		</ul></li>
-</ul>
-
 <h5>point-comp-op <code>keyword</code></h5>
 
-<p>取值范围：<code>clear</code><code>src</code><code>dst</code><code>src-over</code><code>dst-over</code><code>src-in</code><code>dst-in</code><code>src-out</code><code>dst-out</code><code>src-atop</code><code>dst-atop</code><code>xor</code><code>plus</code><code>minus</code><code>multiply</code><code>screen</code><code>overlay</code><code>darken</code><code>lighten</code><code>color-dodge</code><code>color-burn</code><code>hard-light</code><code>soft-light</code><code>difference</code><code>exclusion</code><code>contrast</code><code>invert</code><code>invert-rgb</code><code>grain-merge</code><code>grain-extract</code><code>hue</code><code>saturation</code><code>color</code><code>value</code></p>
+<p>取值范围：<code>clear</code> <code>src</code> <code>dst</code> <code>src-over</code> <code>dst-over</code> <code>src-in</code> <code>dst-in</code> <code>src-out</code> <code>dst-out</code> <code>src-atop</code> <code>dst-atop</code> <code>xor</code> <code>plus</code> <code>minus</code> <code>multiply</code> <code>screen</code> <code>overlay</code> <code>darken</code> <code>lighten</code> <code>color-dodge</code> <code>color-burn</code> <code>hard-light</code> <code>soft-light</code> <code>difference</code> <code>exclusion</code> <code>contrast</code> <code>invert</code> <code>invert-rgb</code> <code>grain-merge</code> <code>grain-extract</code> <code>hue</code> <code>saturation</code> <code>color</code> <code>value</code></p>
 
 <p>默认值： src-over <em>(将当前符号置于其它符号的上一层)</em></p>
 
 <p>说明：这也是一个合成操作。它定义了当前的符号应该如何与其相邻图层进行合成。</p>
 
-<ul>
-	<li><ul>
-			<li><em></em></li>
-		</ul></li>
-</ul>
-
-<h2>2.5 文本符号（text）的属性</h2>
+<h2>2.6 文本符号（text）的属性</h2>
 
 <h5>text-name <code>expression</code></h5>
 
@@ -740,23 +458,11 @@
 
 <p>说明：设置文本符号上显示的文字。可以通过用中括号括起来的字段名来指定要使用的数据字段，例如[column_name]。</p>
 
-<ul>
-	<li><ul>
-			<li><em></em></li>
-		</ul></li>
-</ul>
-
 <h5>text-face-name <code>string</code></h5>
 
 <p>默认值： undefined</p>
 
 <p>说明：设置文本符号所使用的字体。</p>
-
-<ul>
-	<li><ul>
-			<li><em></em></li>
-		</ul></li>
-</ul>
 
 <h5>text-size <code>float</code></h5>
 
@@ -764,23 +470,11 @@
 
 <p>说明：设置文本符号中文字的字号，以像素为单位。</p>
 
-<ul>
-	<li><ul>
-			<li><em></em></li>
-		</ul></li>
-</ul>
-
 <h5>text-ratio <code>unsigned</code></h5>
 
 <p>默认值： 0</p>
 
 <p>说明：设置折行后的文本所占比例。</p>
-
-<ul>
-	<li><ul>
-			<li><em></em></li>
-		</ul></li>
-</ul>
 
 <h5>text-wrap-width <code>unsigned</code></h5>
 
@@ -788,23 +482,11 @@
 
 <p>说明：设置文本块在多长的时候进行折行，以字符为单位。</p>
 
-<ul>
-	<li><ul>
-			<li><em></em></li>
-		</ul></li>
-</ul>
-
 <h5>text-wrap-before <code>boolean</code></h5>
 
 <p>默认值： false</p>
 
 <p>说明：控制文本文字的折行动作。如果该值为false，那么每一行文本都会比wrap-width属性设定的值略长。</p>
-
-<ul>
-	<li><ul>
-			<li><em></em></li>
-		</ul></li>
-</ul>
 
 <h5>text-wrap-character <code>string</code></h5>
 
@@ -812,24 +494,11 @@
 
 <p>说明：设置盾标文本的折行字符。</p>
 
-<ul>
-	<li><ul>
-			<li><em>
-				</em></li>
-		</ul></li>
-</ul>
-
 <h5>text-spacing <code>unsigned</code></h5>
 
 <p>默认值： undefined</p>
 
 <p>说明：设置沿线绘制文本符号时每两个文本符号之间的间距。</p>
-
-<ul>
-	<li><ul>
-			<li><em></em></li>
-		</ul></li>
-</ul>
 
 <h5>text-character-spacing <code>float</code></h5>
 
@@ -837,25 +506,11 @@
 
 <p>说明：设置文本文字的字间距，以像素为单位。</p>
 
-<ul>
-	<li><ul>
-			<li><em>
-				</em></li>
-		</ul></li>
-</ul>
-
 <h5>text-line-spacing <code>unsigned</code></h5>
 
 <p>默认值： 0</p>
 
 <p>说明：设置文本文字的行间距。</p>
-
-<ul>
-	<li><ul>
-			<li><em>
-				</em></li>
-		</ul></li>
-</ul>
 
 <h5>text-label-position-tolerance <code>unsigned</code></h5>
 
@@ -863,35 +518,17 @@
 
 <p>说明：设置文本标注相对于其理想位置的偏移量，以像素为单位（目前仅适用于线要素）</p>
 
-<ul>
-	<li><ul>
-			<li><em></em></li>
-		</ul></li>
-</ul>
-
 <h5>text-max-char-angle-delta <code>float</code></h5>
 
 <p>默认值： 22.5</p>
 
 <p>说明：设置文本文字的最大折转角，以十进制角度为单位。这个值会在绘制时被换算成弧度，例如默认的22.5度会按照22.5/math.pi*180.0公式被换算成0.3925弧度。这个值越大，则被绘制在尖锐转角处的文本符号会越少。</p>
 
-<ul>
-	<li><ul>
-			<li><em></em></li>
-		</ul></li>
-</ul>
-
 <h5>text-fill <code>color</code></h5>
 
 <p>默认值： #000000 <em>(黑色)</em></p>
 
 <p>说明：设置文本文字的颜色。</p>
-
-<ul>
-	<li><ul>
-			<li><em></em></li>
-		</ul></li>
-</ul>
 
 <h5>text-opacity <code>float</code></h5>
 
@@ -901,23 +538,11 @@
 
 <p>说明：设置文本文字的透明度，取值范围为0到1。</p>
 
-<ul>
-	<li><ul>
-			<li><em></em></li>
-		</ul></li>
-</ul>
-
 <h5>text-halo-fill <code>color</code></h5>
 
 <p>默认值： #FFFFFF <em>(白色)</em></p>
 
 <p>说明：设置文本文字边缘的光晕颜色。</p>
-
-<ul>
-	<li><ul>
-			<li><em></em></li>
-		</ul></li>
-</ul>
 
 <h5>text-halo-radius <code>float</code></h5>
 
@@ -925,26 +550,13 @@
 
 <p>说明：设置文本文字边缘的光晕大小，以像素为单位。</p>
 
-<ul>
-	<li><ul>
-			<li><em>
-				</em></li>
-		</ul></li>
-</ul>
-
 <h5>text-halo-rasterizer <code>keyword</code></h5>
 
-<p>取值范围：<code>full</code><code>fast</code></p>
+<p>取值范围：<code>full</code> <code>fast</code></p>
 
 <p>默认值： full</p>
 
 <p>说明：设置用于渲染文字光晕的方法，速度优先还是质量优先。</p>
-
-<ul>
-	<li><ul>
-			<li><em></em></li>
-		</ul></li>
-</ul>
 
 <h5>text-dx <code>float</code></h5>
 
@@ -952,39 +564,19 @@
 
 <p>说明：设置文本文字的水平偏移量，以像素为单位。正值表示向右偏移。</p>
 
-<ul>
-	<li><ul>
-			<li><em></em></li>
-		</ul></li>
-</ul>
-
 <h5>text-dy <code>float</code></h5>
 
 <p>默认值： 0</p>
 
 <p>说明：设置文本文字的垂直偏移量，以像素为单位。正值表示向下偏移。</p>
 
-<ul>
-	<li><ul>
-			<li><em>
-				</em></li>
-		</ul></li>
-</ul>
-
 <h5>text-vertical-alignment <code>keyword</code></h5>
 
-<p>取值范围：<code>top</code><code>middle</code><code>bottom</code><code>auto</code></p>
+<p>取值范围：<code>top</code> <code>middle</code> <code>bottom</code> <code>auto</code></p>
 
 <p>默认值： auto <em>(自动，但受到dy值的影响。当dy&gt;0时，取bottom；而当dy&lt;0时，取top)</em></p>
 
 <p>说明：设置文本符号相对于点要素座标的位置。</p>
-
-<ul>
-	<li><ul>
-			<li><em>
-				</em></li>
-		</ul></li>
-</ul>
 
 <h5>text-avoid-edges <code>boolean</code></h5>
 
@@ -992,23 +584,11 @@
 
 <p>说明：设置是否避免将文本标注置于绘制区域（通常为瓦片）的边缘处。</p>
 
-<ul>
-	<li><ul>
-			<li><em></em></li>
-		</ul></li>
-</ul>
-
 <h5>text-min-distance <code>float</code></h5>
 
 <p>默认值： undefined</p>
 
 <p>说明：设置文本符号之间的最小间距。</p>
-
-<ul>
-	<li><ul>
-			<li><em></em></li>
-		</ul></li>
-</ul>
 
 <h5>text-min-padding <code>float</code></h5>
 
@@ -1016,23 +596,11 @@
 
 <p>说明：设置文本符号在元瓦片中的最小边距。</p>
 
-<ul>
-	<li><ul>
-			<li><em></em></li>
-		</ul></li>
-</ul>
-
 <h5>text-min-path-length <code>float</code></h5>
 
 <p>默认值： 0 <em>(无论路线长度是多少，都要绘制文本符号)</em></p>
 
 <p>说明：如果设置了该值，那么只有在当路线长度大于该值的时候才绘制文本符号。</p>
-
-<ul>
-	<li><ul>
-			<li><em></em></li>
-		</ul></li>
-</ul>
 
 <h5>text-allow-overlap <code>boolean</code></h5>
 
@@ -1040,52 +608,27 @@
 
 <p>说明：设置是否显式相互压盖的文本符号。</p>
 
-<ul>
-	<li><ul>
-			<li><em></em></li>
-		</ul></li>
-</ul>
-
 <h5>text-orientation <code>expression</code></h5>
 
 <p>默认值： undefined</p>
 
 <p>说明：设置文本旋转。</p>
 
-<ul>
-	<li><ul>
-			<li><em>
-				</em></li>
-		</ul></li>
-</ul>
-
 <h5>text-placement <code>keyword</code></h5>
 
-<p>取值范围：<code>point</code><code>line</code><code>vertex</code><code>interior</code></p>
+<p>取值范围：<code>point</code> <code>line</code> <code>vertex</code> <code>interior</code></p>
 
 <p>默认值： point</p>
 
 <p>说明：设置文本符号在对应几何要素上的放置方式。</p>
 
-<ul>
-	<li><ul>
-			<li><em></em></li>
-		</ul></li>
-</ul>
-
 <h5>text-placement-type <code>keyword</code></h5>
 
-<p>取值范围：<code>dummy</code><code>simple</code></p>
+<p>取值范围：<code>dummy</code> <code>simple</code></p>
 
 <p>默认值： dummy</p>
 
 <p>说明：设置文本符号之间相互避让的算法。simple表示使用由text-placements属性指定的基本算法。而dummy则表示不使用该特性。</p>
-
-<ul>
-	<li><ul>
-			<li><em></em></li>
-		</ul></li>
-</ul>
 
 <h5>text-placements <code>string</code></h5>
 
@@ -1093,54 +636,29 @@
 
 <p>说明：如果placement-type属性被设置为simple，那么就会依据该属性的值（即形如“POSITIONS, [SIZES]”的字符串）执行文本符号相互避让算法。例如：<code>text-placements: &quot;E,NE,SE,W,NW,SW&quot;;</code></p>
 
-<ul>
-	<li><ul>
-			<li><em></em></li>
-		</ul></li>
-</ul>
-
 <h5>text-transform <code>keyword</code></h5>
 
-<p>取值范围：<code>none</code><code>uppercase</code><code>lowercase</code><code>capitalize</code></p>
+<p>取值范围：<code>none</code> <code>uppercase</code> <code>lowercase</code> <code>capitalize</code></p>
 
 <p>默认值： none</p>
 
 <p>说明：设置是否对文本字符进行大小写转换。</p>
 
-<ul>
-	<li><ul>
-			<li><em></em></li>
-		</ul></li>
-</ul>
-
 <h5>text-horizontal-alignment <code>keyword</code></h5>
 
-<p>取值范围：<code>left</code><code>middle</code><code>right</code><code>auto</code></p>
+<p>取值范围：<code>left</code> <code>middle</code> <code>right</code> <code>auto</code></p>
 
 <p>默认值： auto</p>
 
 <p>说明：设置文本文字的水平对齐方式。</p>
 
-<ul>
-	<li><ul>
-			<li><em></em></li>
-		</ul></li>
-</ul>
-
 <h5>text-align <code>keyword</code></h5>
 
-<p>取值范围：<code>left</code><code>right</code><code>center</code><code>auto</code></p>
+<p>取值范围：<code>left</code> <code>right</code> <code>center</code> <code>auto</code></p>
 
 <p>默认值： auto <em>(默认的自动方式是居中对齐，但如果已经设置了<code>placement-type</code>属性，那么就会依据<code>text-placements</code>属性的值来对文字进行靠左或靠右对齐)</em></p>
 
 <p>说明：设置文本文字的对齐方式。</p>
-
-<ul>
-	<li><ul>
-			<li><em>
-				</em></li>
-		</ul></li>
-</ul>
 
 <h5>text-clip <code>boolean</code></h5>
 
@@ -1148,27 +666,15 @@
 
 <p>说明：为了提高绘制效率，可以先将矢量要素中所有超出地图边界的部分切掉，再进行绘制。但在某些情况下，为了防止出现绘制错误，也可以通过将该值设为false而不采用这个策略。</p>
 
-<ul>
-	<li><ul>
-			<li><em></em></li>
-		</ul></li>
-</ul>
-
 <h5>text-comp-op <code>keyword</code></h5>
 
-<p>取值范围：<code>clear</code><code>src</code><code>dst</code><code>src-over</code><code>dst-over</code><code>src-in</code><code>dst-in</code><code>src-out</code><code>dst-out</code><code>src-atop</code><code>dst-atop</code><code>xor</code><code>plus</code><code>minus</code><code>multiply</code><code>screen</code><code>overlay</code><code>darken</code><code>lighten</code><code>color-dodge</code><code>color-burn</code><code>hard-light</code><code>soft-light</code><code>difference</code><code>exclusion</code><code>contrast</code><code>invert</code><code>invert-rgb</code><code>grain-merge</code><code>grain-extract</code><code>hue</code><code>saturation</code><code>color</code><code>value</code></p>
+<p>取值范围：<code>clear</code> <code>src</code> <code>dst</code> <code>src-over</code> <code>dst-over</code> <code>src-in</code> <code>dst-in</code> <code>src-out</code> <code>dst-out</code> <code>src-atop</code> <code>dst-atop</code> <code>xor</code> <code>plus</code> <code>minus</code> <code>multiply</code> <code>screen</code> <code>overlay</code> <code>darken</code> <code>lighten</code> <code>color-dodge</code> <code>color-burn</code> <code>hard-light</code> <code>soft-light</code> <code>difference</code> <code>exclusion</code> <code>contrast</code> <code>invert</code> <code>invert-rgb</code> <code>grain-merge</code> <code>grain-extract</code> <code>hue</code> <code>saturation</code> <code>color</code> <code>value</code></p>
 
 <p>默认值： src-over <em>(将当前符号置于其它符号的上一层)</em></p>
 
 <p>说明：这也是一个合成操作。它定义了当前的符号应该如何与其相邻图层进行合成。</p>
 
-<ul>
-	<li><ul>
-			<li><em></em></li>
-		</ul></li>
-</ul>
-
-<h2>2.6 盾标符号（shield）的属性</h2>
+<h2>2.7 盾标符号（shield）的属性</h2>
 
 <h5>shield-name <code>expression</code></h5>
 
@@ -1176,23 +682,11 @@
 
 <p>说明：设置盾标上显示的标注文字。可以通过用中括号括起来的字段名来指定要使用的数据字段，例如[column_name]。</p>
 
-<ul>
-	<li><ul>
-			<li><em></em></li>
-		</ul></li>
-</ul>
-
 <h5>shield-file <code>uri</code></h5>
 
 <p>默认值： none</p>
 
 <p>说明：设置显示在盾标文本后面的背景图片。</p>
-
-<ul>
-	<li><ul>
-			<li><em></em></li>
-		</ul></li>
-</ul>
 
 <h5>shield-face-name <code>string</code></h5>
 
@@ -1200,23 +694,11 @@
 
 <p>说明：设置盾标上标注文字的字体与样式。</p>
 
-<ul>
-	<li><ul>
-			<li><em></em></li>
-		</ul></li>
-</ul>
-
 <h5>shield-unlock-image <code>boolean</code></h5>
 
 <p>默认值： false <em>(盾标文字将被置于盾标背景图片的中心位置)</em></p>
 
 <p>说明：设置盾标文字与背景图片之间的位置关系。如果不想把盾标文本绘制在背景图的中心，那么就应该将该属性值设置为true。</p>
-
-<ul>
-	<li><ul>
-			<li><em></em></li>
-		</ul></li>
-</ul>
 
 <h5>shield-size <code>float</code></h5>
 
@@ -1224,38 +706,19 @@
 
 <p>说明：设置盾标文字的大小，以像素为单位。</p>
 
-<ul>
-	<li><ul>
-			<li><em></em></li>
-		</ul></li>
-</ul>
-
 <h5>shield-fill <code>color</code></h5>
 
 <p>默认值： undefined</p>
 
 <p>说明：设置盾标文字的颜色。</p>
 
-<ul>
-	<li><ul>
-			<li><em>
-				</em></li>
-		</ul></li>
-</ul>
-
 <h5>shield-placement <code>keyword</code></h5>
 
-<p>取值范围：<code>point</code><code>line</code><code>vertex</code><code>interior</code></p>
+<p>取值范围：<code>point</code> <code>line</code> <code>vertex</code> <code>interior</code></p>
 
 <p>默认值： point</p>
 
 <p>说明：设置盾标的放置方式。point方式是将盾标置于点要素的位置，line方式是将盾标在线要素上沿线绘制多次，vertex方式是将盾标置于多边形的顶点位置，而interior方式则是将盾标置于面要素的内部。</p>
-
-<ul>
-	<li><ul>
-			<li><em></em></li>
-		</ul></li>
-</ul>
 
 <h5>shield-avoid-edges <code>boolean</code></h5>
 
@@ -1263,24 +726,11 @@
 
 <p>说明：设置是否避免在地图或瓦片的边缘处绘制盾标。</p>
 
-<ul>
-	<li><ul>
-			<li><em></em></li>
-		</ul></li>
-</ul>
-
 <h5>shield-allow-overlap <code>boolean</code></h5>
 
 <p>默认值： false <em>(不允许盾标与其它现有地图要素重叠)</em></p>
 
 <p>说明：该属性用于设置在盾标与地图上其它符号出现压盖时，是否显示盾标。</p>
-
-<ul>
-	<li><ul>
-			<li><em>
-				</em></li>
-		</ul></li>
-</ul>
 
 <h5>shield-min-distance <code>float</code></h5>
 
@@ -1288,25 +738,11 @@
 
 <p>说明：设置相邻两个盾标符号（可以是相同的盾标，也可以是不同的）之间的最小距离。</p>
 
-<ul>
-	<li><ul>
-			<li><em>
-				</em></li>
-		</ul></li>
-</ul>
-
 <h5>shield-spacing <code>float</code></h5>
 
 <p>默认值： 0</p>
 
 <p>说明：设置在同一线要素上多次绘制的盾标之间的间隔。</p>
-
-<ul>
-	<li><ul>
-			<li><em>
-				</em></li>
-		</ul></li>
-</ul>
 
 <h5>shield-min-padding <code>float</code></h5>
 
@@ -1314,25 +750,11 @@
 
 <p>说明：设置盾标在瓦片上绘制时的最小边距。</p>
 
-<ul>
-	<li><ul>
-			<li><em>
-				</em></li>
-		</ul></li>
-</ul>
-
 <h5>shield-wrap-width <code>unsigned</code></h5>
 
 <p>默认值： 0</p>
 
 <p>说明：设置盾标文本多长的时候需要折行。</p>
-
-<ul>
-	<li><ul>
-			<li><em>
-				</em></li>
-		</ul></li>
-</ul>
 
 <h5>shield-wrap-before <code>boolean</code></h5>
 
@@ -1340,25 +762,11 @@
 
 <p>说明：控制盾标文本的折行动作。如果该值为false，那么每一行文本都会比wrap-width属性设定的值略长。</p>
 
-<ul>
-	<li><ul>
-			<li><em>
-				</em></li>
-		</ul></li>
-</ul>
-
 <h5>shield-wrap-character <code>string</code></h5>
 
 <p>默认值： </p>
 
 <p>说明：设置盾标文本的折行字符。</p>
-
-<ul>
-	<li><ul>
-			<li><em>
-				</em></li>
-		</ul></li>
-</ul>
 
 <h5>shield-halo-fill <code>color</code></h5>
 
@@ -1366,24 +774,11 @@
 
 <p>说明：设置盾标文本的光晕颜色。</p>
 
-<ul>
-	<li><ul>
-			<li><em></em></li>
-		</ul></li>
-</ul>
-
 <h5>shield-halo-radius <code>float</code></h5>
 
 <p>默认值： 0 <em>(盾标文本无光晕效果)</em></p>
 
 <p>说明：设置盾标文本光晕的大小，单位为像素。</p>
-
-<ul>
-	<li><ul>
-			<li><em>
-				</em></li>
-		</ul></li>
-</ul>
 
 <h5>shield-character-spacing <code>unsigned</code></h5>
 
@@ -1391,23 +786,11 @@
 
 <p>说明：设置盾标文字的字间距。该属性目前仅适用于点要素上的盾标。</p>
 
-<ul>
-	<li><ul>
-			<li><em></em></li>
-		</ul></li>
-</ul>
-
 <h5>shield-line-spacing <code>unsigned</code></h5>
 
 <p>默认值： undefined</p>
 
 <p>说明：设置盾标文本中的行距，以像素为单位。</p>
-
-<ul>
-	<li><ul>
-			<li><em></em></li>
-		</ul></li>
-</ul>
 
 <h5>shield-text-dx <code>float</code></h5>
 
@@ -1415,25 +798,11 @@
 
 <p>说明：设置盾标文本的水平偏移量，以像素为单位。正值表示向右偏移。</p>
 
-<ul>
-	<li><ul>
-			<li><em>
-				</em></li>
-		</ul></li>
-</ul>
-
 <h5>shield-text-dy <code>float</code></h5>
 
 <p>默认值： 0</p>
 
 <p>说明：设置盾标文本的垂直偏移量，以像素为单位。正值表示向下偏移。</p>
-
-<ul>
-	<li><ul>
-			<li><em>
-				</em></li>
-		</ul></li>
-</ul>
 
 <h5>shield-dx <code>float</code></h5>
 
@@ -1441,25 +810,11 @@
 
 <p>说明：设置盾标本身的水平偏移量，以像素为单位。正值表示向右偏移。</p>
 
-<ul>
-	<li><ul>
-			<li><em>
-				</em></li>
-		</ul></li>
-</ul>
-
 <h5>shield-dy <code>float</code></h5>
 
 <p>默认值： 0</p>
 
 <p>说明：设置盾标本身的垂直偏移量，以像素为单位。正值表示向下偏移。</p>
-
-<ul>
-	<li><ul>
-			<li><em>
-				</em></li>
-		</ul></li>
-</ul>
 
 <h5>shield-opacity <code>float</code></h5>
 
@@ -1467,70 +822,35 @@
 
 <p>说明：设置盾标背景图片的透明度。</p>
 
-<ul>
-	<li><ul>
-			<li><em>
-				</em></li>
-		</ul></li>
-</ul>
-
 <h5>shield-text-opacity <code>float</code></h5>
 
 <p>默认值： 1</p>
 
 <p>说明：设置盾标文本的透明度。</p>
 
-<ul>
-	<li><ul>
-			<li><em>
-				</em></li>
-		</ul></li>
-</ul>
-
 <h5>shield-horizontal-alignment <code>keyword</code></h5>
 
-<p>取值范围：<code>left</code><code>middle</code><code>right</code><code>auto</code></p>
+<p>取值范围：<code>left</code> <code>middle</code> <code>right</code> <code>auto</code></p>
 
 <p>默认值： auto</p>
 
 <p>说明：设置盾标相对于其中心点的水平对齐方式。</p>
 
-<ul>
-	<li><ul>
-			<li><em>
-				</em></li>
-		</ul></li>
-</ul>
-
 <h5>shield-vertical-alignment <code>keyword</code></h5>
 
-<p>取值范围：<code>top</code><code>middle</code><code>bottom</code><code>auto</code></p>
+<p>取值范围：<code>top</code> <code>middle</code> <code>bottom</code> <code>auto</code></p>
 
 <p>默认值： middle</p>
 
 <p>说明：设置盾标相对于其中心点的垂直对齐方式。</p>
 
-<ul>
-	<li><ul>
-			<li><em>
-				</em></li>
-		</ul></li>
-</ul>
-
 <h5>shield-placement-type <code>keyword</code></h5>
 
-<p>取值范围：<code>dummy</code><code>simple</code></p>
+<p>取值范围：<code>dummy</code> <code>simple</code></p>
 
 <p>默认值： dummy</p>
 
 <p>说明：设置盾标之间相互避让的算法。simple表示使用由shield-placements属性指定的基本算法。而dummy则表示不使用该特性。</p>
-
-<ul>
-	<li><ul>
-			<li><em>
-				</em></li>
-		</ul></li>
-</ul>
 
 <h5>shield-placements <code>string</code></h5>
 
@@ -1538,42 +858,21 @@
 
 <p>说明：如果shield-placement-type属性被设置为simple，那么就会依据该属性的值（即形如“POSITIONS, [SIZES]”的字符串）执行盾标相互避让算法。例如：<code>shield-placements: &quot;E,NE,SE,W,NW,SW&quot;;</code></p>
 
-<ul>
-	<li><ul>
-			<li><em>
-				</em></li>
-		</ul></li>
-</ul>
-
 <h5>shield-text-transform <code>keyword</code></h5>
 
-<p>取值范围：<code>none</code><code>uppercase</code><code>lowercase</code><code>capitalize</code></p>
+<p>取值范围：<code>none</code> <code>uppercase</code> <code>lowercase</code> <code>capitalize</code></p>
 
 <p>默认值： none</p>
 
 <p>说明：设置盾标文字的大小写方式。</p>
 
-<ul>
-	<li><ul>
-			<li><em>
-				</em></li>
-		</ul></li>
-</ul>
-
 <h5>shield-justify-alignment <code>keyword</code></h5>
 
-<p>取值范围：<code>left</code><code>center</code><code>right</code><code>auto</code></p>
+<p>取值范围：<code>left</code> <code>center</code> <code>right</code> <code>auto</code></p>
 
 <p>默认值： auto</p>
 
 <p>说明：设置盾标文本的对齐方式。</p>
-
-<ul>
-	<li><ul>
-			<li><em>
-				</em></li>
-		</ul></li>
-</ul>
 
 <h5>shield-transform <code>functions</code></h5>
 
@@ -1581,41 +880,21 @@
 
 <p>说明：设置SVG的变换函数。</p>
 
-<ul>
-	<li><ul>
-			<li><em>
-				</em></li>
-		</ul></li>
-</ul>
-
 <h5>shield-clip <code>boolean</code></h5>
 
 <p>默认值： true <em>(几何要素会根据地图的地理范围进行切割)</em></p>
 
 <p>说明：为了提高绘制效率，可以先将矢量要素中所有超出地图边界的部分切掉，再进行绘制。但在某些情况下，为了防止出现绘制错误，也可以通过将该值设为false而不采用这个策略。</p>
 
-<ul>
-	<li><ul>
-			<li><em>
-				</em></li>
-		</ul></li>
-</ul>
-
 <h5>shield-comp-op <code>keyword</code></h5>
 
-<p>取值范围：<code>clear</code><code>src</code><code>dst</code><code>src-over</code><code>dst-over</code><code>src-in</code><code>dst-in</code><code>src-out</code><code>dst-out</code><code>src-atop</code><code>dst-atop</code><code>xor</code><code>plus</code><code>minus</code><code>multiply</code><code>screen</code><code>overlay</code><code>darken</code><code>lighten</code><code>color-dodge</code><code>color-burn</code><code>hard-light</code><code>soft-light</code><code>difference</code><code>exclusion</code><code>contrast</code><code>invert</code><code>invert-rgb</code><code>grain-merge</code><code>grain-extract</code><code>hue</code><code>saturation</code><code>color</code><code>value</code></p>
+<p>取值范围：<code>clear</code> <code>src</code> <code>dst</code> <code>src-over</code> <code>dst-over</code> <code>src-in</code> <code>dst-in</code> <code>src-out</code> <code>dst-out</code> <code>src-atop</code> <code>dst-atop</code> <code>xor</code> <code>plus</code> <code>minus</code> <code>multiply</code> <code>screen</code> <code>overlay</code> <code>darken</code> <code>lighten</code> <code>color-dodge</code> <code>color-burn</code> <code>hard-light</code> <code>soft-light</code> <code>difference</code> <code>exclusion</code> <code>contrast</code> <code>invert</code> <code>invert-rgb</code> <code>grain-merge</code> <code>grain-extract</code> <code>hue</code> <code>saturation</code> <code>color</code> <code>value</code></p>
 
 <p>默认值： src-over <em>(将当前符号置于其它符号的上一层)</em></p>
 
 <p>说明：这也是一个合成操作。它定义了当前的符号应该如何与其相邻图层进行合成。</p>
 
-<ul>
-	<li><ul>
-			<li><em></em></li>
-		</ul></li>
-</ul>
-
-<h2>2.7 线模式（line-pattern）的属性</h2>
+<h2>2.8 线模式（line-pattern）的属性</h2>
 
 <h5>line-pattern-file <code>uri</code></h5>
 
@@ -1623,24 +902,11 @@
 
 <p>说明：设置沿线重复绘制的图像文件。</p>
 
-<ul>
-	<li><ul>
-			<li><em>
-				</em></li>
-		</ul></li>
-</ul>
-
 <h5>line-pattern-clip <code>boolean</code></h5>
 
 <p>默认值： true <em>(几何要素会根据地图的地理范围进行切割)</em></p>
 
 <p>说明：为了提高绘制效率，可以先将矢量要素中所有超出地图边界的部分切掉，再进行绘制。但在某些情况下，为了防止出现绘制错误，也可以通过将该值设为false而不采用这个策略。</p>
-
-<ul>
-	<li><ul>
-			<li><em></em></li>
-		</ul></li>
-</ul>
 
 <h5>line-pattern-simplify <code>float</code></h5>
 
@@ -1648,27 +914,13 @@
 
 <p>说明：如果要对几何要素按照地图综合的方法进行简化，那么通过该属性来设定阈值。</p>
 
-<ul>
-	<li><ul>
-			<li><em>
-				</em></li>
-		</ul></li>
-</ul>
-
 <h5>line-pattern-simplify-algorithm <code>keyword</code></h5>
 
-<p>取值范围：<code>radial-distance</code><code>zhao-saalfeld</code><code>visvalingam-whyatt</code></p>
+<p>取值范围：<code>radial-distance</code> <code>zhao-saalfeld</code> <code>visvalingam-whyatt</code></p>
 
 <p>默认值： radial-distance <em>(不使用radial-distance算法进行简化)</em></p>
 
 <p>说明：设置对线要素进行综合的简化算法。</p>
-
-<ul>
-	<li><ul>
-			<li><em>
-				</em></li>
-		</ul></li>
-</ul>
 
 <h5>line-pattern-smooth <code>float</code></h5>
 
@@ -1678,23 +930,11 @@
 
 <p>说明：对线的拐点进行平滑处理。0表示不进行平滑，1表示完全平滑。如果取值大于1，会导致绘制的几何要素扭曲变形。</p>
 
-<ul>
-	<li><ul>
-			<li><em></em></li>
-		</ul></li>
-</ul>
-
 <h5>line-pattern-offset <code>float</code></h5>
 
 <p>默认值： 0 <em>(无偏移)</em></p>
 
 <p>说明：将线要素相对于其原有位置向左（沿着线的走向）或向右偏移一定量的像素绘制。正值表示左偏，负值表示右偏。</p>
-
-<ul>
-	<li><ul>
-			<li><em></em></li>
-		</ul></li>
-</ul>
 
 <h5>line-pattern-geometry-transform <code>functions</code></h5>
 
@@ -1702,28 +942,15 @@
 
 <p>说明：为几何要素定义变换函数。</p>
 
-<ul>
-	<li><ul>
-			<li><em>
-				</em></li>
-		</ul></li>
-</ul>
-
 <h5>line-pattern-comp-op <code>keyword</code></h5>
 
-<p>取值范围：<code>clear</code><code>src</code><code>dst</code><code>src-over</code><code>dst-over</code><code>src-in</code><code>dst-in</code><code>src-out</code><code>dst-out</code><code>src-atop</code><code>dst-atop</code><code>xor</code><code>plus</code><code>minus</code><code>multiply</code><code>screen</code><code>overlay</code><code>darken</code><code>lighten</code><code>color-dodge</code><code>color-burn</code><code>hard-light</code><code>soft-light</code><code>difference</code><code>exclusion</code><code>contrast</code><code>invert</code><code>invert-rgb</code><code>grain-merge</code><code>grain-extract</code><code>hue</code><code>saturation</code><code>color</code><code>value</code></p>
+<p>取值范围：<code>clear</code> <code>src</code> <code>dst</code> <code>src-over</code> <code>dst-over</code> <code>src-in</code> <code>dst-in</code> <code>src-out</code> <code>dst-out</code> <code>src-atop</code> <code>dst-atop</code> <code>xor</code> <code>plus</code> <code>minus</code> <code>multiply</code> <code>screen</code> <code>overlay</code> <code>darken</code> <code>lighten</code> <code>color-dodge</code> <code>color-burn</code> <code>hard-light</code> <code>soft-light</code> <code>difference</code> <code>exclusion</code> <code>contrast</code> <code>invert</code> <code>invert-rgb</code> <code>grain-merge</code> <code>grain-extract</code> <code>hue</code> <code>saturation</code> <code>color</code> <code>value</code></p>
 
 <p>默认值： src-over <em>(将当前符号置于其它符号的上一层)</em></p>
 
 <p>说明：这也是一个合成操作。它定义了当前的符号应该如何与其相邻图层进行合成。</p>
 
-<ul>
-	<li><ul>
-			<li><em></em></li>
-		</ul></li>
-</ul>
-
-<h2>2.8 面模式（polygon-pattern）的属性</h2>
+<h2>2.9 面模式（polygon-pattern）的属性</h2>
 
 <h5>polygon-pattern-file <code>uri</code></h5>
 
@@ -1731,26 +958,13 @@
 
 <p>说明：设置用于平铺填充面要素的图像文件。</p>
 
-<ul>
-	<li><ul>
-			<li><em>
-				</em></li>
-		</ul></li>
-</ul>
-
 <h5>polygon-pattern-alignment <code>keyword</code></h5>
 
-<p>取值范围：<code>local</code><code>global</code></p>
+<p>取值范围：<code>local</code> <code>global</code></p>
 
 <p>默认值： local</p>
 
 <p>说明：设置填充时的对齐方式，local指在当前图层中对齐，global指在整个地图中对齐。</p>
-
-<ul>
-	<li><ul>
-			<li><em></em></li>
-		</ul></li>
-</ul>
 
 <h5>polygon-pattern-gamma <code>float</code></h5>
 
@@ -1760,25 +974,11 @@
 
 <p>说明：设置面要素边缘的抗锯齿级别，影响绘制效果和速度。</p>
 
-<ul>
-	<li><ul>
-			<li><em>
-				</em></li>
-		</ul></li>
-</ul>
-
 <h5>polygon-pattern-opacity <code>float</code></h5>
 
 <p>默认值： 1 <em>(保持填充图片的透明度不变)</em></p>
 
 <p>说明：设置填充图片的透明度。</p>
-
-<ul>
-	<li><ul>
-			<li><em>
-				</em></li>
-		</ul></li>
-</ul>
 
 <h5>polygon-pattern-clip <code>boolean</code></h5>
 
@@ -1786,39 +986,19 @@
 
 <p>说明：为了提高绘制效率，可以先将矢量要素中所有超出地图边界的部分切掉，再进行绘制。但在某些情况下，为了防止出现绘制错误，也可以通过将该值设为false而不采用这个策略。</p>
 
-<ul>
-	<li><ul>
-			<li><em></em></li>
-		</ul></li>
-</ul>
-
 <h5>polygon-pattern-simplify <code>float</code></h5>
 
 <p>默认值： 0 <em>(不对面要素的边线进行简化)</em></p>
 
 <p>说明：如果要对面要素的边线按照地图综合的方法进行简化，那么通过该属性来设定阈值。</p>
 
-<ul>
-	<li><ul>
-			<li><em>
-				</em></li>
-		</ul></li>
-</ul>
-
 <h5>polygon-pattern-simplify-algorithm <code>keyword</code></h5>
 
-<p>取值范围：<code>radial-distance</code><code>zhao-saalfeld</code><code>visvalingam-whyatt</code></p>
+<p>取值范围：<code>radial-distance</code> <code>zhao-saalfeld</code> <code>visvalingam-whyatt</code></p>
 
 <p>默认值： radial-distance <em>(不使用radial-distance算法进行简化)</em></p>
 
 <p>说明：设置对面要素的边线进行综合的简化算法。</p>
-
-<ul>
-	<li><ul>
-			<li><em>
-				</em></li>
-		</ul></li>
-</ul>
 
 <h5>polygon-pattern-smooth <code>float</code></h5>
 
@@ -1828,39 +1008,21 @@
 
 <p>说明：对线的拐点进行平滑处理。0表示不进行平滑，1表示完全平滑。如果取值大于1，会导致绘制的几何要素扭曲变形。</p>
 
-<ul>
-	<li><ul>
-			<li><em></em></li>
-		</ul></li>
-</ul>
-
 <h5>polygon-pattern-geometry-transform <code>functions</code></h5>
 
 <p>默认值： none <em>(不对几何要素进行变换)</em></p>
 
 <p>说明：为几何要素定义变换函数。</p>
 
-<ul>
-	<li><ul>
-			<li><em></em></li>
-		</ul></li>
-</ul>
-
 <h5>polygon-pattern-comp-op <code>keyword</code></h5>
 
-<p>取值范围：<code>clear</code><code>src</code><code>dst</code><code>src-over</code><code>dst-over</code><code>src-in</code><code>dst-in</code><code>src-out</code><code>dst-out</code><code>src-atop</code><code>dst-atop</code><code>xor</code><code>plus</code><code>minus</code><code>multiply</code><code>screen</code><code>overlay</code><code>darken</code><code>lighten</code><code>color-dodge</code><code>color-burn</code><code>hard-light</code><code>soft-light</code><code>difference</code><code>exclusion</code><code>contrast</code><code>invert</code><code>invert-rgb</code><code>grain-merge</code><code>grain-extract</code><code>hue</code><code>saturation</code><code>color</code><code>value</code></p>
+<p>取值范围：<code>clear</code> <code>src</code> <code>dst</code> <code>src-over</code> <code>dst-over</code> <code>src-in</code> <code>dst-in</code> <code>src-out</code> <code>dst-out</code> <code>src-atop</code> <code>dst-atop</code> <code>xor</code> <code>plus</code> <code>minus</code> <code>multiply</code> <code>screen</code> <code>overlay</code> <code>darken</code> <code>lighten</code> <code>color-dodge</code> <code>color-burn</code> <code>hard-light</code> <code>soft-light</code> <code>difference</code> <code>exclusion</code> <code>contrast</code> <code>invert</code> <code>invert-rgb</code> <code>grain-merge</code> <code>grain-extract</code> <code>hue</code> <code>saturation</code> <code>color</code> <code>value</code></p>
 
 <p>默认值： src-over <em>(将当前符号置于其它符号的上一层)</em></p>
 
 <p>说明：这也是一个合成操作。它定义了当前的符号应该如何与其相邻图层进行合成。</p>
 
-<ul>
-	<li><ul>
-			<li><em></em></li>
-		</ul></li>
-</ul>
-
-<h2>2.9 栅格符号（raster）的属性</h2>
+<h2>2.10 栅格符号（raster）的属性</h2>
 
 <h5>raster-opacity <code>float</code></h5>
 
@@ -1868,39 +1030,19 @@
 
 <p>说明：设置栅格符号的透明度。</p>
 
-<ul>
-	<li><ul>
-			<li><em>
-				</em></li>
-		</ul></li>
-</ul>
-
 <h5>raster-filter-factor <code>float</code></h5>
 
 <p>默认值： -1 <em>(允许数据源自行选用缩小图像尺寸的方法)</em></p>
 
 <p>说明：用于栅格或GDAL数据源，对图像尺寸进行预先缩小。将该值调高可以得到更好的缩略图效果，但相应的处理时间也会变长。</p>
 
-<ul>
-	<li><ul>
-			<li><em>
-				</em></li>
-		</ul></li>
-</ul>
-
 <h5>raster-scaling <code>keyword</code></h5>
 
-<p>取值范围：<code>near</code><code>fast</code><code>bilinear</code><code>bilinear8</code><code>bicubic</code><code>spline16</code><code>spline36</code><code>hanning</code><code>hamming</code><code>hermite</code><code>kaiser</code><code>quadric</code><code>catrom</code><code>gaussian</code><code>bessel</code><code>mitchell</code><code>sinc</code><code>lanczos</code><code>blackman</code></p>
+<p>取值范围：<code>near</code> <code>fast</code> <code>bilinear</code> <code>bilinear8</code> <code>bicubic</code> <code>spline16</code> <code>spline36</code> <code>hanning</code> <code>hamming</code> <code>hermite</code> <code>kaiser</code> <code>quadric</code> <code>catrom</code> <code>gaussian</code> <code>bessel</code> <code>mitchell</code> <code>sinc</code> <code>lanczos</code> <code>blackman</code></p>
 
 <p>默认值： near</p>
 
 <p>说明：设置对栅格数据进行重采样的算法。Bilinear可以在速度和质量方面得到不错的平衡，而lanczos则能够得到最高的绘制质量。</p>
-
-<ul>
-	<li><ul>
-			<li><em></em></li>
-		</ul></li>
-</ul>
 
 <h5>raster-mesh-size <code>unsigned</code></h5>
 
@@ -1908,27 +1050,15 @@
 
 <p>说明：在对原始图像进行重投影时，是先将图像切分成若干网格，对网格中的小图像片分别重投影。如果设定该值使得网格的尺寸变大（即把该属性的值调小），那么重投影的速度会加快，但可能会导致图像变形。</p>
 
-<ul>
-	<li><ul>
-			<li><em></em></li>
-		</ul></li>
-</ul>
-
 <h5>raster-comp-op <code>keyword</code></h5>
 
-<p>取值范围：<code>clear</code><code>src</code><code>dst</code><code>src-over</code><code>dst-over</code><code>src-in</code><code>dst-in</code><code>src-out</code><code>dst-out</code><code>src-atop</code><code>dst-atop</code><code>xor</code><code>plus</code><code>minus</code><code>multiply</code><code>screen</code><code>overlay</code><code>darken</code><code>lighten</code><code>color-dodge</code><code>color-burn</code><code>hard-light</code><code>soft-light</code><code>difference</code><code>exclusion</code><code>contrast</code><code>invert</code><code>invert-rgb</code><code>grain-merge</code><code>grain-extract</code><code>hue</code><code>saturation</code><code>color</code><code>value</code></p>
+<p>取值范围：<code>clear</code> <code>src</code> <code>dst</code> <code>src-over</code> <code>dst-over</code> <code>src-in</code> <code>dst-in</code> <code>src-out</code> <code>dst-out</code> <code>src-atop</code> <code>dst-atop</code> <code>xor</code> <code>plus</code> <code>minus</code> <code>multiply</code> <code>screen</code> <code>overlay</code> <code>darken</code> <code>lighten</code> <code>color-dodge</code> <code>color-burn</code> <code>hard-light</code> <code>soft-light</code> <code>difference</code> <code>exclusion</code> <code>contrast</code> <code>invert</code> <code>invert-rgb</code> <code>grain-merge</code> <code>grain-extract</code> <code>hue</code> <code>saturation</code> <code>color</code> <code>value</code></p>
 
 <p>默认值： src-over <em>(将当前符号置于其它符号的上一层)</em></p>
 
 <p>说明：这也是一个合成操作。它定义了当前的符号应该如何与其相邻图层进行合成。</p>
 
-<ul>
-	<li><ul>
-			<li><em></em></li>
-		</ul></li>
-</ul>
-
-<h2>2.10 注记符号（markers）的属性</h2>
+<h2>2.11 注记符号（markers）的属性</h2>
 
 <h5>marker-file <code>uri</code></h5>
 
@@ -1936,23 +1066,11 @@
 
 <p>说明：设置绘制注记符号所使用的SVG文件。如果没有指定具体的文件，则默认使用一个椭圆形符号对每个位置的注记进行渲染。</p>
 
-<ul>
-	<li><ul>
-			<li><em></em></li>
-		</ul></li>
-</ul>
-
 <h5>marker-opacity <code>float</code></h5>
 
 <p>默认值： 1 <em>(边缘和填充均不透明)</em></p>
 
 <p>说明：设置注记符号整体的透明度。如果设置了该属性，则会覆盖在marker-fill-opacity和marker-line-opacity属性中设置的透明度。</p>
-
-<ul>
-	<li><ul>
-			<li><em></em></li>
-		</ul></li>
-</ul>
 
 <h5>marker-fill-opacity <code>float</code></h5>
 
@@ -1960,23 +1078,11 @@
 
 <p>说明：设置注记符号填充部分的透明度。</p>
 
-<ul>
-	<li><ul>
-			<li><em></em></li>
-		</ul></li>
-</ul>
-
 <h5>marker-line-color <code>color</code></h5>
 
 <p>默认值： black</p>
 
 <p>说明：设置注记符号边线的颜色。</p>
-
-<ul>
-	<li><ul>
-			<li><em></em></li>
-		</ul></li>
-</ul>
 
 <h5>marker-line-width <code>float</code></h5>
 
@@ -1984,66 +1090,35 @@
 
 <p>说明：设置注记符号边线的宽度，以像素为单位。但如果该值设置过大会导致注记本身被过粗的边线覆盖。</p>
 
-<ul>
-	<li><ul>
-			<li><em></em></li>
-		</ul></li>
-</ul>
-
 <h5>marker-line-opacity <code>float</code></h5>
 
 <p>默认值： 1 <em>(注记符号边线完全不透明)</em></p>
 
 <p>说明：设置注记符号边线的透明度。</p>
 
-<ul>
-	<li><ul>
-			<li><em>
-				</em></li>
-		</ul></li>
-</ul>
-
 <h5>marker-placement <code>keyword</code></h5>
 
-<p>取值范围：<code>point</code><code>line</code><code>interior</code></p>
+<p>取值范围：<code>point</code> <code>line</code> <code>interior</code></p>
 
 <p>默认值： point <em>(注记符号被置于几何要素的重心（形心）位置)</em></p>
 
 <p>说明：设置注记在几何要素上的放置方式，可以位于点要素上，或者在面要素的中心位置，还可以沿着线要素反复出现（通过设置<code>marker-placement:line</code>实现）。如果取值interior，那么可以确保注记符号被绘制在多边形的内部。</p>
 
-<ul>
-	<li><ul>
-			<li><em></em></li>
-		</ul></li>
-</ul>
-
 <h5>marker-multi-policy <code>keyword</code></h5>
 
-<p>取值范围：<code>each</code><code>whole</code><code>largest</code></p>
+<p>取值范围：<code>each</code> <code>whole</code> <code>largest</code></p>
 
 <p>默认值： each <em>(如果一个要素包含了多个几何形状，而且放置方式是point或interior，那么注记符号就会在每个几何形状处都会被绘制一次)</em></p>
 
 <p>说明：该属性是为包含多个几何形状的地理（multi-geometries）要素准备的，对沿线放置的注记符号不起作用。其默认值为each，也就是每个几何形状上都会被绘制一个注记；whole表示注记将被绘制在所有几何形状组合后的重心位置；而largest表示注记将被绘制在最大（依据最小包围框的面积）的那个几何形状上（这也同样是文本标注在多几何要素上绘制的默认方法）。</p>
 
-<ul>
-	<li><ul>
-			<li><em></em></li>
-		</ul></li>
-</ul>
-
 <h5>marker-type <code>keyword</code></h5>
 
-<p>取值范围：<code>arrow</code><code>ellipse</code></p>
+<p>取值范围：<code>arrow</code> <code>ellipse</code></p>
 
 <p>默认值： ellipse</p>
 
 <p>说明：设置默认的注记符号类型。如果没有指定用于渲染注记的SVG文件，那么内置的渲染引擎可以提供两种选择：箭头或椭圆。</p>
-
-<ul>
-	<li><ul>
-			<li><em></em></li>
-		</ul></li>
-</ul>
 
 <h5>marker-width <code>expression</code></h5>
 
@@ -2051,24 +1126,11 @@
 
 <p>说明：设置注记符号的宽度。这个属性只适用于两种内置的默认注记样式。</p>
 
-<ul>
-	<li><ul>
-			<li><em>
-				</em></li>
-		</ul></li>
-</ul>
-
 <h5>marker-height <code>expression</code></h5>
 
 <p>默认值： 10</p>
 
 <p>说明：设置注记符号的高度。这个属性只适用于两种内置的默认注记样式。</p>
-
-<ul>
-	<li><ul>
-			<li><em></em></li>
-		</ul></li>
-</ul>
 
 <h5>marker-fill <code>color</code></h5>
 
@@ -2076,23 +1138,11 @@
 
 <p>说明：设置注记的填充色。</p>
 
-<ul>
-	<li><ul>
-			<li><em></em></li>
-		</ul></li>
-</ul>
-
 <h5>marker-allow-overlap <code>boolean</code></h5>
 
 <p>默认值： false <em>(不允许注记符号相互压盖（被压盖的注记将不被显式）)</em></p>
 
 <p>说明：设置被压盖的注记符号是否被显式在地图上。</p>
-
-<ul>
-	<li><ul>
-			<li><em></em></li>
-		</ul></li>
-</ul>
 
 <h5>marker-ignore-placement <code>boolean</code></h5>
 
@@ -2100,23 +1150,11 @@
 
 <p>说明：设置是否允许在与当前要素重叠的位置放置其它要素。</p>
 
-<ul>
-	<li><ul>
-			<li><em></em></li>
-		</ul></li>
-</ul>
-
 <h5>marker-spacing <code>float</code></h5>
 
 <p>默认值： 100</p>
 
 <p>说明：设置重复绘制的注记之间的间距，单位为像素。如果设定的间距小于注记符号本身的尺寸，或者大于线要素的长度，那么注记就绘制不出来。</p>
-
-<ul>
-	<li><ul>
-			<li><em></em></li>
-		</ul></li>
-</ul>
 
 <h5>marker-max-error <code>float</code></h5>
 
@@ -2124,35 +1162,17 @@
 
 <p>说明：设置实际的注记位置与marker-spacing属性值之间的最大误差。如果将该属性值调高，那么渲染引擎就会尝试处理与其它注记符号之间的位置冲突。</p>
 
-<ul>
-	<li><ul>
-			<li><em></em></li>
-		</ul></li>
-</ul>
-
 <h5>marker-transform <code>functions</code></h5>
 
 <p>默认值： <em>(无变换)</em></p>
 
 <p>说明：设置SVG图形的变换方法。</p>
 
-<ul>
-	<li><ul>
-			<li><em></em></li>
-		</ul></li>
-</ul>
-
 <h5>marker-clip <code>boolean</code></h5>
 
 <p>默认值： true <em>(几何要素会根据地图的地理范围进行切割)</em></p>
 
 <p>说明：为了提高绘制效率，可以先将矢量要素中所有超出地图边界的部分切掉，再进行绘制。但在某些情况下，为了防止出现绘制错误，也可以通过将该值设为false而不采用这个策略。</p>
-
-<ul>
-	<li><ul>
-			<li><em></em></li>
-		</ul></li>
-</ul>
 
 <h5>marker-smooth <code>float</code></h5>
 
@@ -2162,40 +1182,21 @@
 
 <p>说明：对线的拐点进行平滑处理。0表示不进行平滑，1表示完全平滑。如果取值大于1，会导致绘制的几何要素扭曲变形。</p>
 
-<ul>
-	<li><ul>
-			<li><em></em></li>
-		</ul></li>
-</ul>
-
 <h5>marker-geometry-transform <code>functions</code></h5>
 
 <p>默认值： none <em>(不对几何要素进行变换)</em></p>
 
 <p>说明：为几何要素定义变换函数。</p>
 
-<ul>
-	<li><ul>
-			<li><em>
-				</em></li>
-		</ul></li>
-</ul>
-
 <h5>marker-comp-op <code>keyword</code></h5>
 
-<p>取值范围：<code>clear</code><code>src</code><code>dst</code><code>src-over</code><code>dst-over</code><code>src-in</code><code>dst-in</code><code>src-out</code><code>dst-out</code><code>src-atop</code><code>dst-atop</code><code>xor</code><code>plus</code><code>minus</code><code>multiply</code><code>screen</code><code>overlay</code><code>darken</code><code>lighten</code><code>color-dodge</code><code>color-burn</code><code>hard-light</code><code>soft-light</code><code>difference</code><code>exclusion</code><code>contrast</code><code>invert</code><code>invert-rgb</code><code>grain-merge</code><code>grain-extract</code><code>hue</code><code>saturation</code><code>color</code><code>value</code></p>
+<p>取值范围：<code>clear</code> <code>src</code> <code>dst</code> <code>src-over</code> <code>dst-over</code> <code>src-in</code> <code>dst-in</code> <code>src-out</code> <code>dst-out</code> <code>src-atop</code> <code>dst-atop</code> <code>xor</code> <code>plus</code> <code>minus</code> <code>multiply</code> <code>screen</code> <code>overlay</code> <code>darken</code> <code>lighten</code> <code>color-dodge</code> <code>color-burn</code> <code>hard-light</code> <code>soft-light</code> <code>difference</code> <code>exclusion</code> <code>contrast</code> <code>invert</code> <code>invert-rgb</code> <code>grain-merge</code> <code>grain-extract</code> <code>hue</code> <code>saturation</code> <code>color</code> <code>value</code></p>
 
 <p>默认值： src-over <em>(将当前符号置于其它符号的上一层)</em></p>
 
 <p>说明：这也是一个合成操作。它定义了当前的符号应该如何与其相邻图层进行合成。</p>
 
-<ul>
-	<li><ul>
-			<li><em></em></li>
-		</ul></li>
-</ul>
-
-<h2>2.11 建筑物符号（building）的属性</h2>
+<h2>2.12 建筑物符号（building）的属性</h2>
 
 <h5>building-fill <code>color</code></h5>
 
@@ -2203,25 +1204,11 @@
 
 <p>说明：设置建筑物的外墙填充色</p>
 
-<ul>
-	<li><ul>
-			<li><em>
-				</em></li>
-		</ul></li>
-</ul>
-
 <h5>building-fill-opacity <code>float</code></h5>
 
 <p>默认值： 1</p>
 
 <p>说明：设置建筑物整体的透明度，包括建筑物所有的面。</p>
-
-<ul>
-	<li><ul>
-			<li><em>
-				</em></li>
-		</ul></li>
-</ul>
 
 <h5>building-height <code>expression</code></h5>
 
@@ -2229,13 +1216,7 @@
 
 <p>说明：设置建筑物的高度，以像素为单位。</p>
 
-<ul>
-	<li><ul>
-			<li><em></em></li>
-		</ul></li>
-</ul>
-
-<h2>2.12 调试模式下的属性</h2>
+<h2>2.13 调试模式下的属性</h2>
 
 <h5>debug-mode <code>string</code></h5>
 
@@ -2243,14 +1224,7 @@
 
 <p>说明：设置调试模式渲染</p>
 
-<ul>
-	<li><ul>
-			<li><em>
-				</em></li>
-		</ul></li>
-</ul>
-
-<h2>2.13 关于取值类型的说明</h2>
+<h2>2.14 关于取值类型的说明</h2>
 
 <p>这里列出了CartoCSS中所有属性的取值类型及其说明。</p>
 
