@@ -1,4 +1,4 @@
-## 2.9 面模式（polygon-pattern）的属性
+### 2.9 面模式（polygon-pattern）的属性
 
 ##### polygon-pattern-file `uri`
 

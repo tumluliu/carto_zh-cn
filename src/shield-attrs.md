@@ -1,4 +1,4 @@
-## 2.7 盾标符号（shield）的属性
+### 2.7 盾标符号（shield）的属性
 
 ##### shield-name `expression`
 

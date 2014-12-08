@@ -1,4 +1,4 @@
-## 2.3 线符号（line）的属性
+### 2.3 线符号（line）的属性
 
 ##### line-color `color`
 

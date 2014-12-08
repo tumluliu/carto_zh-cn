@@ -1,4 +1,4 @@
-## 2.4 面符号（polygon）的属性
+### 2.4 面符号（polygon）的属性
 
 ##### polygon-fill `color`
 

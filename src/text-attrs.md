@@ -1,4 +1,4 @@
-## 2.6 文本符号（text）的属性
+### 2.6 文本符号（text）的属性
 
 ##### text-name `expression`
 
