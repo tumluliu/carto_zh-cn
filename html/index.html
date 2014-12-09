@@ -3,19 +3,29 @@
 	<head>
 		<meta charset="utf-8" />
 		<link rel="stylesheet" type="text/css" href="css/style.css" />
-		<title>CartoCSS概述</title>
+		<title>CartoCSS中文参考手册</title>
 	</head>
 <body>
 
-<h1>CartoCSS概述</h1>
+<h1>CartoCSS中文参考手册</h1>
 
-<p>CartoCSS是一种语法类似CSS的制图样式描述语言。层叠样式表（Cascading Style Sheets，CSS）是一种对网页进行设计的样式语言。如果熟悉CSS的话，那么CartoCSS这种对地图进行样式设计的语言也会看起来不陌生，尽管二者所包含的要素、属性等内容和含义完全不同。</p>
+<h2>前言</h2>
 
-<h2>符号</h2>
+<p>这是一份根据<a href="https://github.com/mapbox/carto">carto</a>的最新文档和<a href="https://www.mapbox.com/mapbox-studio/style-quickstart/">MapBox Studio的在线帮助文档</a>综合整理翻译的中文版CartoCSS使用与语言参考手册。翻译的目的是为了方便越来越多的使用CartoCSS进行制图的中文用户了解这种制图样式语言中各种属性的含义及用法。读这份文档需要具有一些的地理信息系统（GIS）、地图制图学（Cartography）方面的背景知识。由于CartoCSS最终会被解译为<a href="https://github.com/mapnik/mapnik">mapnik</a>样式并进行制图渲染，所以如果知道并了解mapnik的工作原理，那么会对CartoCSS的语法要素及工作机理有更深刻的理解，但这不是使用CartoCSS进行制图所必需的。关于背景知识，可以参考mapnik项目中的<a href="https://github.com/mapnik/mapnik/wiki/LearningMapnik">相关文档</a>。</p>
 
-<p>higis中的地图渲染引擎提供了一组基本样式，基于这些基本样式可以构造出复杂的地图样式。这些基本样式被称为<strong>符号</strong>，每种符号都有一系列可配置的属性。</p>
+<p>我会尽力保证这份文档与官方英文文档同步。这个仓库中保存了中文版文档的markdown格式版本，以及通过<a href="http://www.ulyssesapp.com/">Ulysses</a>生成的pdf与html版本。html的在线版本可以直接从<a href="http://luliu.me/projects/carto_zh-cn/">这里</a>查看。</p>
 
-<p>higis中目前包含10种符号。每一种符号都可以应用于以下某一类或几类几何要素：</p>
+<p>关于翻译的更多信息请参考这篇<a href="http://luliu.me/?p=40">博客</a>，有问题请与Lu Liu(nudtlliu#gmail.com, luliu.me)联系。</p>
+
+<h2>概述</h2>
+
+<p>CartoCSS是一种语法类似CSS（Cascading Style Sheets，层叠样式表，一种对网页进行设计的样式语言）的制图样式描述语言。如果熟悉CSS的话，那么CartoCSS这种对地图进行样式设计的语言也会看起来不陌生，尽管二者所包含的要素、属性等内容和含义完全不同。</p>
+
+<h3>符号</h3>
+
+<p>CartoCSS所基于的地图渲染引擎Mapnik提供了一组基本样式，基于这些基本样式可以构造出复杂的地图样式。这些基本样式被称为<strong>符号</strong>，每种符号都有一系列可配置的属性。</p>
+
+<p>Mapnik中目前包含10种符号。每一种符号都可以应用于以下某一类或几类几何要素：</p>
 
 <p>1. 线符号（可用于线要素和面要素）</p>
 
@@ -47,7 +57,7 @@
 
 <p>一种符号只有在明确定义了它的样式之后才能被绘制在地图上。在每种符号的诸多属性中，除了显式赋值的属性以外，其它属性将全部被设置为默认值。例如，线符号中颜色属性的默认值为黑色，所以如果用户显式设置了线宽，那么图层中的线要素就将以用户设置的宽度被绘制成黑色。</p>
 
-<h2>多符号</h2>
+<h3>多符号</h3>
 
 <p>A single layer is not limited to one of each symbolizer type. For example, multiple semi-transparent line symbolizers can be assigned to a polygon to achieve a soft glow or shadow effect. Multiple text symbolizers can be assigned to the same point with different offsets to label it with more than one field.</p>
 
@@ -124,7 +134,968 @@
 
 <figure><img src="symbolizer-2.png"/></figure>
 
-<h1>CartoCSS参考手册</h1>
+<h2>快速入门</h2>
+
+<p>TODO: 根据MapBox Studio文档中的<a href="https://www.mapbox.com/mapbox-studio/style-quickstart/">QuickStart</a>部分撰写</p>
+
+<p>Mapbox Studio uses a language called CartoCSS to determine the look of a map. Colors, sizes, and shapes can all be manipulated by applying their specific CartoCSS parameters in the stylesheet panel to the right of the map. Read the CartoCSS manual for a more detailed introduction to the language.</p>
+
+<p>In this tutorial we’ll create a custom style by writing CartoCSS for buildings, roads, and parks.</p>
+
+<h3>Styling buildings</h3>
+
+<p>Add the following CartoCSS to your custom stylesheet and then click Save.</p>
+
+<pre><code>
+#building[zoom&gt;=14] {
+ polygon-fill:#eee;
+ line-width:0.5;
+ line-color:#ddd;
+}
+
+</code></pre>
+
+<figure><img src="https://cloud.githubusercontent.com/assets/83384/3870305/ba0d0a6a-20c7-11e4-9454-a751319ca7e2.png"/></figure>
+
+<p><em>图片来源：www.mapbox.com</em></p>
+
+<ul>
+	<li><code>#building</code> selects the building layer as the one that will be styled.</li>
+	<li><code>[zoom&gt;=14]</code> restricts the styles to zoom level 14 or greater.</li>
+	<li><code>polygon-fill: #eee</code> fills the building polygons with a light grey color.</li>
+</ul>
+
+<p>To add depth to our buildings at higher zoom levels let’s add another set of rules that use the building symbolizer to render polygons as block-like shapes. Add the following CartoCSS to your custom stylesheet and then click Save.</p>
+
+<pre><code>
+#building[zoom&gt;=16] {
+ building-fill:#eee;
+ building-fill-opacity:0.9;
+ building-height:4;
+}
+</code></pre>
+
+<figure><img src="https://cloud.githubusercontent.com/assets/83384/3870329/bceff796-20c8-11e4-8ff2-23bf7b374bff.png"/></figure>
+
+<p><em>图片来源：www.mapbox.com</em></p>
+
+<h3>Styling parks</h3>
+
+<p>Add the following CartoCSS to your custom stylesheet and then click Save.</p>
+
+<pre><code>
+#landuse[class=&#39;park&#39;] {
+ polygon-fill:#dec;
+}
+
+#poi_label[maki=&#39;park&#39;][scalerank&lt;=3][zoom&gt;=15] {
+ text-name:@name;
+ text-face-name:@sans;
+ text-size:10;
+ text-wrap-width: 60;
+ text-fill:#686;
+ text-halo-fill:#fff;
+ text-halo-radius:1;
+ text-halo-rasterizer:fast;
+}
+
+</code></pre>
+
+<figure><img src="https://cloud.githubusercontent.com/assets/83384/3870363/c7b51674-20c9-11e4-8393-9da2f75b5d67.png"/></figure>
+
+<p><em>图片来源：www.mapbox.com</em></p>
+
+<ul>
+	<li><code>#landuse</code> selects features from the landuse layer.</li>
+	<li><code>[class=&#39;park&#39;]</code> restricts the landuse layer to features where the class attribute is park.</li>
+	<li><code>#poi_label</code> selects the <code>poi_label</code> layer for labelling parks.</li>
+	<li><code>[maki=&#39;park&#39;][scalerank&lt;=3][zoom&gt;=15]</code> restricts the <code>poi_label</code> layer to prominent park labels and restricts their visibility to zoom level 15 or greater.</li>
+	<li><code>text-name: @name</code> sets the field that label contents will use for their text. It references the existing <code>@name</code> variable defined in the <code>style</code> tab.</li>
+	<li><code>text-face-name: @sans</code> sets the font to use for displaying labels. It references the existing <code>@sans</code> variable defined in the style tab.</li>
+	<li><code>text-wrap-width: 60</code> sets a maximum width for a single line of text.</li>
+	<li><code>text-halo-rasterizer: fast</code> uses an alternative optimized algorithm for drawing halos around text that improves rendering speed.</li>
+</ul>
+
+<h3>Labelling roads</h3>
+
+<p>Add the following CartoCSS to your custom stylesheet and then click Save.</p>
+
+<pre><code>
+#road_label[zoom&gt;=13] {
+ text-name:@name;
+ text-face-name:@sans;
+ text-size:10;
+ text-placement:line;
+ text-avoid-edges:true;
+ text-fill:#68a;
+ text-halo-fill:#fff;
+ text-halo-radius:1;
+ text-halo-rasterizer:fast;
+}
+
+</code></pre>
+
+<figure><img src="https://cloud.githubusercontent.com/assets/83384/3870380/23717e70-20cb-11e4-99f5-68a80914a0ce.png"/></figure>
+
+<p><em>图片来源：www.mapbox.com</em></p>
+
+<ul>
+	<li><code>#road_label</code> selects features from the road_label layer.</li>
+	<li><code>[zoom&gt;=13]</code> restricts the road_label layer to zoom level 13 or greater.</li>
+	<li><code>text-placement: line</code> sets labels to follow the orientation of lines rather than horizontally.</li>
+	<li><code>text-avoid-edges: true</code> forces labels to be placed away from tile edges to avoid being clipped.</li>
+</ul>
+
+<h2>基础用法</h2>
+
+<h3>样式选择器（Selectors）</h3>
+
+<p>CartoCSS styles are constructed by applying blocks of style rules to groups of objects. Style blocks are bounded by curly braces {} and contain style properties and values. Selectors are what allow you restrict these styles to specific layers or groups of objects within layers.</p>
+
+<h4>By layer ID</h4>
+
+<p>Select all of the objects from a single layer by the layer’s ID. Separate multiple layer IDs with commas to select them for a single style.</p>
+
+<pre><code>
+#layer_name {
+ // styles
+}
+#layer_1,
+#layer_2 {
+ // styles will apply to all the objects in both layers
+}
+
+</code></pre>
+
+<h4>By layer class</h4>
+
+<p>You can also assign classes to layers to select multiple layers more simply. In Mapbox Studio (unlike TileMill) layer classes are only available for advanced usage.</p>
+
+<pre><code>
+.roads {
+ // styles will apply to all layers
+ // with a class of &#39;roads&#39;
+}
+
+</code></pre>
+
+<h4>Filter selectors</h4>
+
+<p>You can modify selections with filters that reduce the number of objects a style applies to based on certain criteria. Filters let your style read into the various text and numeric properties attached to each object in a layer. For example, you might have all your roads in a single layer, but you could use filters to specify different line colors for different road classifications.</p>
+
+<p>Filters should be written inside square brackets after a layer selector or nested inside a larger style block.</p>
+
+<h5>Zoom level filters</h5>
+
+<p>Restrict styles to certain zoom levels. This style will only apply when your map is zoomed all the way out to zoom level 0:</p>
+
+<pre><code>
+#layer[zoom=0] { /* style */ }
+
+</code></pre>
+
+<p>You can specify ranges of zoom levels using two filters:</p>
+
+<pre><code>
+#layer[zoom&gt;=4][zoom&lt;=10] { /* style */ }
+
+</code></pre>
+
+<p>Valid operators for zoom filters are = (equal to), &gt; (greater than), &lt; (less than), &gt;= (greater than or equal to), &lt;= (less than or equal to), != (not equal to).</p>
+
+<p>You can nest filters to better organize your styles. For example, this style will draw red lines from zoom levels 4 through 10, but the lines will be thicker for zoom levels 8, 9, and 10.</p>
+
+<pre><code>
+#layer[zoom&gt;=4][zoom&lt;=10] {
+ line-color: red;
+ line-width: 2;
+ [zoom=8] { line-width: 3; }
+ [zoom=9] { line-width: 4; }
+ [zoom=10] { line-width: 5; }
+}
+
+</code></pre>
+
+<h5>Numeric value comparison filters</h5>
+
+<p>The same comparison operators available for the zoom filter can also be used for any numeric column in your data. For example, you might have a population field in a source full of city points. You could create a style that only labels cities with a population of more than 1 million.</p>
+
+<pre><code>
+#cities[population&gt;1000000] {
+ text-name: [name];
+ text-face-name: &#39;Open Sans Regular&#39;;
+}
+
+</code></pre>
+
+<p>You could also combine multiple numeric filters with zoom level filters to gradually bring in more populated cities as you zoom in.</p>
+
+<pre><code>
+#cities {
+ [zoom&gt;=4][population&gt;1000000],
+ [zoom&gt;=5][population&gt;500000],
+ [zoom&gt;=6][population&gt;100000] {
+	text-name: [name];
+	text-face-name: &#39;Open Sans Regular&#39;;
+ }
+}
+
+</code></pre>
+
+<p>As with zoom levels, you can select data based on numeric ranges.</p>
+
+<pre><code>
+#cities[population&gt;100000][population&lt;2000000] { /* styles */ }
+
+</code></pre>
+
+<h5>Text comparison filters</h5>
+
+<p>You can also filter on columns that contain text. Filter on exact matches with the equals operator (=) or get the inverse results with the not-equal operator (!=). Unlike zoom and numeric values, text values must be quoted with either double or single quotes.</p>
+
+<p>As an example, look at the roads layer in Mapbox Streets (the default vector tile source in Mapbox Studio). It contains a field called class, and each value for this field is one of just a few options such as “motorway”, “main”, and “street”. This makes it a good column to filter on for styling.</p>
+
+<pre><code>
+#roads {
+ [class=&#39;motorway&#39;] {
+	   line-width: 4;
+ }
+ [class=&#39;main&#39;] {
+	   line-width: 2;
+ }
+ [class=&#39;street&#39;] {
+	   line-width: 1;
+ }
+}
+
+</code></pre>
+
+<p>To select everything that is not a motorway you could use the != (“not equal”) operator in the filter:</p>
+
+<pre><code>
+#roads[class!=&#39;motorway&#39;] { /* style */ }
+
+</code></pre>
+
+<h5>Regular expression filters</h5>
+
+<p><em>Note: This is an advanced feature that may have negative performance implications.</em></p>
+
+<p>You can match text in filters based on a pattern using the regular expression operator (=~). This filter will match any text starting with ‘motorway’ (ie, both ‘motorway’ and ‘motorway_link’).</p>
+
+<pre><code>
+#roads[class=~&#39;motorway.*&#39;] { /* style */ }
+
+</code></pre>
+
+<p>The . represents ‘any character’, and the * means ‘any number of occurrences of the preceding expression. So .* used in combination means ‘any number of any characters’.</p>
+
+<h3>为线要素配置样式（Styling lines）</h3>
+
+<p>Line styles can be applied to both line and polygon layers. The simplest line styles have just a line-width (in pixels) and a line-color making a single solid line. The default values for these properties are 1 and black respectively if they are not specified.</p>
+
+<figure><img src="https://www.mapbox.com/tilemill/assets/pages/styling-lines-1.png"/></figure>
+
+<p><em>图片来源：<a href="https://www.mapbox.com/tilemill/docs/guides/styling-lines/">Mapbox</a></em></p>
+
+<pre><code>
+// country land borders
+#admin_0_lines {
+ line-width: 0.75;
+ line-color: #426;
+}
+
+</code></pre>
+
+<h4>Dashed lines</h4>
+
+<p>Simple dashed lines can be created with the line-dasharray property. The value of this property is a comma-separated list of pixel widths that will alternatively be applied to dashes and spaces. This style draws a line with 10 pixel dashes separated by 4 pixel spaces:</p>
+
+<figure><img src="https://www.mapbox.com/tilemill/assets/pages/styling-lines-2.png"/></figure>
+
+<p><em>图片来源：<a href="https://www.mapbox.com/tilemill/docs/guides/styling-lines/">Mapbox</a></em></p>
+
+<pre><code>
+#admin_1_line {
+  line-width: 0.5;
+  line-color: #426;
+  line-dasharray: 10, 4;
+}
+
+</code></pre>
+
+<p>You can make your dash patterns as complex as you want, with the limitation that the dasharray values must all be whole numbers.</p>
+
+<figure><img src="https://www.mapbox.com/tilemill/assets/pages/styling-lines-3.png"/></figure>
+
+<p><em>图片来源：<a href="https://www.mapbox.com/tilemill/docs/guides/styling-lines/">Mapbox</a></em></p>
+
+<pre><code>
+#admin_1_line {
+  line-width: 0.5;
+  line-color: #426;
+  line-dasharray: 10, 3, 2, 3;
+}
+
+</code></pre>
+
+<h4>Caps &amp; Joins</h4>
+
+<p>With thicker line widths you’ll notice long points at sharp angles and odd gaps on small polygons.</p>
+
+<figure><img src="https://www.mapbox.com/tilemill/assets/pages/styling-lines-4.png"/></figure>
+
+<p><em>图片来源：<a href="https://www.mapbox.com/tilemill/docs/guides/styling-lines/">Mapbox</a></em></p>
+
+<pre><code>
+#countries::bigoutline {
+  line-color: #9ed1dc;
+  line-width: 20;
+}
+
+</code></pre>
+
+<p>You can adjust the angles with the <code>line-join</code> property: <code>round</code> or <code>square</code> them off (the default is called <code>miter</code>). The gaps can be filled by setting line-cap to <code>round</code> or <code>square</code> (the default is called <code>butt</code>).</p>
+
+<figure><img src="https://www.mapbox.com/tilemill/assets/pages/styling-lines-5.png"/></figure>
+
+<p><em>图片来源：<a href="https://www.mapbox.com/tilemill/docs/guides/styling-lines/">Mapbox</a></em></p>
+
+<pre><code>
+#countries::bigoutline {
+  line-color: #9ed1dc;
+  line-width: 20;
+  line-join: round;
+  line-cap: round;
+}
+
+</code></pre>
+
+<p>For dashed lines, line-caps are applied to each dash and their additional length is not included in the dasharray definition. Notice how the following style creates almost-solid lines despite the dasharray defining a gap of 4 pixels.</p>
+
+<figure><img src="https://www.mapbox.com/tilemill/assets/pages/styling-lines-6.png"/></figure>
+
+<p><em>图片来源：<a href="https://www.mapbox.com/tilemill/docs/guides/styling-lines/">Mapbox</a></em></p>
+
+<pre><code>
+#layer {
+  line-width: 4;
+  line-cap: round;
+  line-dasharray: 10, 4;
+}
+
+</code></pre>
+
+<h4>Compound line styles</h4>
+
+<h5>Roads</h5>
+
+<p>For certain types of line styles you will need to style and overlap multiple line styles. For example, a road with casing:</p>
+
+<figure><img src="https://www.mapbox.com/tilemill/assets/pages/styling-lines-7.png"/></figure>
+
+<p><em>图片来源：<a href="https://www.mapbox.com/tilemill/docs/guides/styling-lines/">Mapbox</a></em></p>
+
+<pre><code>
+#roads[Type=&#39;Major Highway&#39;] {
+  ::case {
+    line-width: 5;
+    line-color:#d83;
+  }
+  ::fill {
+    line-width: 2.5;
+    line-color:#fe3;
+  }
+}
+
+</code></pre>
+
+<p>Dealing with multiple road classes, things get a little more complicated. You can either group your styles by class or group them by attachment. Here we’ve grouped by class (filtering on the Type column).</p>
+
+<figure><img src="https://www.mapbox.com/tilemill/assets/pages/styling-lines-8.png"/></figure>
+
+<p><em>图片来源：<a href="https://www.mapbox.com/tilemill/docs/guides/styling-lines/">Mapbox</a></em></p>
+
+<pre><code>
+#roads {
+  [Type=&#39;Major Highway&#39;] {
+    ::case {
+      line-width: 5;
+      line-color:#d83;
+    }
+    ::fill {
+      line-width: 2.5;
+      line-color:#fe3;
+    }
+  }
+  [Type=&#39;Secondary Highway&#39;] {
+    ::case {
+      line-width: 4.5;
+      line-color:#ca8;
+    }
+    ::fill {
+      line-width: 2;
+      line-color:#ffa;
+    }
+  }
+}
+
+</code></pre>
+
+<h5>Railroads</h5>
+
+<p>A common way of symbolizing railroad lines is with regular hatches on a thin line. This can be done with two line attachments - one thin and solid, the other thick and dashed. The dash should be short with wide spacing.</p>
+
+<figure><img src="https://www.mapbox.com/tilemill/assets/pages/styling-lines-9.png"/></figure>
+
+<p><em>图片来源：<a href="https://www.mapbox.com/tilemill/docs/guides/styling-lines/">Mapbox</a></em></p>
+
+<pre><code>
+#railroads {
+  ::line, ::hatch { line-color: #777; }
+  ::line { line-width:1; }
+  ::hatch {
+    line-width: 4;
+    line-dasharray: 1, 24;
+  }
+}
+
+</code></pre>
+
+<p>Another common railroad line style is similar, but with a thin dash and a thick outline. Make sure you define the <code>::dash</code> after the <code>::line</code> so that it appears on top correctly.</p>
+
+<figure><img src="https://www.mapbox.com/tilemill/assets/pages/styling-lines-10.png"/></figure>
+
+<p><em>图片来源：<a href="https://www.mapbox.com/tilemill/docs/guides/styling-lines/">Mapbox</a></em></p>
+
+<pre><code>
+#railroads {
+  ::line {
+    line-width: 5;
+    line-color: #777;
+  }
+  ::dash {
+    line-color: #fff;
+    line-width: 2.5;
+    line-dasharray: 6, 6;
+  }
+}
+
+</code></pre>
+
+<h4>Line patterns with Images</h4>
+
+<p>Certain types of line pattens are too complex to be easily achieved with regular compound line styles. TileMill allows you to use repeated images alongside or in place of your other line styles. As an example we’ll make a pattern that we’ll use to represent a cliff. To do this you’ll need to work with external graphics software - we’ll be using Inkscape in this example.</p>
+
+<p>In Inkscape (or whatever you are using), create a new document. The size should be rather small - the height of the image will be the width of the line pattern and the width of the image will be repeated along the length of the line. Our example is 30x16 pixels.</p>
+
+<figure><img src="https://www.mapbox.com/tilemill/assets/pages/styling-lines-11.png"/></figure>
+
+<p><em>图片来源：<a href="https://www.mapbox.com/tilemill/docs/guides/styling-lines/">Mapbox</a></em></p>
+
+<p>Note how the centerline of the pattern is centered on the image (with empty space at the top) for correct alignment with the line data.</p>
+
+<p>To use the image from Inkscape, export it as a PNG file. Line patterns just need a single CartoCSS style to be added to your TileMill project:</p>
+
+<figure><img src="https://www.mapbox.com/tilemill/assets/pages/styling-lines-12.png"/></figure>
+
+<p><em>图片来源：<a href="https://www.mapbox.com/tilemill/docs/guides/styling-lines/">Mapbox</a></em></p>
+
+<pre><code>
+#cliff {
+  line-pattern-file: url(cliff.png);
+}
+
+</code></pre>
+
+<p>For some types of patterns, such as the cliff in this example, the direction of the pattern is important. The bottom of line pattern images will be on the right side of lines. The left side of the image will be at the beginning of the line.</p>
+
+<h3>为面要素配置样式（Styling polygons）</h3>
+
+<p>Polygons are areas that can be filled with a solid color or a pattern, and also given an outline. When you start a new TileMill project with the ‘Include world layer and styles’ option checked (the default) you’ll already have a basic polygon layer and style ready. The fill color of the polygons is defined by the <code>polygon-fill</code> property, and it has some line styles as well.</p>
+
+<p><strong>Tip</strong>: everything covered in the Styling Lines guide can also be applied to polygon layers.</p>
+
+<h4>Basic Styling</h4>
+
+<p>If you want to adjust the opacity of a polygon-fill you can use the polygon-opacity property. This is a number between 0 and 1 - 0 being fully transparent and 1 being fully opaque. With 75% opacity we can see both the map background and the lines that have been drawn beneath the polygons.</p>
+
+<figure><img src="https://www.mapbox.com/tilemill/assets/pages/styling-polygons-2.png"/></figure>
+
+<p><em>图片来源：<a href="https://www.mapbox.com/tilemill/docs/guides/styling-polygons/">Mapbox</a></em></p>
+
+<pre><code>
+#countries {
+  polygon-fill: #fff;
+  polygon-opacity: 0.75;
+}
+
+</code></pre>
+
+<h4>Gaps and Gamma</h4>
+
+<p>When you have a layer containing polygons that should fit together seamlessly, you might notice subtle gaps between them at certain scales. You can use the polygon-gamma style to help reduce this effect. Gamma takes a value between 0 and 1 - the default is 1, so try lowering it to hide the gaps. Be careful about setting it too low, though. You’ll get jagged edges and possibly even stranger artifacts.</p>
+
+<figure><img src="https://www.mapbox.com/tilemill/assets/pages/styling-polygons-3.png"/></figure>
+
+<p><em>图片来源：<a href="https://www.mapbox.com/tilemill/docs/guides/styling-polygons/">Mapbox</a></em></p>
+
+<pre><code>
+#countries {
+  polygon-fill: #fff;
+  polygon-gamma: 0.5;
+}
+
+</code></pre>
+
+<p>Patterns and Textures</p>
+
+<p>With TileMill, you can easily fill areas with textures and patterns by bringing in external images. You might create the patterns yourself in image editing software such as GIMP or Inkscape, or find ready-made images from resource websites such as Subtle Patterns or Free Seamless Textures.</p>
+
+<p>You can add a pattern style from any local file or web URL using the polygon-pattern-file style. Here is a simple diagonal stripe pattern you can use to try out - you can reference it from CartoCSS as in the snippet below.</p>
+
+<figure><img src="https://www.mapbox.com/tilemill/assets/pages/pattern-stripe.png"/></figure>
+
+<p><em>图片来源：<a href="https://www.mapbox.com/tilemill/docs/guides/styling-polygons/">Mapbox</a></em></p>
+
+<pre><code>
+polygon-pattern-file: url(&quot;http://tilemill.com/assets/pages/pattern-stripe.png&quot;);
+
+</code></pre>
+
+<figure><img src="https://www.mapbox.com/tilemill/assets/pages/pattern-example.png"/></figure>
+
+<p><em>图片来源：<a href="https://www.mapbox.com/tilemill/docs/guides/styling-polygons/">Mapbox</a></em></p>
+
+<p>For organization it’s a good idea to save and store images resources like this on your computer, for example inside your TileMill project folder. To see an example of this look at the Open Streets DC example: open your Documents directory in a file manager and navigate to MapBox→project→open-streets-dc. You can see that there is a subdirectory named ‘images’ and there are a couple of pattern images inside of it.</p>
+
+<figure><img src="https://www.mapbox.com/tilemill/assets/pages/tilemill-project-folder.png"/></figure>
+
+<p><em>图片来源：<a href="https://www.mapbox.com/tilemill/docs/guides/styling-polygons/">Mapbox</a></em></p>
+
+<p>Images are stored inside the TileMill project they can be <em>relatively referenced</em>, meaning you don’t need to specify the full path of the file location. Your style would simply be <code>polygon-pattern-file: url(&quot;images/water.png&quot;);</code>. Doing this also makes the TileMill project more portable, for example if you want move it to a different computer.</p>
+
+<h4>Global patterns</h4>
+
+<p>If you want to add a pattern image to the background of the whole map, you can use the background-image property on the ‘Map’ object.</p>
+
+<pre><code>
+Map {
+ background-image: url(&quot;pattern.png&quot;);
+}
+
+</code></pre>
+
+<p>Like all other properties on the Map object, background-image has a global effect - it cannot be filtered or changed depending on zoom level.</p>
+
+<p>If you want to control the a background pattern by zoom level you can add a layer to your project that contains an earth-sized polygon for you to style.</p>
+
+<h5>Combining patterns &amp; fills</h5>
+
+<p>Using transparency or compositing operations it is possible to get a lot of variety out of a single pattern image.</p>
+
+<h5>Ensuring seamlessness</h5>
+
+<p>There are two types of pattern alignment: local (the default) and global (specified with <code>polygon-pattern-alignment: global;</code>).</p>
+
+<p>When a pattern style has local alignment, that means that the pattern will be aligned separately for each polygon it is applied to. The top-left corner of the pattern image will be aligned to the top-left corner of a polygon’s bounding box.</p>
+
+<p>When a pattern style has global alignment, pattern images are aligned to the metatile instead of the geometries. Thus a repeated pattern will line up across all of the polygons it is applied to. With global alignment, pattern images should not be larger than the metatile (excluding the buffer), otherwise portions of the pattern will never be shown.</p>
+
+<p>Another important thing to keep in mind is with globally-aligned patterns is that the pixel dimensions of the image file must multiply evenly up to the width and height of the metatile. If your metatile size is the default of 2, your metatile is 512 pixels wide and tall (2×256). Your pattern width or height dimentions could be 16 or 32 or 128, but should not 20 or 100 or any other number you can’t evenly divide 512 by. If you are using patterns from a resource website, you may need to resize them in an image editor to conform to this limitation.</p>
+
+<h3>为文本标注配置样式（Styling labels）</h3>
+
+<p>原文已更新至新的Mapbox文档体系中：</p>
+
+<p><a href="https://www.mapbox.com/mapbox-studio/styling-labels/">https://www.mapbox.com/mapbox-studio/styling-labels/</a></p>
+
+<p>以下还是从原TileMill的文档中摘取过来的。</p>
+
+<h4>Basic Point Labels</h4>
+
+<p>In CartoCSS, labelling is handled by a variety of properties beginning with <code>text-</code>. For each text-related style there are two required properties: <code>text-name</code>, which specifies what text goes in the labels, and <code>text-face-name</code>, which specifies the typeface(s) will be used to draw the label. (You can see which typefaces are available in the font browser - click the ‘A’ icon on the left button bar.)</p>
+
+<p>The <code>text-name</code> property can pull text from your layer’s data fields. If your layer contains a column called <code>NAME</code>, a simple label style would look like this:</p>
+
+<figure><img src="https://www.mapbox.com/tilemill/assets/pages/styling-labels-1.png"/></figure>
+
+<p><em>图片来源：<a href="https://www.mapbox.com/tilemill/docs/guides/styling-labels/">Mapbox</a></em></p>
+
+<pre><code>
+#cities {
+ text-name: [NAME];
+ text-face-name: &#39;Droid Sans Regular&#39;;
+}
+
+</code></pre>
+
+<p>The color and size of these labels will be the defaults - black and 10 pixels respectively. These can be adjusted with the text-fill and text-size properties.</p>
+
+<figure><img src="https://www.mapbox.com/tilemill/assets/pages/styling-labels-2.png"/></figure>
+
+<p><em>图片来源：<a href="https://www.mapbox.com/tilemill/docs/guides/styling-labels/">Mapbox</a></em></p>
+
+<pre><code>
+#cities {
+  text-name: [NAME];
+  text-face-name: &#39;Droid Sans Regular&#39;;
+  text-fill: #036;
+  text-size: 20;
+}
+
+</code></pre>
+
+<p>To separate your text from the background, it is often useful to add an outline or halo around the text. You can control the color with text-halo-fill and the width of the halo (in pixels) is controlled with <code>text-halo-radius</code>. In the example below, we are using the fadeout color function to make the white halo 30% transparent.</p>
+
+<figure><img src="https://www.mapbox.com/tilemill/assets/pages/styling-labels-3.png"/></figure>
+
+<p><em>图片来源：<a href="https://www.mapbox.com/tilemill/docs/guides/styling-labels/">Mapbox</a></em></p>
+
+<pre><code>
+#cities {
+  text-name: [NAME];
+  text-face-name: &#39;Droid Sans Regular&#39;;
+  text-fill: #036;
+  text-size: 20;
+  text-halo-fill: fadeout(white, 30%);
+  text-halo-radius: 2.5;
+}
+
+</code></pre>
+
+<h4>Text Along Lines</h4>
+
+<p>You can also use CartoCSS to style labels that follow a line such as a road or a river. To do this we need to adjust the <code>text-placement</code> property. Its default is point; we’ll change it to line. We’ve also added a simple style to visualize the line itself.</p>
+
+<figure><img src="https://www.mapbox.com/tilemill/assets/pages/styling-labels-4.png"/></figure>
+
+<p><em>图片来源：<a href="https://www.mapbox.com/tilemill/docs/guides/styling-labels/">Mapbox</a></em></p>
+
+<pre><code>
+#rivers {
+  line-color: #85c5d3;
+  text-name: [NAME];
+  text-face-name: &#39;Droid Sans Regular&#39;;
+  text-fill: #036;
+  text-size: 20;
+  text-placement: line;
+}
+
+</code></pre>
+
+<p>For rivers it is nice to have the label offset parallel to the line of the river. This can be easily done with the <code>text-dy</code> property to specify how large (in pixels) this offset should be. (dy refers to a displacement along the <strong>y</strong> axis.)</p>
+
+<p>We’ll also adjust the <code>text-max-char-angle-delta</code> property. This allows us to specify the maximum line angle (in degrees) that the text should try to wrap around. The default is 22.5°; setting it lower will make the labels appear along straighter parts of the line.</p>
+
+<figure><img src="https://www.mapbox.com/tilemill/assets/pages/styling-labels-5.png"/></figure>
+
+<p><em>图片来源：<a href="https://www.mapbox.com/tilemill/docs/guides/styling-labels/">Mapbox</a></em></p>
+
+<pre><code>
+#rivers {
+  line-color: #85c5d3;
+  text-name: [NAME];
+  text-face-name: &#39;Droid Sans Regular&#39;;
+  text-fill: #036;
+  text-size: 20;
+  text-placement: line;
+  text-dy: 12;
+  text-max-char-angle-delta: 15;
+}
+
+</code></pre>
+
+<h4>Adding custom text</h4>
+
+<p>Labels aren’t limited to pulling text from just one column. You can combine data from many columns as well as arbitrary text to construct your <code>text-name</code>. For example you could include the state/province separated by a comma and a space.</p>
+
+<pre><code>
+#cities {
+  text-name: [NAME] + &#39;, &#39; + [ADM1NAME];
+  text-face-name: &#39;Droid Sans Regular&#39;;
+  text-size: 20;
+}
+
+</code></pre>
+
+<p>Other potential uses:</p>
+
+<ul>
+	<li>Multilingual labels: <code>[name] + &#39;(&#39; + [name_en] + &#39;)&#39;</code></li>
+	<li>Numeric units: <code>[elevation] + &#39;m&#39;</code></li>
+	<li>Clever unicode icons: <code>&#39;⚑ &#39; + [embassy_name] or &#39;⚓ &#39; + [harbour_name]</code></li>
+</ul>
+
+<p>You can also assign arbitrary text to labels that does not come from a data field. Due to a backwards-compatibility issue, you will need to quote such text twice for this to work correctly.</p>
+
+<pre><code>
+#parks {
+ text-name: &quot;&#39;Park&#39;&quot;;
+ text-face-name: &#39;Droid Sans Regular&#39;;
+}
+
+</code></pre>
+
+<p>If you need to include quotation marks in your custom quoted text, you will need to <em>escape</em> them with a backslash. For example, for the custom text <strong>City’s “Best” Coffee</strong>:</p>
+
+<pre><code>
+text-name: &quot;&#39;City\&#39;s \&quot;Best\&quot; Coffee&#39;&quot;;
+
+</code></pre>
+
+<h4>Multi-line labels</h4>
+
+<p>You can wrap long labels onto multiple lines with the <code>text-wrap-width</code> property which specifies at what pixel width labels should start wrapping. By default the first word that crosses the wrap-width threshold will not wrap - to change this you can set <code>text-wrap-before</code> to <code>true</code>.</p>
+
+<figure><img src="https://www.mapbox.com/tilemill/assets/pages/styling-labels-6.png"/></figure>
+
+<p><em>图片来源：<a href="https://www.mapbox.com/tilemill/docs/guides/styling-labels/">Mapbox</a></em></p>
+
+<pre><code>
+#cities {
+  text-name: [NAME] + &#39;, &#39; + [ADM1NAME];
+  text-face-name: &#39;Droid Sans Regular&#39;;
+  text-size: 20;
+  text-wrap-width: 100;
+  text-wrap-before: true;
+}
+
+</code></pre>
+
+<p>Note that text wrapping not yet supported with <code>text-placement: line</code>.</p>
+
+<p>You may have a specific point where you want the line breaks to happen. You can use the text-wrap-character to cause labels to wrap on a character other than a space. With a properly constructed dataset this can give you better control over your labels.</p>
+
+<p>For example we could alter our compound label example to separate the two fields only with an underscore. Setting the wrap character to _ (and also setting a very low wrap width to force wrapping) ensures that the two fields will always be written on their own lines.</p>
+
+<figure><img src="https://www.mapbox.com/tilemill/assets/pages/styling-labels-7.png"/></figure>
+
+<p><em>图片来源：<a href="https://www.mapbox.com/tilemill/docs/guides/styling-labels/">Mapbox</a></em></p>
+
+<pre><code>
+#cities {
+  text-name: [NAME] + &#39;_&#39; + [ADM1NAME];
+  text-face-name: &#39;Droid Sans Regular&#39;;
+  text-size: 20;
+  text-wrap-width: 1;
+  text-wrap-character: &#39;_&#39;;
+}
+
+</code></pre>
+
+<h4>Layering Labels</h4>
+
+<p>If you are applying label styles to layers that also have line or polygon styles you might notice some unexpected overlapping where the labels aren’t necessarily on top.</p>
+
+<p>For simple stylesheets you can control this by making sure your geometry styles and your text styles are in separate attachments:</p>
+
+<pre><code>
+#layer {
+  ::shape {
+    polygon-fill: #ace;
+    line-color: #68a;
+  }
+  ::label {
+    text-name: [name];
+    text-face-name: &#39;Arial Regular&#39;;
+  }
+}
+
+</code></pre>
+
+<p>However in many cases you’ll need to create a label layer that is separate from the layer you use for line and polygon styling. As an example of this, you can look at the Open Streets DC project that comes with TileMill.</p>
+
+<p>The layers roads and <code>roads-label</code> reference the same data, but are separated for correct ordering. For more details on how object stacking works in TileMill, see the Symbol Drawing Order guide.</p>
+
+<p>TODO: 这里需要重新组织以消除对TileMill的依赖</p>
+
+<h3>关于制图渲染中的各种顺序问题</h3>
+
+<p>Objects in TileMill are drawn using a <a href="http://en.wikipedia.org/wiki/Painter&#39;s_algorithm">Painter’s Algorithm</a>, meaning everything is drawn in a specific order, and things that are drawn first might be covered by things that are drawn later.</p>
+
+<h4>Overview</h4>
+
+<p>The order in which objects are drawn depends on the following conditions. See the sections that follow for more details.</p>
+
+<ol>
+	<li>Layers: “Higher” layers obscure “lower” ones.</li>
+	<li>Stylesheets are applied from left to right.</li>
+	<li>Rules within a Stylesheet are applied from top to bottom. This means two things: a). objects matched by later rules will be drawn over those defined by earlier rules; and b). attachments may be redefined by later rules.</li>
+	<li>Attachments (e.g., <code>::glow { ... }</code>) within a Stylesheet are applied from top to bottom.</li>
+	<li>Lastly, all else being equal, objects are drawn in the order in which they are found, such as in PostGIS.</li>
+</ol>
+
+<h4>Order vs. Priority</h4>
+
+<p>For things like lines and areas, objects that are drawn first are less likely to be fully visible. Objects high in the stack might completely obscure other objects, thus you might associate these with a high ‘priority’ or ‘importance’.</p>
+
+<p>However for things like text, markers, and icons that have their allow-overlap properties set to false (the default) things work a bit differently. Objects that are drawn first are <strong>more</strong> likely to be visible; instead of letting things sit on top of each other, overlapping objects are simply skipped. Since such objects higher in the stack are less likely to be drawn, you might associate these with a low ‘priority’ or ‘importance’.</p>
+
+<h4>Layer Ordering</h4>
+
+<p>Layers are the most basic and explicit way of controlling the order of elements on a map in TileMill. Layers are rendered in order starting at the bottom of the layers list moving up. You can adjust the position of each layer in the stack by clicking and draggin on its geometry icon.</p>
+
+<p>If you look at the example projects that come with TileMill, you can see that the basic parts of the map (eg. landuse areas, water) are in layers at the bottom of the list. The things that shouldn’t be covered up by anything else (eg. labels, icons) are in layers at the top of the list.</p>
+
+<h4>Attachment Ordering</h4>
+
+<p>Within a layer, styles can be broken up into ‘attachments’ with the <code>:: syntax</code>. Think of attachments like sub-layers.</p>
+
+<figure><img src="https://www.mapbox.com/tilemill/assets/pages/symbol-order-0.png"/></figure>
+
+<p><em>图片来源：<a href="https://www.mapbox.com/tilemill/docs/guides/symbol-drawing-order/">Mapbox</a></em></p>
+
+<pre><code>
+#layer {
+  ::outline {
+    line-width: 6;
+    line-color: black;
+  }
+  ::inline {
+    line-width: 2;
+    line-color: white;
+  }
+}
+
+</code></pre>
+
+<p>Attachments are drawn in the order they are first defined, so in the example above the <code>::outline</code> lines will be drawn below the <code>::inline</code> lines.</p>
+
+<p>Note that all styles are nested inside attachments. If you don’t explicitly define one, a default attachment still exists. Thus the following style produces the same result as the one above.</p>
+
+<figure><img src="https://www.mapbox.com/tilemill/assets/pages/symbol-order-0.png"/></figure>
+
+<p><em>图片来源：<a href="https://www.mapbox.com/tilemill/docs/guides/symbol-drawing-order/">Mapbox</a></em></p>
+
+<pre><code>
+#layer {
+  ::outline {
+    line-width: 6;
+    line-color: black;
+  }
+  line-width: 2;
+  line-color: white;
+}
+
+</code></pre>
+
+<h4>Data Ordering</h4>
+
+<p>Within each attachment, the order that your data is stored/retrieved in is also significant.</p>
+
+<p>When styling city labels, for example, it’s good to ensure that the order of your data makes sense for label prioritization. For data coming from an SQL database you should ORDER BY a population column or some other prioritization field in the select statement.</p>
+
+<p>Data coming from files are read from the beginning of the file to the end and cannot be re-ordered on-the-fly by TileMill. You’ll want to pre-process such files to make sure the ordering makes sense.</p>
+
+<p>You can do this from the terminal with ogr2ogr (see Setting up GDAL). This example rearranges all the objects in cities.shp based on the population field in descending order (highest population first).</p>
+
+<pre><code>
+ogr2ogr -sql \
+ &#39;select * from cities order by population desc&#39; \
+ cities_ordered.shp cities.shp
+
+</code></pre>
+
+<h4>Symbolizer Ordering</h4>
+
+<p>Each object in each attachment may have multiple symbolizers applied to it. That is, a polygon might have both a fill and an outline. In this case, the styles are drawn in the same order they are defined.</p>
+
+<p>In this style, the outline will be drawn below the fill:</p>
+
+<figure><img src="https://www.mapbox.com/tilemill/assets/pages/symbol-order-1.png"/></figure>
+
+<p><em>图片来源：<a href="https://www.mapbox.com/tilemill/docs/guides/symbol-drawing-order/">Mapbox</a></em></p>
+
+<pre><code>
+#layer {
+  line-width: 6;
+  polygon-fill: #aec;
+  polygon-opacity: 0.8;
+}
+
+</code></pre>
+
+<p>In this style, the line is drawn on top of the fill:</p>
+
+<figure><img src="https://www.mapbox.com/tilemill/assets/pages/symbol-order-2.png"/></figure>
+
+<p><em>图片来源：<a href="https://www.mapbox.com/tilemill/docs/guides/symbol-drawing-order/">Mapbox</a></em></p>
+
+<pre><code>
+#layer {
+  polygon-fill: #aec;
+  polygon-opacity: 0.8;
+  line-width: 6;
+}
+
+</code></pre>
+
+<p>It’s also possible to create multiple symbols of the same type within an attachment using named <em>instances</em>. Like attachments, their names are arbitrary.</p>
+
+<figure><img src="https://www.mapbox.com/tilemill/assets/pages/symbol-order-3.png"/></figure>
+
+<p><em>图片来源：<a href="https://www.mapbox.com/tilemill/docs/guides/symbol-drawing-order/">Mapbox</a></em></p>
+
+<pre><code>
+#layer {
+  bottomline/line-width: 6;
+  middleline/line-width: 4;
+  middleline/line-color: white;
+  topline/line-color: red;
+}
+
+</code></pre>
+
+<p>Note that symbolizer ordering happens after all other types of ordering - so an outline might be on top of one polygon but beneath a neighboring polygon. If you want to ensure lines are always below fills, use separate attachments.</p>
+
+<h4>Layer Source Ordering</h4>
+
+<p>The order in which your layer sources are specified also influences rendering order: data from sources are rendered in order. So if you click “Change source” under “Layers” and you see you.id123,mapbox.mapbox-terrain-v1, the layers from mapbox.mapbox-terrain-v1 will render last, over the layers from you.id123. To ensure that your own data renders last, use mapbox.mapbox-terrain-v1,you.id123.</p>
+
+<h3>关于合成操作（Compositing）</h3>
+
+<p>Compositing operations affect the way colors and textures of different elements and styles interact with each other.</p>
+
+<p>Without any compositing operations on a source it will just be painted directly over the destination – compositing operations allow us to change this. There are 33 compositing operations available in CartoCSS:</p>
+
+<p>| Compositing operations in CartoCSS |||</p>
+
+<p>|-------------|---------------|----------|</p>
+
+<p>| plus | difference | src |</p>
+
+<p>| minus | exclusion | dst |</p>
+
+<p>| multiply | contrast | src-over |</p>
+
+<p>| screen | invert | dst-over |</p>
+
+<p>| overlay | invert-rgb | src-in |</p>
+
+<p>| darken | grain-merge | dst-in |</p>
+
+<p>| lighten | grain-extract | src-out |</p>
+
+<p>| color-dodge | hue | dst-out |</p>
+
+<p>| color-burn | saturation | src-atop |</p>
+
+<p>| hard-light | color | dst-atop |</p>
+
+<p>| soft-light | value | xor |</p>
+
+<h2>高级技巧</h2>
+
+<h3>高级地图设计</h3>
+
+<p>参考 <a href="https://www.mapbox.com/tilemill/docs/guides/advanced-map-design/">https://www.mapbox.com/tilemill/docs/guides/advanced-map-design/</a></p>
+
+<h3>高级标注符号用法</h3>
+
+<p>参考 <a href="https://www.mapbox.com/tilemill/docs/guides/labels-advanced/">https://www.mapbox.com/tilemill/docs/guides/labels-advanced/</a></p>
+
+<h1>CartoCSS语言参考</h1>
 
 <p>The following is a list of properties provided in CartoCSS that you can apply to map elements.</p>
 
@@ -1064,8 +2035,7 @@
 
 <ul>
 	<li><ul>
-			<li><em>
-				</em></li>
+			<li><em></em></li>
 		</ul></li>
 </ul>
 
@@ -1079,8 +2049,7 @@
 
 <ul>
 	<li><ul>
-			<li><em>
-				</em></li>
+			<li><em></em></li>
 		</ul></li>
 </ul>
 
@@ -1176,8 +2145,7 @@
 
 <ul>
 	<li><ul>
-			<li><em>
-				</em></li>
+			<li><em></em></li>
 		</ul></li>
 </ul>
 
@@ -1195,8 +2163,7 @@
 
 <ul>
 	<li><ul>
-			<li><em>
-				</em></li>
+			<li><em></em></li>
 		</ul></li>
 </ul>
 
@@ -1274,8 +2241,7 @@
 
 <ul>
 	<li><ul>
-			<li><em>
-				</em></li>
+			<li><em></em></li>
 		</ul></li>
 </ul>
 
@@ -1505,8 +2471,7 @@
 
 <ul>
 	<li><ul>
-			<li><em>
-				</em></li>
+			<li><em></em></li>
 		</ul></li>
 </ul>
 
@@ -1892,8 +2857,7 @@
 
 <ul>
 	<li><ul>
-			<li><em>
-				</em></li>
+			<li><em></em></li>
 		</ul></li>
 </ul>
 
@@ -1909,8 +2873,7 @@
 
 <ul>
 	<li><ul>
-			<li><em>
-				</em></li>
+			<li><em></em></li>
 		</ul></li>
 </ul>
 
@@ -2230,8 +3193,7 @@
 
 <ul>
 	<li><ul>
-			<li><em>
-				</em></li>
+			<li><em></em></li>
 		</ul></li>
 </ul>
 
@@ -2661,8 +3623,7 @@
 
 <ul>
 	<li><ul>
-			<li><em>
-				</em></li>
+			<li><em></em></li>
 		</ul></li>
 </ul>
 
