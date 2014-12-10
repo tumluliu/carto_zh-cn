@@ -14,9 +14,9 @@
 
 感谢以下用户参与本书翻译：
 
-- [Anran Yang](http://www.github.com/08to09)
+- [Anran Yang](http://www.github.com/yarray)
 
-特别感谢[Anran Yang](http://www.github.com/08to09)对本书进行封面设计。
+特别感谢[Anran Yang](http://www.github.com/yarray)对本书进行封面设计。
 
 ### 源码仓库
 
