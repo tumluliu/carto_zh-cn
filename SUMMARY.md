@@ -21,7 +21,7 @@
    * [面符号的属性](src/lang-ref/polygon-attrs.md)
    * [点符号的属性](src/lang-ref/point-attrs.md)
    * [文本符号的属性](src/lang-ref/text-attrs.md)
-   * 盾标符号的属性
+   * [盾标符号的属性](src/lang-ref/shield-attrs.md)
    * 线模式的属性
    * 面模式的属性
    * 栅格符号的属性
