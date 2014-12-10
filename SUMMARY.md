@@ -2,4 +2,5 @@
 
 * [前言](README.md)
 * [概述](src/introduction/intro.md)
+* 快速入门
 
