@@ -26,7 +26,7 @@
    * [面模式的属性](src/lang-ref/polygon-pattern-attrs.md)
    * [栅格符号的属性](src/lang-ref/raster-attrs.md)
    * [注记符号的属性](src/lang-ref/markers-attrs.md)
-   * 建筑物符号的属性
+   * [建筑物符号的属性](src/lang-ref/building-attrs.md)
    * 调试模式下的属性
    * 属性取值类型
 
