@@ -12,7 +12,7 @@
    * [关于合成操作](src/basics/compositing_ref.md)
    * [支持CartoCSS的软件与系统](src/basics/softwares.md)
 * 高级技巧
-   * 高级地图设计
+   * [高级地图设计](src/advanced/map_design.md)
    * 高级标注方法
 * 语言参考
    * 公共属性
