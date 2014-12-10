@@ -16,4 +16,5 @@
    * [高级标注方法](src/advanced/adv-label-placement.md)
 * 语言参考
    * [公共属性](src/lang-ref/public-attrs.md)
+   * 地图的属性
 
