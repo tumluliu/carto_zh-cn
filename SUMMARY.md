@@ -4,4 +4,5 @@
 * [概述](src/introduction/intro.md)
 * 快速入门
 * 基础用法
+* 高级技巧
 
