@@ -16,7 +16,7 @@
    * [高级标注方法](src/advanced/adv-label-placement.md)
 * 语言参考
    * [公共属性](src/lang-ref/public-attrs.md)
-   * 地图的属性
+   * [地图的属性](src/lang-ref/map-attrs.md)
    * 线符号的属性
    * 面符号的属性
    * 点符号的属性
