@@ -13,5 +13,6 @@
    * [支持CartoCSS的软件与系统](src/basics/softwares.md)
 * 高级技巧
    * 高级地图设计
+   * 高级标注方法
 * 语言参考
 
