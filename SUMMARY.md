@@ -18,4 +18,5 @@
    * [公共属性](src/lang-ref/public-attrs.md)
    * 地图的属性
    * 线符号的属性
+   * 面符号的属性
 
