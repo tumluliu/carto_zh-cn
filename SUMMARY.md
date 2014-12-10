@@ -24,7 +24,7 @@
    * [盾标符号的属性](src/lang-ref/shield-attrs.md)
    * [线模式的属性](src/lang-ref/line-pattern-attrs.md)
    * [面模式的属性](src/lang-ref/polygon-pattern-attrs.md)
-   * 栅格符号的属性
+   * [栅格符号的属性](src/lang-ref/raster-attrs.md)
    * 注记符号的属性
    * 建筑物符号的属性
    * 调试模式下的属性
