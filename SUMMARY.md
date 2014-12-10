@@ -12,5 +12,6 @@
    * [关于合成操作](src/basics/compositing_ref.md)
    * [支持CartoCSS的软件与系统](src/basics/softwares.md)
 * 高级技巧
+   * 高级地图设计
 * 语言参考
 
