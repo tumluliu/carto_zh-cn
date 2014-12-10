@@ -20,7 +20,7 @@
    * [线符号的属性](src/lang-ref/line-attrs.md)
    * [面符号的属性](src/lang-ref/polygon-attrs.md)
    * [点符号的属性](src/lang-ref/point-attrs.md)
-   * 文本符号的属性
+   * [文本符号的属性](src/lang-ref/text-attrs.md)
    * 盾标符号的属性
    * 线模式的属性
    * 面模式的属性
