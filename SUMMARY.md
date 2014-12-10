@@ -6,7 +6,6 @@
 * 基础用法
    * [样式选择器](src/basics/selectors.md)
    * [配置线要素样式](src/basics/styling_lines.md)
-       * 文本符号的属性
    * [配置面要素样式](src/basics/styling_polygons.md)
    * [配置文本标注样式](src/basics/styling_labels.md)
    * [制图渲染中的顺序](src/basics/symbolizers_order.md)
