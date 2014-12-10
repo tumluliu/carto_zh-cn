@@ -17,7 +17,7 @@
 * 语言参考
    * [公共属性](src/lang-ref/public-attrs.md)
    * [地图的属性](src/lang-ref/map-attrs.md)
-   * 线符号的属性
+   * [线符号的属性](src/lang-ref/line-attrs.md)
    * 面符号的属性
    * 点符号的属性
    * 文本符号的属性
