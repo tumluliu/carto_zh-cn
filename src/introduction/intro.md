@@ -2,11 +2,13 @@
 
 CartoCSS是一种语法类似CSS（Cascading Style Sheets，层叠样式表，一种对网页进行设计的样式语言）的制图样式描述语言。如果熟悉CSS的话，那么CartoCSS这种对地图进行样式设计的语言也会看起来不陌生，尽管二者所包含的要素、属性等内容和含义完全不同。
 
+（译注：个人认为目前这部分中的内容不适合作为概述，过早进入让人头晕的概念，这中间至少还需要一个图来说明CartoCSS、Mapnik还有这些符号之间的关系）
+
 ### 符号
 
-CartoCSS所基于的地图渲染引擎Mapnik提供了一组基本样式，基于这些基本样式可以构造出复杂的地图样式。这些基本样式被称为**符号**，每种符号都有一系列可配置的属性。
+CartoCSS所基于的地图渲染引擎Mapnik提供了一组基本样式，基于这些基本样式可以配制出复杂的地图样式。这些基本样式被称为**符号**，每种符号都包含一系列属性。
 
-Mapnik中目前包含10种符号。每一种符号都可以应用于以下某一类或几类几何要素：
+Mapnik中目前包含以下十种符号。每种符号都可以用于对某一种或几种类型的空间数据进行样式配置：
 
 1.	线符号（可用于线要素和面要素）
 2.	面符号（可用于面要素）
@@ -15,16 +17,16 @@ Mapnik中目前包含10种符号。每一种符号都可以应用于以下某一
 5.	盾标符号（可用于点要素和线要素）
 6.	线模式（可用于线要素和面要素）
 7.	面模式（可用于面要素）
-8.	栅格符号（可用于栅格）
+8.	栅格符号（可用于栅格数据）
 9.	注记符号（可用于点要素、线要素和面要素）
-10.	建筑物符号
+10.	建筑物符号（译注：通常用于面要素）
 
 
-需要注意的是，尽管面符号可以用于定制线要素的样式，但往往会出现不可预期的不理想结果，因此不推荐使用。
+_需要注意的是，尽管面符号可以用于定制线要素的样式，但往往会出现不可预期的不理想结果，因此不推荐使用。_
 
 Multiple symbolizers can be applied to the same layer - some common combinations are line & polygons, point & text, line & markers, and line & line pattern.
 
-对同一个图层可以同时应用多种符号来定制样式。这种用法我们称之为“多符号”。常用的多符号组合包括：线符号加面符号，点符号、文本符号、线符号加注记符号，以及线符号加线模式等。
+对同一个图层可以同时应用多种符号来定制样式。这种用法我们称之为**多符号**。常用的多符号组合包括：线符号加面符号，点符号、文本符号、线符号加注记符号，以及线符号加线模式等。
 
 A symbolizer is not present on the map unless it has a style defined, but once one of its style properties is added to the stylesheet default values will apply to the other properties for that symbolizer unless overridden. For example, the default line symbolizer color is black, so if you assign a line-width to a layer that line will be black unless you also assign a different color.
 
@@ -40,7 +42,7 @@ Normally when you assign a style to a layer, the style applies to a default symb
 
 通常，如果对一个图层定义了一种样式，那么这种样式就会应用于一种默认的符号。在下面的例子中，后一个样式规则就会将前一个覆盖，因为二者都应用了相同的默认符号，即线符号。
 
-
+	
 	#layer {
 	  line-color: #C00;
 	  line-width: 1;
@@ -51,12 +53,13 @@ Normally when you assign a style to a layer, the style applies to a default symb
 	  line-opacity: 0.5;
 	  line-width: 2;
 	}
+	
 
 You can explicitly declare any number of new symbolizers for a layer that will be rendered in addition to styles they would otherwise conflict with. New symbolizers are defined using a double colon syntax inspired by pseudo-elements in CSS3:
 
 用户可以通过显式声明的方式为一个图层增加任意数量的**新符号**。由这些新符号所定义的样式之间只要不互相冲突，那么它们都将被用于渲染该图层。为图层定义新符号使用双冒号“::”语法，与CSS3中的伪元素定义类似：
 
-
+	
 	#layer {
 	  /* styles for the default symbolizers */
 	}
@@ -64,6 +67,7 @@ You can explicitly declare any number of new symbolizers for a layer that will b
 	#layer::newsymbol {
 	  /* styles for a new symbolizer named ‘newsymbol’ */
 	}
+	
 
 Note that newsymbol is not a special keyword but an arbitrary name chosen by the user. To help keep track of different symbolizers you can name additional symbolizers whatever makes sense for the situation. Some examples: `#road::casing`, `#coastline::glow_inner`, `#building::shadow`.
 
@@ -73,6 +77,7 @@ Returning to our previous example, declaring the second rule will add a blue glo
 
 在上一个例子中，我们可以通过再声明一个新符号来实现一个蓝色光晕效果。而正是通过增加了这个新符号的声明，使得蓝色光晕能够被叠加渲染在之前的红色轮廓线之上，而不是覆盖了前面红色线样式（如图）。
 
+	
 	#layer {
 	  line-color: #C00;
 	  line-width: 1;
@@ -83,8 +88,11 @@ Returning to our previous example, declaring the second rule will add a blue glo
 	  line-opacity: 0.5;
 	  line-width: 4;
 	}
+	
 
 ![](symbolizer-1.png)
+
+_图片来源：[Mapbox](https://www.mapbox.com/tilemill/docs/manual/carto/)_
 
 Symbolizers are rendered in the order they are defined, so here the `::glow` (blue line) appears on top of the first style (red line).
 
@@ -92,8 +100,9 @@ Symbolizers are rendered in the order they are defined, so here the `::glow` (bl
 
 Named symbolizer styles can still be overridden by further styles that reference the same symbolizer name. In this example, the line color will be green, not green-on-yellow.
 
-**具名符号**样式也同样会有同名覆盖问题，即后定义的具名符号会覆盖之前先定义的同名具名符号的样式设置。在下面的例子中，线的颜色最终将被渲染为绿色（RGB值为#3F6），而不是半透明黄色上叠加一层绿色效果（如图）。
+具名的新符号样式也同样会有同名覆盖问题，即后定义的新符号会覆盖之前先定义的同名符号的样式设置。在下面的例子中，线的颜色最终将被渲染为绿色（RGB值为#3F6），而不是半透明黄色上叠加一层绿色效果（如图）。
 
+	
 	.border::highlight {
 	  line-color: #FF0;
 	  line-opacity: 0.5;
@@ -102,6 +111,9 @@ Named symbolizer styles can still be overridden by further styles that reference
 	.border::highlight {
 	  line-color: #3F6;
 	}
+	
 
 ![](symbolizer-2.png)
+
+_图片来源：[Mapbox](https://www.mapbox.com/tilemill/docs/manual/carto/)_
 

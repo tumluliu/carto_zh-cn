@@ -1,4 +1,4 @@
-# CartoCSS参考手册
+# 语言参考
 
 The following is a list of properties provided in CartoCSS that you can apply to map elements.
 
