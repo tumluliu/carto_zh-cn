@@ -15,7 +15,7 @@
 * [高级技巧](src/advanced/advanced.md)
    * [高级地图设计](src/advanced/map_design.md)
    * [高级标注方法](src/advanced/adv-label-placement.md)
-* 语言参考
+* [语言参考](src/lang-ref/lang-ref.md)
    * [公共属性](src/lang-ref/public-attrs.md)
    * [地图的属性](src/lang-ref/map-attrs.md)
    * [线符号的属性](src/lang-ref/line-attrs.md)
