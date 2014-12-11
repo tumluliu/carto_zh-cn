@@ -12,7 +12,7 @@
    * [制图渲染中的顺序](src/basics/symbolizers_order.md)
    * [关于合成操作](src/basics/compositing_ref.md)
    * [支持CartoCSS的软件与系统](src/basics/softwares.md)
-* 高级技巧
+* [高级技巧](src/advanced/advanced.md)
    * [高级地图设计](src/advanced/map_design.md)
    * [高级标注方法](src/advanced/adv-label-placement.md)
 * 语言参考
