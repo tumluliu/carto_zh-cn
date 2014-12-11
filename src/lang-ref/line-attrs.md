@@ -1,4 +1,4 @@
-## 线符号（line）的属性
+### 线符号（line）的属性
 
 ##### line-color `color`
 
@@ -49,8 +49,9 @@ The behavior of lines when joining
 
 设置线要素之间在交汇点处如何绘制。三种绘制方法的比较如下图所示。
 
-![](linejoin.png)
-（图片来源：[www.w3.org](http://www.w3.org/TR/SVG/painting.html "line join")）
+![](http://www.w3.org/TR/SVG/images/painting/linejoin.png)
+
+_图片来源：[www.w3.org](http://www.w3.org/TR/SVG/painting.html "line join")_
 
 
 * * *
