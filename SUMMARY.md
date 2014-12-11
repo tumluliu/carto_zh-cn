@@ -6,6 +6,27 @@
 * 基础用法
    * [样式选择器](src/basics/selectors.md)
    * [配置线要素样式](src/basics/styling_lines.md)
+   * [配置面要素样式](src/basics/styling_polygons.md)
+   * [配置文本标注样式](src/basics/styling_labels.md)
+   * [制图渲染中的顺序](src/basics/symbolizers_order.md)
+   * [关于合成操作](src/basics/compositing_ref.md)
+   * [支持CartoCSS的软件与系统](src/basics/softwares.md)
 * 高级技巧
+   * [高级地图设计](src/advanced/map_design.md)
+   * [高级标注方法](src/advanced/adv-label-placement.md)
 * 语言参考
+   * [公共属性](src/lang-ref/public-attrs.md)
+   * [地图的属性](src/lang-ref/map-attrs.md)
+   * [线符号的属性](src/lang-ref/line-attrs.md)
+   * [面符号的属性](src/lang-ref/polygon-attrs.md)
+   * [点符号的属性](src/lang-ref/point-attrs.md)
+   * [文本符号的属性](src/lang-ref/text-attrs.md)
+   * [盾标符号的属性](src/lang-ref/shield-attrs.md)
+   * [线模式的属性](src/lang-ref/line-pattern-attrs.md)
+   * [面模式的属性](src/lang-ref/polygon-pattern-attrs.md)
+   * [栅格符号的属性](src/lang-ref/raster-attrs.md)
+   * [注记符号的属性](src/lang-ref/markers-attrs.md)
+   * [建筑物符号的属性](src/lang-ref/building-attrs.md)
+   * [调试模式下的属性](src/lang-ref/debug-attrs.md)
+   * [属性取值类型](src/lang-ref/value-types.md)
 
