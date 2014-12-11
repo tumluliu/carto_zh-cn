@@ -1,4 +1,4 @@
-## 盾标符号（shield）的属性
+### 盾标符号（shield）的属性
 
 ##### shield-name `expression`
 
@@ -8,7 +8,8 @@
 Value to use for a shield&quot;s text label. Data columns are specified using brackets like [column\_name]
 
 设置盾标上显示的标注文字。可以通过用中括号括起来的字段名来指定要使用的数据字段，例如[column\_name]。
-* * * 
+* * *
+
 ##### shield-file `uri`
 
 
@@ -287,7 +288,8 @@ The shield&#x27;s horizontal alignment from its centerpoint
 
 The shield&#x27;s vertical alignment from its centerpoint
 设置盾标相对于其中心点的垂直对齐方式。
-* * * 
+* * *
+
 ##### shield-placement-type `keyword`
 `dummy``simple`
 
@@ -296,7 +298,8 @@ The shield&#x27;s vertical alignment from its centerpoint
 
 Re-position and&#x2F;or re-size shield to avoid overlaps. &quot;simple&quot; for basic algorithm (using shield-placements string,) &quot;dummy&quot; to turn this feature off.
 设置盾标之间相互避让的算法。simple表示使用由shield-placements属性指定的基本算法。而dummy则表示不使用该特性。
-* * * 
+* * *
+
 ##### shield-placements `string`
 
 

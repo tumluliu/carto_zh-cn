@@ -1,4 +1,4 @@
-## 文本符号（text）的属性
+### 文本符号（text）的属性
 
 ##### text-name `expression`
 
@@ -78,7 +78,8 @@ Use this character instead of a space to wrap long text.
 
 Distance between repeated text labels on a line (aka. label-spacing)
 设置沿线绘制文本符号时每两个文本符号之间的间距。
-* * * 
+* * *
+
 ##### text-character-spacing `float`
 
 
@@ -87,7 +88,8 @@ Distance between repeated text labels on a line (aka. label-spacing)
 
 Horizontal spacing adjustment between characters in pixels
 设置文本文字的字间距，以像素为单位。
-* * * 
+* * *
+
 ##### text-line-spacing `unsigned`
 
 
@@ -149,7 +151,8 @@ _(white)_
 
 Specifies the color of the halo around the text.
 设置文本文字边缘的光晕颜色。
-* * * 
+* * *
+
 ##### text-halo-radius `float`
 
 
@@ -159,7 +162,8 @@ _(no halo)_
 
 Specify the radius of the halo in pixels
 设置文本文字边缘的光晕大小，以像素为单位。
-* * * 
+* * *
+
 ##### text-halo-rasterizer `keyword`
 `full``fast`
 
@@ -210,7 +214,8 @@ Position of label relative to point position.
 
 Avoid placing labels that intersect with tile boundaries.
 设置是否避免将文本标注置于绘制区域（通常为瓦片）的边缘处。
-* * * 
+* * *
+
 ##### text-min-distance `float`
 
 

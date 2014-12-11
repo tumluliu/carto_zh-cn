@@ -1,4 +1,4 @@
-## 面模式（polygon-pattern）的属性
+### 面模式（polygon-pattern）的属性
 
 ##### polygon-pattern-file `uri`
 
@@ -40,7 +40,8 @@ _(The image is rendered without modifications)_
 
 Apply an opacity level to the image used for the pattern
 设置填充图片的透明度。
-* * * 
+* * *
+
 ##### polygon-pattern-clip `boolean`
 
 

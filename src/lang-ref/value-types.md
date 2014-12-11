@@ -1,10 +1,10 @@
-## 关于取值类型的说明
+### 关于取值类型的说明
 
 Below is a list of values and an explanation of any expression that can be applied to properties in CartCSS.
 
 这里列出了CartoCSS中所有属性的取值类型及其说明。
 
-### 颜色型（Color）
+#### 颜色型（Color）
 
 CartoCSS accepts a variety of syntaxes for colors - HTML-style hex values, rgb, rgba, hsl, and hsla. It also supports the predefined HTML colors names, like `yellow` and `blue`.
 
@@ -51,7 +51,7 @@ These functions all take arguments which can be color variables, literal colors,
 以上这些函数的参数可以是颜色值，也可以是颜色名，还可以是其它颜色函数。
 
 
-### 浮点型（Float）
+#### 浮点型（Float）
 
 Float is a fancy way of saying 'number'. In CartoCSS, you specify _just a number_ - unlike CSS, there are no units, but everything is specified in pixels.
 
@@ -76,7 +76,7 @@ It's also possible to do simple math with number values:
 	}
 	
 
-### 统一资源描述符型（URI）
+#### 统一资源描述符型（URI）
 
 URI is a fancy way of saying URL. When an argument is a URI, you use the same kind of `url('place.png')` notation that you would with HTML. Quotes around the URL aren't required, but are highly recommended. URIs can be paths to places on your computer, or on the internet.
 
@@ -89,7 +89,7 @@ URI是URL的一种时髦说法（译注：这实在不敢苟同，在http协议�
 	}
 	
 
-### 字符串型（String）
+#### 字符串型（String）
 
 A string is basically just text. In the case of CartoCSS, you're going to put it in quotes. Strings can be anything, though pay attention to the cases of `text-name` and `shield-name` - they actually will refer to features, which you refer to by putting them in brackets, as seen in the example below.
 
@@ -101,7 +101,7 @@ A string is basically just text. In the case of CartoCSS, you're going to put it
 	}
 	
 
-### 布尔型（Boolean）
+#### 布尔型（Boolean）
 
 Boolean means yes or no, so it accepts the values `true` or `false`.
 布尔类型即是或否，取值为`true`或`false`。
@@ -112,7 +112,7 @@ Boolean means yes or no, so it accepts the values `true` or `false`.
 	}
 	
 
-### 表达式型（Expressions）
+#### 表达式型（Expressions）
 
 Expressions are statements that can include fields, numbers, and other types in a really flexible way. You have run into expressions before, in the realm of 'fields', where you'd specify `"[FIELD]"`, but expressions allow you to drop the quotes and also do quick addition, division, multiplication, and concatenation from within Carto syntax.
 
@@ -124,7 +124,7 @@ Expressions are statements that can include fields, numbers, and other types in 
 	}
 	
 
-### 数列型（Numbers）
+#### 数列型（Numbers）
 Numbers are comma-separated lists of one or more number in a specific order. They're used in line dash arrays, in which the numbers specify intervals of line, break, and line again.
 数列型是逗号分隔的一组有序数值。数列类型在用于配置虚线样式时，其中的数字交替表示的是实线段长度、间隔长度和实线段长度。
 
@@ -134,7 +134,7 @@ Numbers are comma-separated lists of one or more number in a specific order. The
 	}
 	
 
-### 百分数型（Percentages）
+#### 百分数型（Percentages）
 In Carto, the percentage symbol, `%` universally means `value/100`. It's meant to be used with ratio-related properties, like opacity rules.
 在CartoCSS中，百分号`%`表示`值/100`。它可以用于表示比例的属性，例如透明度。
 
@@ -152,7 +152,7 @@ _注意，百分数不能用于定义宽度、高度等属性。这一点与CSS�
 	}
 	
 
-### 函数型（Functions）
+#### 函数型（Functions）
 
 Functions are comma-separated lists of one or more functions. For instance, transforms use the `functions` type to allow for transforms within Carto, which are optionally chainable.
 这种类型可以包含一组逗号分隔的函数。例如，各种变换都是用`functions`作为值类型，而且这些函数还可以串接起来（？）。

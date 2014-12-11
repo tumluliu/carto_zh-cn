@@ -1,4 +1,4 @@
-## 建筑物符号（building）的属性
+### 建筑物符号（building）的属性
 
 ##### building-fill `color`
 

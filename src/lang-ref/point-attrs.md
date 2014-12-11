@@ -1,4 +1,4 @@
-## 点符号（point）的属性
+### 点符号（point）的属性
 
 ##### point-file `uri`
 

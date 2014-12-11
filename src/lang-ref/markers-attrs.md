@@ -1,4 +1,4 @@
-## 注记符号（markers）的属性
+### 注记符号（markers）的属性
 
 ##### marker-file `uri`
 
@@ -128,7 +128,8 @@ The default marker-type. If a SVG file is not given as the marker-file parameter
 The width of the marker, if using one of the default types.
 
 设置注记符号的宽度。这个属性只适用于两种内置的默认注记样式。
-* * * 
+* * *
+
 ##### marker-height `expression`
 
 

@@ -1,4 +1,4 @@
-## 栅格符号（raster）的属性
+### 栅格符号（raster）的属性
 
 ##### raster-opacity `float`
 

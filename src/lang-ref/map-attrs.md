@@ -1,4 +1,4 @@
-## 地图（map）的属性
+### 地图（map）的属性
 
 ##### background-color `color`
 

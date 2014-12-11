@@ -1,4 +1,4 @@
-## 线模式（line-pattern）的属性
+### 线模式（line-pattern）的属性
 
 ##### line-pattern-file `uri`
 
