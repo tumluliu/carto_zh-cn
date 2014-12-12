@@ -1,10 +1,12 @@
-## 基础用法
-
 ### 样式选择器（Selectors）
 
 CartoCSS styles are constructed by applying blocks of style rules to groups of objects. Style blocks are bounded by curly braces {} and contain style properties and values. Selectors are what allow you restrict these styles to specific layers or groups of objects within layers.
 
-#### By layer ID
+在CartoCSS中，地图样式通过一系列样式规则来表达。这些样式规则作用于地图上的各种要素对象，并且以模块化的形式进行组织。每一个**样式块**都由一对{}包围，其中包含了若干条用于描述样式的属性和值。**样式选择器**的作用就是指明某个样式块是作用于哪个图层，或者进一步限定这些样式在特定图层中的作用范围是哪些要素对象。（译注：因此从本质上说，样式选择器其实就是描述了样式块的作用域）
+
+样式选择器可以有三种不同的形式：图层标识、图层类别，以及过滤器。其中过滤器还可以分为数值型、文本型和正则表达式三种类型。
+
+#### 图层标识（By layer ID）
 
 Select all of the objects from a single layer by the layer’s ID. Separate multiple layer IDs with commas to select them for a single style.
 
@@ -18,7 +20,7 @@ Select all of the objects from a single layer by the layer’s ID. Separate mult
 	}
 	
 
-#### By layer class
+#### 图层类别（By layer class）
 
 You can also assign classes to layers to select multiple layers more simply. In Mapbox Studio (unlike TileMill) layer classes are only available for advanced usage.
 
@@ -29,13 +31,13 @@ You can also assign classes to layers to select multiple layers more simply. In 
 	}
 	
 
-#### Filter selectors
+#### 过滤器（Filter selectors）
 
 You can modify selections with filters that reduce the number of objects a style applies to based on certain criteria. Filters let your style read into the various text and numeric properties attached to each object in a layer. For example, you might have all your roads in a single layer, but you could use filters to specify different line colors for different road classifications.
 
 Filters should be written inside square brackets after a layer selector or nested inside a larger style block.
 
-##### Zoom level filters
+##### 缩放级别过滤器（Zoom level filters）
 
 Restrict styles to certain zoom levels. This style will only apply when your map is zoomed all the way out to zoom level 0:
 
@@ -63,7 +65,7 @@ You can nest filters to better organize your styles. For example, this style wil
 	}
 	
 
-##### Numeric value comparison filters
+##### 数值型过滤器（Numeric value comparison filters）
 
 The same comparison operators available for the zoom filter can also be used for any numeric column in your data. For example, you might have a population field in a source full of city points. You could create a style that only labels cities with a population of more than 1 million.
 
@@ -93,7 +95,7 @@ As with zoom levels, you can select data based on numeric ranges.
 	#cities[population>100000][population<2000000] { /* styles */ }
 	
 
-##### Text comparison filters
+##### 文本型过滤器（Text comparison filters）
 
 You can also filter on columns that contain text. Filter on exact matches with the equals operator (=) or get the inverse results with the not-equal operator (!=). Unlike zoom and numeric values, text values must be quoted with either double or single quotes.
 
@@ -119,7 +121,7 @@ To select everything that is not a motorway you could use the != (“not equal�
 	#roads[class!='motorway'] { /* style */ }
 	
 
-##### Regular expression filters
+##### 正则表达式过滤器（Regular expression filters）
 
 _Note: This is an advanced feature that may have negative performance implications._
 
