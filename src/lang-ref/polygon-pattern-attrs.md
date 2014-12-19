@@ -1,4 +1,4 @@
-### 面模式（polygon-pattern）的属性
+### 面图案（polygon-pattern）的属性
 
 ##### polygon-pattern-file `uri`
 
@@ -11,7 +11,7 @@ Image to use as a repeated pattern fill within a polygon
 * * *
 
 ##### polygon-pattern-alignment `keyword`
-`local``global`
+`local` `global`
 
 默认值： local
 

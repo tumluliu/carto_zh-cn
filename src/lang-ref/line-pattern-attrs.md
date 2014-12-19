@@ -1,4 +1,4 @@
-### 线模式（line-pattern）的属性
+### 线图案（line-pattern）的属性
 
 ##### line-pattern-file `uri`
 
@@ -35,7 +35,8 @@ geometries are simplified by the given tolerance
 * * *
 
 ##### line-pattern-simplify-algorithm `keyword`
-`radial-distance``zhao-saalfeld``visvalingam-whyatt`
+
+`radial-distance` `zhao-saalfeld` `visvalingam-whyatt`
 
 默认值： radial-distance
 _(geometry will not be simplified using the radial distance algorithm)_
