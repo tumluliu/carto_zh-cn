@@ -1,5 +1,7 @@
 ### 样式选择器（Selectors）
 
+_译注：[原文地址](https://www.mapbox.com/mapbox-studio/styling-selectors/)_
+
 CartoCSS styles are constructed by applying blocks of style rules to groups of objects. Style blocks are bounded by curly braces {} and contain style properties and values. Selectors are what allow you restrict these styles to specific layers or groups of objects within layers.
 
 在CartoCSS中，地图样式通过一系列样式规则来表达。这些样式规则作用于地图上的各种要素对象，并且以模块化的形式进行组织。每一个**样式块**都由一对花括号`{}`包围，其中包含了若干条用于描述样式的属性和值。**样式选择器**的作用就是指明某个样式块是作用于哪个图层，或者进一步限定这些样式在特定图层中的作用范围是哪些要素对象。（译注：因此从本质上说，样式选择器其实就是描述了样式块的作用域）
