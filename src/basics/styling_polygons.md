@@ -1,4 +1,4 @@
-### 为面要素配置样式（Styling polygons）
+### 配置面样式（Styling polygons）
 
 _译注：[原文地址](https://www.mapbox.com/mapbox-studio/styling-polygons/)_
 

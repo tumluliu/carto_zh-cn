@@ -1,4 +1,4 @@
-### 为线要素配置样式（Styling lines）
+### 配置线样式（Styling lines）
 
 _译注：[原文地址](https://www.mapbox.com/mapbox-studio/styling-lines/)_
 
