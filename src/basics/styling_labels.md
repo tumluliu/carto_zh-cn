@@ -1,50 +1,57 @@
-### 为文本标注配置样式（Styling labels）
+### 配置标注样式（Styling labels）
 
-原文已更新至新的Mapbox文档体系中：
+_译注：[原文地址](https://www.mapbox.com/mapbox-studio/styling-labels/)_
 
-[https://www.mapbox.com/mapbox-studio/styling-labels/](https://www.mapbox.com/mapbox-studio/styling-labels/)
-
-以下还是从原TileMill的文档中摘取过来的。
-
-#### Basic Point Labels
+#### 简单点标注（Basic Point Labels）
 
 In CartoCSS, labelling is handled by a variety of properties beginning with `text-`. For each text-related style there are two required properties: `text-name`, which specifies what text goes in the labels, and `text-face-name`, which specifies the typeface(s) will be used to draw the label. (You can see which typefaces are available in the font browser - click the ‘A’ icon on the left button bar.)
 
-The `text-name` property can pull text from your layer’s data fields. If your layer contains a column called `NAME`, a simple label style would look like this:
+在CartoCSS中，文本标注的样式由一系列以`text-`开头的属性进行配置。在配置标注的属性中，有两个必填属性：`text-name`和`text-face-name`。前者用于指定显示在标注中的文本内容；后者用于指定显示文本所用的字体。
 
-![](https://www.mapbox.com/tilemill/assets/pages/styling-labels-1.png)
-_图片来源：[Mapbox](https://www.mapbox.com/tilemill/docs/guides/styling-labels/)_
+The `text-name` property can pull text from your layer’s data fields. If your layer contains a column called `name_en`, a simple label style would look like this:
+
+`text-name`属性可以从图层的属性数据字段中提取文本内容。比如一个图层中有个属性字段叫`name_en`，那么一个简单的文本标注就可以用下面的方式进行样式定义：
+
+![](https://cloud.githubusercontent.com/assets/126952/3881477/0145a420-218e-11e4-8961-23c6d57df53b.png)
+
+_图片来源：[Mapbox](https://www.mapbox.com/mapbox-studio/styling-labels/)_
 
 	
-	#cities {
-	 text-name: [NAME];
-	 text-face-name: 'Droid Sans Regular';
+	#place_label {
+	  text-name: [name_en];
+	  text-face-name: 'Open Sans Condensed Bold';
 	}
 	
 
 The color and size of these labels will be the defaults - black and 10 pixels respectively. These can be adjusted with the text-fill and text-size properties.
 
-![](https://www.mapbox.com/tilemill/assets/pages/styling-labels-2.png)
-_图片来源：[Mapbox](https://www.mapbox.com/tilemill/docs/guides/styling-labels/)_
+上面例子中标注的颜色和尺寸都是默认值：黑色，10像素。这两个值可以用`text-fill`和`text-size`属性进行调整。
+
+![](https://cloud.githubusercontent.com/assets/126952/3881475/013ef2b0-218e-11e4-8f46-b578843e2092.png)
+
+_图片来源：[Mapbox](https://www.mapbox.com/mapbox-studio/styling-labels/)_
 
 	
-	#cities {
-	  text-name: [NAME];
-	  text-face-name: 'Droid Sans Regular';
+	#place_label {
+	  text-name: [name_en];
+	  text-face-name: 'Open Sans Condensed Bold';
 	  text-fill: #036;
 	  text-size: 20;
 	}
 	
 
-To separate your text from the background, it is often useful to add an outline or halo around the text. You can control the color with text-halo-fill and the width of the halo (in pixels) is controlled with `text-halo-radius`. In the example below, we are using the fadeout color function to make the white halo 30% transparent.
+To separate your text from the background, it is often useful to add an outline or halo around the text. You can control the color with text-halo-fill and the width of the halo (in pixels) is controlled with text-halo-radius. In the example below, we are using the fadeout color function to make the white halo 30% transparent.
 
-![](https://www.mapbox.com/tilemill/assets/pages/styling-labels-3.png)
-_图片来源：[Mapbox](https://www.mapbox.com/tilemill/docs/guides/styling-labels/)_
+为了能让文本标注在地图背景中更为醒目，通常会为文本文字增加边线或光晕。光晕的颜色用`text-halo-fill`属性进行配置，宽度用`text-halo-radius`属性进行配置。在下面的例子中，我们利用了`fadeout`颜色变换函数得到一个具有30%透明度的白色光晕。
+
+![](https://cloud.githubusercontent.com/assets/126952/3881476/014304f4-218e-11e4-9690-792b142c66fd.png)
+
+_图片来源：[Mapbox](https://www.mapbox.com/mapbox-studio/styling-labels/)_
 
 	
-	#cities {
-	  text-name: [NAME];
-	  text-face-name: 'Droid Sans Regular';
+	#place_label {
+	  text-name: [name_en];
+	  text-face-name: 'Open Sans Condensed Bold';
 	  text-fill: #036;
 	  text-size: 20;
 	  text-halo-fill: fadeout(white, 30%);
@@ -52,11 +59,12 @@ _图片来源：[Mapbox](https://www.mapbox.com/tilemill/docs/guides/styling-lab
 	}
 	
 
-#### Text Along Lines
+#### 沿线标注（Text Along Lines）
 
 You can also use CartoCSS to style labels that follow a line such as a road or a river. To do this we need to adjust the `text-placement` property. Its default is point; we’ll change it to line. We’ve also added a simple style to visualize the line itself.
 
 ![](https://www.mapbox.com/tilemill/assets/pages/styling-labels-4.png)
+
 _图片来源：[Mapbox](https://www.mapbox.com/tilemill/docs/guides/styling-labels/)_
 
 	
