@@ -63,15 +63,16 @@ _图片来源：[Mapbox](https://www.mapbox.com/mapbox-studio/styling-labels/)_
 
 You can also use CartoCSS to style labels that follow a line such as a road or a river. To do this we need to adjust the `text-placement` property. Its default is point; we’ll change it to line. We’ve also added a simple style to visualize the line itself.
 
-![](https://www.mapbox.com/tilemill/assets/pages/styling-labels-4.png)
+CartoCSS支持沿线标注，例如沿着道路或河流的走向来绘制文本标注。控制这种标注效果的属性是`text-placement`。它的默认值是`point`，如果要实现沿线标注，那么需要将其值设为`line`。在下面的例子中，除了标注以外，河流线本身也配置了简单的样式。
 
-_图片来源：[Mapbox](https://www.mapbox.com/tilemill/docs/guides/styling-labels/)_
+![](https://cloud.githubusercontent.com/assets/126952/3881773/9f47f6c6-2190-11e4-9d53-f49a687147cb.png)
+
+_图片来源：[Mapbox](https://www.mapbox.com/mapbox-studio/styling-labels/)_
 
 	
-	#rivers {
-	  line-color: #85c5d3;
-	  text-name: [NAME];
-	  text-face-name: 'Droid Sans Regular';
+	#waterway_label {
+	  text-name: [name_en];
+	  text-face-name: 'Open Sans Condensed Bold';
 	  text-fill: #036;
 	  text-size: 20;
 	  text-placement: line;
@@ -80,16 +81,20 @@ _图片来源：[Mapbox](https://www.mapbox.com/tilemill/docs/guides/styling-lab
 
 For rivers it is nice to have the label offset parallel to the line of the river. This can be easily done with the `text-dy` property to specify how large (in pixels) this offset should be. (dy refers to a displacement along the **y** axis.)
 
+对于河流来说，让它的标注相对于河流线稍作平移会比较美观。这种效果可通过设置`text-dy`属性来实现。它的值以像素为单位，用于指定将标注沿**y**轴方向的偏移量。
+
 We’ll also adjust the `text-max-char-angle-delta` property. This allows us to specify the maximum line angle (in degrees) that the text should try to wrap around. The default is 22.5°; setting it lower will make the labels appear along straighter parts of the line.
 
-![](https://www.mapbox.com/tilemill/assets/pages/styling-labels-5.png)
-_图片来源：[Mapbox](https://www.mapbox.com/tilemill/docs/guides/styling-labels/)_
+还有一个`text-max-char-angle-delta`属性，它用来调整标注文本的最大弯折角度，其默认值是22.5°。如果把它的值调小，那么标注就会被绘制在线要素上更为平直的部分，避开尖锐拐角。
+
+![](https://cloud.githubusercontent.com/assets/126952/3881774/9f4851e8-2190-11e4-8c86-cbdba0276f13.png)
+
+_图片来源：[Mapbox](https://www.mapbox.com/mapbox-studio/styling-labels/)_
 
 	
-	#rivers {
-	  line-color: #85c5d3;
-	  text-name: [NAME];
-	  text-face-name: 'Droid Sans Regular';
+	#waterway_label {
+	  text-name: [name_en];
+	  text-face-name: 'Open Sans Condensed Bold';
 	  text-fill: #036;
 	  text-size: 20;
 	  text-placement: line;
@@ -98,34 +103,50 @@ _图片来源：[Mapbox](https://www.mapbox.com/tilemill/docs/guides/styling-lab
 	}
 	
 
-#### Adding custom text
+#### 添加自定义文字（Adding custom text）
 
-Labels aren’t limited to pulling text from just one column. You can combine data from many columns as well as arbitrary text to construct your `text-name`. For example you could include the state/province separated by a comma and a space.
+Labels aren’t limited to pulling text from just one field. You can combine data from many fields as well as arbitrary text to construct your `text-name`. For example you could include a point’s type in parentheses.
+
+用于标注的文字（也就是`text-name`属性的值），不仅可以从空间数据的某一个属性字段中获取，它还可以由多个属性字段组合而成，还可以是用户自定义的任意文本。例如，可以在标注文字的后面添加一个写在括号中的兴趣点类型：
+
+![](https://cloud.githubusercontent.com/assets/126952/3882373/597ad9f0-2196-11e4-9cbf-1977422cf312.png)
 
 	
-	#cities {
-	  text-name: [NAME] + ', ' + [ADM1NAME];
-	  text-face-name: 'Droid Sans Regular';
-	  text-size: 20;
+	#poi_label {
+	  text-name: [name_en] + ' (' + [type] + ')';
+	  text-face-name: 'Open Sans Condensed Bold';
+	  text-size: 16;
 	}
 	
 
 Other potential uses:
 
+其它一些应用实例：
+
 - Multilingual labels: `[name] + '(' + [name_en] + ')'`
+- Administrative units: `[city] + ', ' + [province]`
 - Numeric units: `[elevation] + 'm'`
-- Clever unicode icons: `'⚑ ' + [embassy_name] or '⚓ ' + [harbour_name]`
+- Clever [unicode icons](http://copypastecharacter.com/symbols): `'⚑ ' + [embassy_name] or '⚓ ' + [harbour_name]`
+
+- 多语言标注：`[name] + '(' + [name_en] + ')'`
+- 行政区划单位：`[city] + ', ' + [province]`
+- 计量单位：`[elevation] + 'm'`
+- 特殊的[unicode字符](http://copypastecharacter.com/symbols)：`'⚑ ' + [embassy_name] or '⚓ ' + [harbour_name]`
 
 You can also assign arbitrary text to labels that does not come from a data field. Due to a backwards-compatibility issue, you will need to quote such text twice for this to work correctly.
 
+标注的内容还可以不从属性数据的字段中提取，而是任意用户自定义的文本。但由于向后兼容的原因，这样的自定义文本必须要套上两层引号：
+
 	
-	#parks {
-	 text-name: "'Park'";
-	 text-face-name: 'Droid Sans Regular';
+	#poi_label[maki='park'] {
+	  text-name: "'Park'";
+	  text-face-name: 'Open Sans Regular';
 	}
 	
 
 If you need to include quotation marks in your custom quoted text, you will need to _escape_ them with a backslash. For example, for the custom text **City’s “Best” Coffee**:
+
+如果标注文本中包含引号，那么需要使用反斜杠来转义。例如，如果要标注文字**City’s “Best” Coffee**，那么需要这样定义：
 
 	
 	text-name: "'City\'s \"Best\" Coffee'";
