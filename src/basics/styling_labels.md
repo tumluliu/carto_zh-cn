@@ -152,30 +152,54 @@ If you need to include quotation marks in your custom quoted text, you will need
 	text-name: "'City\'s \"Best\" Coffee'";
 	
 
-#### Multi-line labels
+#### 多行标注（Multi-line labels）
 
 You can wrap long labels onto multiple lines with the `text-wrap-width` property which specifies at what pixel width labels should start wrapping. By default the first word that crosses the wrap-width threshold will not wrap - to change this you can set `text-wrap-before` to `true`.
 
-![](https://www.mapbox.com/tilemill/assets/pages/styling-labels-6.png)
-_图片来源：[Mapbox](https://www.mapbox.com/tilemill/docs/guides/styling-labels/)_
+对于包含较长文本的标注，可以通过设置`text-wrap-width`属性来将其折行显示。这个属性用于指定标注文本从什么位置（以像素为单位）开始折行。对于正好位于设定的折行位置处的第一个字，默认是不会被折到下一行显示。如果要修改这个默认行为，可以将`text-wrap-before`属性设置为`true`。
+
+![](https://cloud.githubusercontent.com/assets/126952/3882901/a1ccfc06-219b-11e4-8545-4fd89239e144.png)
+
+_图片来源：[Mapbox](https://www.mapbox.com/mapbox-studio/styling-labels/)_
 
 	
-	#cities {
-	  text-name: [NAME] + ', ' + [ADM1NAME];
-	  text-face-name: 'Droid Sans Regular';
-	  text-size: 20;
-	  text-wrap-width: 100;
+	#poi_label {
+	  text-name: [name];
+	  text-face-name: 'Open Sans Condensed Bold';
+	  text-size: 16;
+	  text-wrap-width: 150;
 	  text-wrap-before: true;
 	}
 	
 
 Note that text wrapping not yet supported with `text-placement: line`.
 
-You may have a specific point where you want the line breaks to happen. You can use the text-wrap-character to cause labels to wrap on a character other than a space. With a properly constructed dataset this can give you better control over your labels.
+不过，需要注意多行本文不支持沿线标注的情况。
+
+You may have a specific point where you want the line breaks to happen. You can use the code n to indicate a new line.
+
+用户还可以自行指定一个特定的折行点，比如`\n`。
+
+	
+	#poi_label {
+	  text-name: [name] + '\n' + [type];
+	  text-face-name: 'Open Sans Condensed Bold';
+	  text-size: 16;
+	}
+	
+
+（译注：以下部分为原TileMill文档中的内容，但在新的Mapbox Studio文档中已被删除，但译者认为这部分值得保留。）
+
+You can use the text-wrap-character to cause labels to wrap on a character other than a space. With a properly constructed dataset this can give you better control over your labels.
+
+用户还可以利用`text-wrap-character`属性来指定一个折行字符（默认是空格）。这个特性在对一些具有特定结构的数据集进行文本标注时特别有用。
 
 For example we could alter our compound label example to separate the two fields only with an underscore. Setting the wrap character to \_ (and also setting a very low wrap width to force wrapping) ensures that the two fields will always be written on their own lines.
 
+例如我们可以将折行字符设置成下划线`_`，然后再把折行宽度`text-wrap-width`设得很小，这样就能够保证以`_`分隔的两个字段总是能分成两行显示。
+
 ![](https://www.mapbox.com/tilemill/assets/pages/styling-labels-7.png)
+
 _图片来源：[Mapbox](https://www.mapbox.com/tilemill/docs/guides/styling-labels/)_
 
 	
@@ -188,11 +212,15 @@ _图片来源：[Mapbox](https://www.mapbox.com/tilemill/docs/guides/styling-lab
 	}
 	
 
-#### Layering Labels
+#### 独立标注层（Layering Labels）
 
 If you are applying label styles to layers that also have line or polygon styles you might notice some unexpected overlapping where the labels aren’t necessarily on top.
 
+如果在一个已经配置了线样式或面样式的图层上也同时配置标注样式，那么往往会出现一些如标注相互压盖等异常渲染效果。
+
 For simple stylesheets you can control this by making sure your geometry styles and your text styles are in separate attachments:
+
+对于这个问题，在地图样式比较简单的时候，可以通过将地理要素的样式与标注样式分别定义在不同的子符号中来解决：
 
 	
 	#layer {
@@ -209,9 +237,11 @@ For simple stylesheets you can control this by making sure your geometry styles 
 
 However in many cases you’ll need to create a label layer that is separate from the layer you use for line and polygon styling. As an example of this, you can look at the Open Streets DC project that comes with TileMill.
 
+而对于样式比较复杂的大多数情况，则最好是为标注专门创建一个独立于地理要素的图层，然后分别定义它们的样式。
+
 The layers roads and `roads-label` reference the same data, but are separated for correct ordering. For more details on how object stacking works in TileMill, see the Symbol Drawing Order guide.
 
-TODO: 这里需要重新组织以消除对TileMill的依赖
+这时，专门用于标注的图层与其对应的地理要素图层实际指向的是同一个地理数据集，但是要把标注图层置于地理要素图层之上，以保证标注不会被地理要素压盖。
 
 
 
