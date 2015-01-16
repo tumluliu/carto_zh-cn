@@ -1,5 +1,7 @@
 ### 基本概念
 
+_译注：[原文地址](https://www.mapbox.com/tilemill/docs/manual/carto/)_
+
 #### 符号
 
 CartoCSS所基于的地图渲染引擎Mapnik提供了一组基本样式，基于这些基本样式可以配制出复杂的地图样式。这些基本样式被称为**符号**，每种符号都包含一系列属性。
@@ -112,4 +114,146 @@ Named symbolizer styles can still be overridden by further styles that reference
 ![](https://www.mapbox.com/tilemill/assets/manual/symbolizer-2.png)
 
 _图片来源：[Mapbox](https://www.mapbox.com/tilemill/docs/manual/carto/)_
+
+
+**需要补充以下部分（来自[carto](https://github.com/mapbox/carto)项目的[README](https://github.com/mapbox/carto/blob/master/README.md)）：**
+
+
+#### 从属样式与实例（Attachments and Instances）
+
+In CSS, a certain object can only have one instance of a property. A `<div>` has a specific border width and color, rules that match better than others (#id instead of .class) override previous definitions. CartoCSS acts the same way normally for the sake of familiarity and organization, but Mapnik itself is more powerful.
+
+Layers in Mapnik can have multiple [borders](#)(http://trac.mapnik.org/wiki/LineSymbolizer) and multiple copies of other attributes. This ability is useful in drawing line outlines, like in the case of road borders or 'glow' effects around coasts. CartoCSS makes this accessible by allowing attachments to styles:
+
+	
+	#world {
+	  line-color: #fff;
+	  line-width: 3;
+	}
+	
+	#world::outline {
+	  line-color: #000;
+	  line-width: 6;
+	}
+	
+
+Attachments are optional.
+
+While attachments allow creating implicit "layers" with the same data, using **instances** allows you to create multiple symbolizers in the same style/layer:
+
+	
+	#roads {
+	  casing/line-width: 6;
+	  casing/line-color: #333;
+	  line-width: 4;
+	  line-color: #666;
+	}
+	
+
+This makes Mapnik first draw the line of color #333 with a width of 6, and then immediately afterwards, it draws the same line again with width 4 and color #666. Contrast that to attachments: Mapnik would first draw all casings before proceeding to the actual lines.
+
+#### 变量与表达式（Variables & Expressions）
+
+CartoCSS inherits from its basis in [less.js](#)(http://lesscss.org/) some new features in CSS. One can define variables in stylesheets, and use expressions to modify them.
+
+	
+	@mybackground: #2B4D2D;
+	
+	Map {
+	  background-color: @mybackground
+	}
+	
+	#world {
+	  polygon-fill: @mybackground + #222;
+	  line-color: darken(@mybackground, 10%);
+	}
+	
+
+#### 嵌套样式（Nested Styles）
+
+CartoCSS also inherits nesting of rules from less.js.
+
+	
+	/* Applies to all layers with .land class */
+	.land {
+	  line-color: #ccc;
+	  line-width: 0.5;
+	  polygon-fill: #eee;
+	  /* Applies to #lakes.land */
+	  #lakes {
+	    polygon-fill: #000;
+	  }
+	}
+	
+
+This can be a convenient way to group style changes by zoom level:
+
+	
+	[zoom > 1] {
+	  /* Applies to all layers at zoom > 1 */
+	  polygon-gamma: 0.3;
+	  #world {
+	    polygon-fill: #323;
+	  }
+	  #lakes {
+	    polygon-fill: #144;
+	  }
+	}
+	
+
+#### 字体（FontSets）
+
+By defining multiple fonts in a `text-face-name` definition, you create [FontSets](#)(http://trac.mapnik.org/wiki/FontSet) in CartoCSS. These are useful for supporting multiple character sets and fallback fonts for distributed styles.
+
+	
+	/* CartoCSS样式*/
+	#world {
+	  text-name: "[NAME]";
+	  text-size: 11;
+	  text-face-name: "Georgia Regular", "Arial Italic";
+	}
+	
+
+	
+	/* 编译后的Mapnik XML样式 */
+	<FontSet name="fontset-0">
+	  <Font face-name="Georgia Regular"/>
+	  <Font face-name="Arial Italic"/>
+	</FontSet>
+	<Style name="world-text">
+	  <Rule>
+	    <TextSymbolizer fontset-name="fontset-0"
+	      size="11"
+	      name="[NAME]"/>
+	  </Rule>
+	</Style>
+	
+
+#### 过滤器（Filters）
+
+CartoCSS supports a variety of filter styles:
+
+Numeric comparisons:
+
+	
+	#world[population > 100]
+	#world[population < 100]
+	#world[population >= 100]
+	#world[population <= 100]
+	
+
+General comparisons:
+
+	
+	#world[population = 100]
+	#world[population != 100]
+	
+
+String comparisons:
+
+	
+	/* a regular expression over name */
+	#world[name =~ "A.*"]
+	
+
 
