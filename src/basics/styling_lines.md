@@ -128,7 +128,7 @@ _图片来源：[Mapbox](https://www.mapbox.com/mapbox-studio/styling-lines/)_
 
 Dealing with multiple road classes, things get a little more complicated. You can either group your styles by class or group them by attachment. Here we’ve grouped by class (filtering on the `class` field).
 
-对于不同的级别或类型的道路，样式定义也会相应复杂一些。用户可以按照道路的级别或组成样式的子符号（译注：attachment在这里是指通过叠加覆盖方式组合而成的某类道路样式的各个新符号，比如例子中的`::case`和`::fill`）对样式进行分组。下面的例子中的样式是按照道路级别进行分组（基于`class`字段设置过滤器）。
+对于不同的级别或类型的道路，样式定义也会相应复杂一些。用户可以按照道路的级别或组成样式的从属样式（译注：attachment在这里是指通过叠加覆盖方式组合而成的某类道路样式的各个从属样式，比如例子中的`::case`和`::fill`）对样式进行分组。下面的例子中的样式是按照道路级别进行分组（基于`class`字段设置过滤器）。
 
 ![](https://www.mapbox.com/tilemill/assets/pages/styling-lines-8.png)
 
@@ -163,7 +163,7 @@ _图片来源：[Mapbox](https://www.mapbox.com/tilemill/docs/guides/styling-lin
 
 A common way of symbolizing railroad lines is with regular hatches on a thin line. This can be done with two line attachments - one thin and solid, the other thick and dashed. The dash should be short with wide spacing.
 
-一种典型的铁路线样式是在一条细实线上画上一系列垂直于细线的小短线。这种效果可以通过用两个相互叠加的线符号实现：一条细实线，还有一条短而粗的虚线。
+一种典型的铁路线样式是在一条细实线上画上一系列垂直于细线的小短线。这种效果可以通过用两个相互叠加的从属线样式实现：一条细实线，还有一条短而粗的虚线。
 
 ![](https://cloud.githubusercontent.com/assets/126952/3893425/b8d7178e-223a-11e4-813a-f14390ac3bd6.png)
 
