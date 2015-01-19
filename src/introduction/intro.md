@@ -11,3 +11,10 @@ CartoCSS是一种语法类似CSS（Cascading Style Sheets，层叠样式表，�
 如果上面三点阐述清楚了，那么接下来可以再介绍一下CartoCSS的诞生和发展过程。这里面就不得不提到Mapnik，这个尺度就不太好把握了。主要还是侧重于发展历程吧，即从Mapnik到Cascadenik，再到CartoCSS的发展过程。
 
 最后，再介绍一下用CartoCSS制图与目前其它主流（比如ArcGIS，或者真正的地图出版社）制图方法及工具链的对比。这个也蛮有挑战的。
+
+**2015.01.15. 注意：根据以下参考材料补充完善这部分内容**
+
+- [http://www.macwright.org/2012/11/02/css-for-maps.html](http://www.macwright.org/2012/11/02/css-for-maps.html)
+- [http://www.developmentseed.org/blog/2011/feb/09/introducing-carto-css-map-styling-language/](http://www.developmentseed.org/blog/2011/feb/09/introducing-carto-css-map-styling-language/)
+- [https://github.com/mapbox/carto/blob/master/README.md](https://github.com/mapbox/carto/blob/master/README.md)
+
