@@ -113,13 +113,19 @@ The `overlay` comp-op combines the colors from the source image, and also uses t
 
 The `multiply` comp-op multiplies the color of the source and destination, usually resulting in a darkened image tinted to the color of the source. If either the source or destination is solid white, the other will appear unchanged. If either the source or destination is solid black, the result will also be solid black.
 
+`multiply`合成操作将源与目标的颜色进行相乘运算。这种操作得到图像的颜色通常是基于源图像颜色的暗化效果。如果源（或目标）是纯白色的，那么合成的效果就是保持目标（或源）的颜色不变。如果源或目标是纯黑色的，那么合成的效果就是纯黑色。
+
 One of the many uses for multiply is to simulate the way ink colors would blend with each other or with a textured surface. It can also be used for other kinds of texure effects.
+
+`multiply`操作的众多应用之一是模拟不同颜色的墨水混合或墨水与带有纹理的表面混合的效果。此外，它还可以用于其它纹理效果。
 
 ##### Color-dodge
 
 ![](https://cloud.githubusercontent.com/assets/83384/3881330/228f3ea8-218d-11e4-9a26-d9c6c501f4ec.png)![](https://cloud.githubusercontent.com/assets/83384/3881334/2296b2b4-218d-11e4-9ca7-a5ac240da41e.png)
 
 The `color-dodge` comp op brightens the colors of the destination based on the source. The lighter the source, the more intense the effect. You’ll get nicer results when using this on dark to mid-tone colors, otherwise the colors can become too intense.
+
+`color-dodge`操作以源图像为基础将目标的颜色亮化。源图像的颜色越亮，合成后的效果越刺眼。要想得到比较美观的效果，需要在颜色较暗的颜色上应用该操作，否则就会得到过于刺眼的合成效果。
 
 ##### Plus
 
