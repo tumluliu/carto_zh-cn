@@ -133,13 +133,19 @@ The `color-dodge` comp op brightens the colors of the destination based on the s
 
 The `plus` comp-op adds the color of the source to the destination. For example, if your source color is dark red, this operation will add a small amount of red color to the destination causing it to brighten and also turn red. The lighter your source color, the lighter your result will be because a lot of color will be added. A completely black source will not affect the destination at all because no color will be added. Using this mode on darker source layers is recommended.
 
+`plus`操作将源的颜色与目标颜色相加。举个例子，如果源的颜色是深红（dark red），那么`plus`操作就会为目标增加少量的红色，使其亮度增加而且颜色偏红。源的颜色越浅，得到结果的颜色也会越浅，因为会有很多颜色被添加（译注：神马意思？？）。纯黑色的源不会对目标产生任何影响，因为没有颜色会被叠加（译注：这里的“颜色”指的是RGB中的颜色分量吗？黑色是#000，所以“no color”；白色是#FFF，所以有“a lot of color”，是这个意思？）。推荐在源图层颜色较深的时候使用这个合成操作。
+
 ##### Minus
 
 ![](https://cloud.githubusercontent.com/assets/83384/3881374/230be6c4-218d-11e4-86c3-220891079924.png)![](https://cloud.githubusercontent.com/assets/83384/3881375/230e6962-218d-11e4-9cf5-485a1a7a355d.png)
 
 The `minus` comp-op subtracts the color of the source from the destination. For example, if your source color is a dark red, this operation will remove a small amount of red color from the destination causing it to darken and turn slightly green/blue. The lighter your source color, the darker your result will be because a lot of color will be subtracted. A completely black source will not affect the destination at all because no color will be removed. Using this mode on darker source layers is recommended.
 
+`minus`操作从目标层的颜色中减去源层的颜色。举个例子，如果源层颜色是深红（dark red），那么这个操作会从目标层中减少一部分红色，使其亮度变暗而且颜色偏绿/蓝。源层颜色越浅，得到的结果颜色越深，因为会有更多的颜色被减掉。纯黑色的源不会对目标产生任何影响，因为没有任何颜色分量被减掉。推荐在源层颜色较深的时候使用这个合成操作。
+
 In the bathymetry example above there are more polygons overlapping each other. The subtraction is run for each overlapping piece, causing areas with a lot of overlap to darken more and shift more to the green spectrum.
+
+在上面海水背景叠加的例子中，有更多相互叠加的多边形。减操作会被作用于每个叠加的部分，从而引起重叠很多的区域亮度更暗，颜色更偏绿色。
 
 ##### Screen
 
@@ -147,11 +153,15 @@ In the bathymetry example above there are more polygons overlapping each other. 
 
 The `screen` comp-op will paint white pixels from the source over the destination, but black pixels will have no affect. This operation can be useful when applied to textures or raster layers.
 
+`screen`操作是把源层中的白色像素点画到目标层上，而黑色像素点则不会有效果。这个操作适用于纹理或栅格图层。
+
 ##### Darken
 
 ![](https://cloud.githubusercontent.com/assets/83384/3881336/229dba14-218d-11e4-9750-369326b72e7f.png)![](https://cloud.githubusercontent.com/assets/83384/3881339/22a5153e-218d-11e4-9c84-4adc8d80f5fc.png)
 
 The `darken` comp-op compares the individual red, green, and blue components of the source and destination and takes the lower of each. This operation can be useful when applied to textures or raster layers.
+
+`darken`操作会对源层与目标层颜色中的R、G、B分量分别比较，然后取较小的值作为合成结果的颜色分量。这个操作适用于纹理或栅格图层。
 
 ##### Lighten
 
@@ -159,11 +169,15 @@ The `darken` comp-op compares the individual red, green, and blue components of 
 
 The `lighten` comp-op compares the individual red, green, and blue components of the source and destination and takes the higher of each.
 
+`lighten`操作会对源层与目标层颜色中的R、G、B分量分别比较，然后取较大的值作为合成结果的颜色分量。
+
 ##### Color-burn
 
 ![](https://cloud.githubusercontent.com/assets/83384/3881332/2290e28a-218d-11e4-8b95-fc62ab495ed9.png)![](https://cloud.githubusercontent.com/assets/83384/3881333/2295bd78-218d-11e4-957e-c9076d47dccf.png)
 
 The `color-burn` comp op darkens the colors of the destination based on the source. The darker the source, the more intense the effect.
+
+`color-burn`操作基于源层颜色对目标层颜色进行加深。源层的颜色越深，合成结果就会越强烈。（译注：intense这里该译成什么？）
 
 ##### Hard-light
 
