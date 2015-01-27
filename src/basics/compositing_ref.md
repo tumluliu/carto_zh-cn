@@ -185,11 +185,15 @@ The `color-burn` comp op darkens the colors of the destination based on the sour
 
 The `hard-light` comp-op will use light parts of the source to lighten the destination, and dark parts of the source to darken the destination. Mid-tones will have less effect
 
+`hard-light`操作会用源层中较明亮的部分去调亮目标层的亮度，用源层中较暗的部分去调暗目标层的亮度，而那些中间色调的颜色则不会有太多影响。
+
 ##### Soft-light
 
 ![](https://cloud.githubusercontent.com/assets/83384/3881389/233a064e-218d-11e4-8b11-1f21caa0e5ed.png)![](https://cloud.githubusercontent.com/assets/83384/3881388/23372320-218d-11e4-84b6-75eec4af462f.png)
 
 The `soft-light` comp-op works like a less intense version of the overlay mode. It is useful for applying texture effects or ghost images.
+
+`soft-light`操作可以看作是`overlay`操作的一个弱化版本。它可以用于产生纹理效果或虚影图像。
 
 ##### Grain-merge
 
@@ -205,11 +209,15 @@ The `soft-light` comp-op works like a less intense version of the overlay mode. 
 
 The `hue` comp-op applies the hue of the source pixels to the destination pixels, keeping the destination saturation and value.
 
+`hue`操作将源层中每个像素的色调应用于目标层的对应像素中，而保持饱和度与明度不变（译注：即在HSV颜色模型中，应用H，而保持S和V不变）。
+
 ##### Saturation
 
 ![](https://cloud.githubusercontent.com/assets/83384/3881382/2327d55a-218d-11e4-9056-620382c07de3.png)![](https://cloud.githubusercontent.com/assets/83384/3881385/233295da-218d-11e4-87c4-9922c2bd9c22.png)
 
 The `saturation` comp-op applies the saturation of the source pixels to the destination pixels, keeping the destination hue and value.
+
+`saturation`操作将源层中每个像素的饱和度应用于目标层的对应像素中，而保持色调与明度不变（译注：即在HSV颜色模型中，应用S，而保持H和V不变）。
 
 ##### Color
 
@@ -217,19 +225,29 @@ The `saturation` comp-op applies the saturation of the source pixels to the dest
 
 The `color` comp-op applies the saturation of the source pixels to the destination pixels, keeping the destination hue and value.
 
+`color`操作将源层中每个像素的饱和度应用于目标层的对应像素中，而保持色调与明度不变（译注：即在HSV颜色模型中，应用S，而保持H和V不变。可是可是，这个和上边的`saturation`操作的解释怎么完全一样？）。
+
 ##### Value
 
 ![](https://cloud.githubusercontent.com/assets/83384/3881399/2363996e-218d-11e4-866c-acfdda0d7e0e.png)![](https://cloud.githubusercontent.com/assets/83384/3881402/2368f206-218d-11e4-9f13-3ab2e694f92f.png)
 
 The `value` comp-op applies the value of the source pixels to the destination pixels, keeping the destination hue and saturation.
 
+`value`操作将源层中每个像素的明度应用于目标层的对应像素中，而保持色调与饱和度不变（译注：即在HSV颜色模型中，应用V，而保持H和S不变）。
+
 #### 透明度混合（Alpha Blending）
 
 There are 11 alpha blending compositing operations. Rather than altering the colors of a layer, these operations use the shapes of a layer to show or hide the rest of the image in different ways.
 
+透明度混合合成操作一共有11种。不同于颜色混合操作是对层的颜色进行修改，透明度混合主要利用层与层之间的形状关系来显示或隐藏渲染图像的某些部分，且能够支持很多种不同的显示或隐藏方式。
+
 Some of these modes will be more useful when applied to the whole style with the `comp-op` property, rather than with a symbolizer-specific property such as `polygon-comp-op`. All of the examples below were created with `comp-op`; there would be fewer differences between some of them had `polygon-comp-op` been used.
 
-The `src` and `dst` composite operations show only the source and destination layers, respectively. Neither are of much use in Mapbox Studio (where you can just as easily hide the layers). The `src-over` comp-op is another one you won’t be uding much. It draws the source and destination normally, the same as not applying a comp-op at all. The rest of the alpha blending compositing operations may be useful for cartography, however.
+在这些透明度混合操作中，有一些更适用于通过`comp-op`属性应用于整个样式块，而非用于特定符号的合成属性（如`polygon-comp-op`）。本小节的例子全部都是通过`comp-op`属性实现的。它们其中有一些如果应用`polygon-comp-op`属性的话，效果会有些许不同。
+
+The `src` and `dst` composite operations show only the source and destination layers, respectively. Neither are of much use in Mapbox Studio (where you can just as easily hide the layers). The `src-over` comp-op is another one you won’t be uding (**typo**) much. It draws the source and destination normally, the same as not applying a comp-op at all. The rest of the alpha blending compositing operations may be useful for cartography, however.
+
+`src`和`dst`操作的含义是分别只显示源层和目标层。在实际制图中，这两种操作很少被用到（因为可以通过打开或关闭是否隐藏图层的开关来实现一样的效果）。`src-over`也是一个基本不会被用到的操作，因为它的含义就是按顺序正常绘制源层和目标层，和不使用`comp-op`属性效果完全一样。剩下的其它8种透明度混合操作在制图中就比较有用了，下面来一一介绍。
 
 ##### Dst-over
 
@@ -237,11 +255,15 @@ The `src` and `dst` composite operations show only the source and destination la
 
 The `dst-over` comp-op will draw the source beneath everything else. If your destination forms a solid background, this will effectively hide the source.
 
+`dst-over`操作会将源层绘制在最底层。如果目标层是不透明的背景，那么这个操作的效果就是把源层隐藏起来。
+
 ##### Src-in
 
 ![](https://cloud.githubusercontent.com/assets/83384/3881394/234dd5a2-218d-11e4-8bfa-279ce07573f8.png)![](https://cloud.githubusercontent.com/assets/83384/3881392/2349ad74-218d-11e4-84e7-3e6f9261bbdf.png)
 
 The `src-in` comp-op will only draw parts of the source if they intersect with parts of the destination. The colors of the destination will not be drawn, only alpha channel (the shapes). If your destination forms a solid background, this operation will effectively be the same as `src`, since all parts of the source will intersect with the destination.
+
+`src-in`操作的效果是只绘制出源层中与目标层相交叠的部分。目标层中除了Alpha通道以外的颜色值都不会被绘制。如果目标层只是一个单纯的不透明背景，那么这个操作的效果就和`src`一样，因为源层中的所有部分都会和目标层相交叠。
 
 ##### Dst-in
 
@@ -249,11 +271,15 @@ The `src-in` comp-op will only draw parts of the source if they intersect with p
 
 The `dst-in` comp-op will only draw parts of the destination that intersect with parts of the sources. The colors of the source will not be drawn, only the alpha channel (the shapes). If your source is completely solid, this operation will effectively be the same as `dst`, since all parts of the destination will intersect with the source.
 
+`dst-in`操作是只绘制目标层中与源层交叠的被ufen。源层中除了Alpha通道以外的颜色值都不会被绘制。如果源层完全不透明，那么这个操作就和`dst`效果一样，因为目标层的所有部分都会和源层相交叠。
+
 ##### Src-out
 
 ![](https://cloud.githubusercontent.com/assets/83384/3881396/2354f404-218d-11e4-8568-49f82ca4162f.png)![](https://cloud.githubusercontent.com/assets/83384/3881395/2354c0d8-218d-11e4-936e-bce3adf1f3fd.png)
 
 The `src-out` comp-op will only draw parts of the source that do not intersect parts of the destination. The colors of the destination will not be drawn, only alpha channel (the shapes). If your destination forms a solid background, this operation will completely hide both the source and the destination, since all parts of the source intersect the destination.
+
+`src-out`操作的效果是只绘制源层中那些与目标层不相交的部分。目标层中除了Alpha通道以外的颜色值都不会被绘制。如果目标层只是一个单纯的不透明背景，那么这个操作的效果就是将源层与目标层都隐藏掉，因为源层的所有部分都与目标层相交。
 
 ##### Dst-out
 
@@ -261,11 +287,17 @@ The `src-out` comp-op will only draw parts of the source that do not intersect p
 
 The `dst-out` comp-op will only draw parts of the destination that do not intersect parts of the source. The colors of the source will not be drawn, only alpha channel (the shapes). If your source is completely solid, this operation will completely hide both the source and the destination, since all parts of the source intersect the destination.
 
+`dst-out`操作的效果是只绘制目标层中那些与源层不相交的部分。源层中除了Alpha通道以外的颜色值都不会被绘制。如果源层完全不透明，那么这个操作的效果就是将源层与目标层都隐藏掉，因为源层的所有部分都与目标层相交。
+
 ##### Src-atop
 
 ![](https://cloud.githubusercontent.com/assets/83384/3881390/23448290-218d-11e4-87cb-9959b68357fc.png)![](https://cloud.githubusercontent.com/assets/83384/3881391/2345454a-218d-11e4-9f3b-b94b6d97c3b3.png)
 
+（**译注：第一张图看起来有点问题，怎么地理范围都变化了？**）
+
 The `src-atop` comp-op will only draw the source where it intersects with the destination. It will also draw the entire destination. If your destination forms a solid background, the result will be the same as `src-over` (or no comp-op at all).
+
+`src-atop`操作的效果是只绘制源层中与目标层相交叠的部分。但它也会把整个目标层都画出来。如果目标层只是个不透明的背景，那么效果就和`src-over`（或者不应用合成操作）一样。
 
 ##### Dst-atop
 
@@ -273,8 +305,12 @@ The `src-atop` comp-op will only draw the source where it intersects with the de
 
 The `dst-atop` comp-op will only draw the destination on top of the source, but only where the two intersect. All parts of the source will be drawn, but below the destination. If your destination forms a solid background, no part of the source will be visible.
 
+`dst-atop`操作的效果是只将目标层中与源层相交的部分绘制在源层的上面，而源层的所有部分都会被绘制在目标层的下面。如果目标层是一个不透明背景，那么目标层就会完全不可见。
+
 ##### Xor
 
 ![](https://cloud.githubusercontent.com/assets/83384/3881400/2366cd96-218d-11e4-9047-afacbbec5a53.png)![](https://cloud.githubusercontent.com/assets/83384/3881401/2367757a-218d-11e4-8460-9fc2e5c50e42.png)
 
 The `xor` comp-op means ‘exclusive or’. It will only draw parts of the source and destination that do not overlap each other. If either your source or your destination forms a solid layer, neither will be drawn because there are no non-overlapping parts.
+
+`xor`，也就是“异或”操作的效果是只绘制源层与目标层不相交的部分（译注：相交的部分似乎是作全透明处理了，待考证）。如果源层或目标层中有一个是完全不透明的，那么结果将是两个层都不会被画出来，因为二者没有不相交的部分。
