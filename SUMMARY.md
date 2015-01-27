@@ -19,7 +19,7 @@
    * [使用图例](src/advanced/legends.md)
    * [理解元瓦片](src/advanced/metatiles.md)
    * [栅格制图技巧](src/advanced/styling-rasters.md)
-   * [专题制图](src/advanced/thematic-maps.md)
+   * [专题制图](src/advanced/thematic-mapping.md)
 * [语言参考](src/lang-ref/lang-ref.md)
    * [公共属性](src/lang-ref/public-attrs.md)
    * [地图的属性](src/lang-ref/map-attrs.md)
