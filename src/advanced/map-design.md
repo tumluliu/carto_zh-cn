@@ -97,19 +97,27 @@ For our tornado map, we have decided to display the total number of tornadoes in
 ![](https://www.mapbox.com/tilemill/assets/pages/label-styling-1.png)
 
 1. `::label`   
-	This creates a new **symbolizer** for your layer. The name ‘label’ here is arbitrary, you can call it whatever you like. The position of the symbolizer in CartoCSS determines the order of its rendering. The first code in a CartoCSS layer is rendered first on the map and will be **below** anything that is rendered after it. Therefore, if you need a layer feature to be on **top**, like we do with the labels, it must come last in the code.
+	This creates a new **symbolizer** for your layer. The name ‘label’ here is arbitrary, you can call it whatever you like. The position of the symbolizer in CartoCSS determines the order of its rendering. The first code in a CartoCSS layer is rendered first on the map and will be **below** anything that is rendered after it. Therefore, if you need a layer feature to be on **top**, like we do with the labels, it must come last in the code.  
+	它的含义是创建一个从属样式块（译注：原文中是“新符号”，在TileMill的系列文档中，均使用“新符号”这个说法，而在新的Mapbox Studio文档中，都变成attachment，也就是“从属样式块”了，为了保持全文上下一致，我都翻成“从属样式块”）。这里的从属样式块名`label`可以随便起，而从属样式块在整个样式表中的位置则决定了它被渲染的次序。在CartoCSS的样式块中，最先出现的代码会被首先渲染到地图上，因而会被绘制在后面其它渲染的要素的下面。因此，如果需要将某一层渲染到地图的最上层，那么就应该把它定义在样式代码的最后。
 2. `text-name`  
-	This denotes the field whose text will be displayed.
+	This denotes the field whose text will be displayed.  
+	这是指明了哪个数据字段将被作为文本标记中显示的内容。
 3. `text-face-name`  
-	This sets the **font** for the text label. You can view a list of available system fonts by clicking the** font button (A)** on the lower left.
+	This sets the **font** for the text label. You can view a list of available system fonts by clicking the** font button (A)** on the lower left.  
+	这是用于设置文本标注上文字的字体。
 4. `text-allow-overlap`  
-	This allows the text and the dots to be displayed together at the same location. By default this option is set to false, which prevents overlapping items.
+	This allows the text and the dots to be displayed together at the same location. By default this option is set to false, which prevents overlapping items.  
+	这个设置是允许文本标注和圆点标记重叠显示。这个属性的默认值是`false`，也就是不允许重叠。
 
 That is all you need to get started with **labels**. The same idea applies to placename labels as well. You can further style them with the text- style parameters, changing things like size, color, opacity, placement, and more.
 
-#### Images as Icons
+以上这些用来配置一个基本的文本标注已经足够了。把它们用于地名标注也没有任何问题。用户可以通过`text-`系列属性进一步调整诸如字号、颜色、透明度、位置偏移等样式。
+
+#### 使用图像作为图标（Images as Icons）
 
 TileMill supports using **SVG (Scalable Vector Graphic)** images as markers on your map. It is possible that we could use a custom-made tornado icon in place of the circle markers. The first thing you need is the SVG file saved somewhere on your system, preferably in your project folder for the sake of organization (Documents/MapBox/project/project-name/). Then it’s all in the CartoCSS.
+
+
 
 ![](https://www.mapbox.com/tilemill/assets/pages/svg-icons-1.png)
 
