@@ -117,44 +117,67 @@ That is all you need to get started with **labels**. The same idea applies to pl
 
 TileMill supports using **SVG (Scalable Vector Graphic)** images as markers on your map. It is possible that we could use a custom-made tornado icon in place of the circle markers. The first thing you need is the SVG file saved somewhere on your system, preferably in your project folder for the sake of organization (Documents/MapBox/project/project-name/). Then it’s all in the CartoCSS.
 
-
+在CartoCSS中可以使用SVG图像作为地图上的注记。在这个台风地图的例子中，我们可以使用自定义的图标来代替圆点形状注记。当然首先，我们需要先要有一个保存在系统中的SVG文件。为了组织方便，最好把它放在项目的目录中。
 
 ![](https://www.mapbox.com/tilemill/assets/pages/svg-icons-1.png)
 
 1. `point-file`  
-	This designates the **path** to the SVG relative to your project folder. In this case the SVG is located in Documents/MapBox/project/2010-tornadoes/icons/.
+	This designates the **path** to the SVG relative to your project folder. In this case the SVG is located in Documents/MapBox/project/2010-tornadoes/icons/.  
+	这是指向SVG文件的路径
 2. `point-allow-overlap`  
-	Like other `-allow-overlap` parameters, this allows the images to be displayed even if they will be on top of each other.
+	Like other `-allow-overlap` parameters, this allows the images to be displayed even if they will be on top of each other.  
+	就像其它`-allow-overlap`参数一样，这个属性允许表示点符号的图标重叠显示。
 3. `point-transform`  
-	This is the parameter used to **scale** and **move** the image, among other things. A value of `"scale(1)"` will display the image at its original size, while `"scale(0.5)"` and `"scale(2)"` will display it at 50% and 200% respectively. You can also use this property to move the image vertically and horizontally by using the property `"translate()"`. For example, the value `"translate(20, -40)"` will move the image 20 pixels to the right and 40 pixels up. There are several other properties that you can employ with point-transform. [Learn about them on W3](http://www.w3.org/TR/SVG/coords.html#TransformAttribute).
+	This is the parameter used to **scale** and **move** the image, among other things. A value of `"scale(1)"` will display the image at its original size, while `"scale(0.5)"` and `"scale(2)"` will display it at 50% and 200% respectively. You can also use this property to move the image vertically and horizontally by using the property `"translate()"`. For example, the value `"translate(20, -40)"` will move the image 20 pixels to the right and 40 pixels up. There are several other properties that you can employ with point-transform. [Learn about them on W3](http://www.w3.org/TR/SVG/coords.html#TransformAttribute).  
+	这个参数用来对注记图片进行拉伸与移位。使用`"scale(1)"`将按照原始比例绘制注记图片，而`"scale(0.5)"`和`"scale(2)"`则将分别按照原始图片50%与200%的比例来绘制。除了拉伸，还可以用`"translate()"`来移位，例如，可以用`"translate(20, -40)"`将图片向右平移20像素、向上平移40像素。除此以外，还有一些可用于点变换的属性，可以从[W3上参考更多详细内容](http://www.w3.org/TR/SVG/coords.html#TransformAttribute)。
 
-#### Exporting for Compositing
+#### 导出并合成（Exporting for Compositing）
 
 When your map contains multiple levels of data as our tornado map does, it is sometimes wise to export each level separately. This has multiple benefits. Firstly, it compartmentalizes your map so that when updating you may not have to re-export the entire map. Secondly, it gives you greater flexibility when [compositing](https://www.mapbox.com/mapbox-studio/compositing-reference).
 
+当一幅地图与这个龙卷风地图的例子一样包含了多个层次的数据时，把每个层次的数据都分别导出并作为独立的图层是值得推荐的做法。这样做有很多好处，首先，这样可以将地图划分成更多细粒度的部分，从而在地图更新的时候不必把整张图再重新导出一遍（译注：这里“导出”的含义有待斟酌，不知道是否理解正确。我认为是在预处理阶段将原始数据用过滤器拆分成若干个数据子集，而它这里的“导出”似乎未必是这个意思）。第二，这样可以为合成操作提供更多方便。
+
 Thirdly, **interactivity** can only be active on one layer at a time. This means if we want a hover tooltip for the state-level dots and for the individual dots, we cannot export them together.
+
+第三，地图的交互一次只能应用在一个图层上。这就是说，（在龙卷风地图的例子中）如果想要在州一级和原始的独立点数据集上都实现悬停工具条的效果，那么就不能把这些数据集一起导出。（译注：这点说的不清楚，需要梳理）
 
 When exporting individual pieces of your project, a very helpful tool is the ability to **comment-out** specific CartoCSS code. Anything commented-out will remain in your code, but not render on the map. All this entails is placing `/*` before and `*/` after the code you want to comment-out. This is also a way to write comments into the code, hence the name.
 
-We have plans to composite this tornado map with an existing world baselayer available fromMapbox, so the first thing to do will be to comment-out the default blue and white world base and the state borders.
+当需要将项目中的某些独立部分导出的时候，有个技巧是对特定部分的CartoCSS代码灵活运用注释。被注释掉的部分对应的样式不会被渲染到地图上。CartoCSS中的注释也是使用`/*`和`*/`将被注释的部分代码包围。（译注：最后一句话没有译出，因为感觉含义既有重复，又有不明确的地方）
+
+We have plans to composite this tornado map with an existing world baselayer available from Mapbox, so the first thing to do will be to comment-out the default blue and white world base and the state borders.
+
+在龙卷风地图的例子中，我们准备把龙卷风的分布图与一张现成的世界地图合成。为此，首先应该把蓝白色的世界底图和国界线样式代码注释掉。
 
 ![](https://www.mapbox.com/tilemill/assets/pages/exporting-in-pieces-1.png)
 
 Notice that the code between the `/*` and `*/` is now greyed-out, and the background of the map is **transparent**.
 
+注意图中`/*`和`*/`之间的代码已经变成灰色的，而此时的地图背景已经变成全透明的了。
+
 Now we can create a tooltip for the state-level dots, and export. On the export page, be sure to select only the zoom levels for this particular piece of the map.
+
+现在我们可以为州一级的圆点符号创建悬浮提示效果并导出了。在导出配置页面上，要确定只选择导出那些针对这幅地图特定部分的缩放级别。（译注：关于导出，还是不太清楚具体的含义，所以翻译的不理想）
 
 ![](https://www.mapbox.com/tilemill/assets/pages/exporting-in-pieces-2.png)
 
 Next we create and switch the tooltip to the individual dots layer, and export. Change the zoom levels and filename accordingly.
 
+接下来，我们为每个原始的龙卷风统计点创建悬浮提示效果并导出。在导出时，将缩放级别和文件名做相应的修改。
+
 ![](https://www.mapbox.com/tilemill/assets/pages/exporting-in-pieces-3.png)
 
 We now have two MBTiles with their own interactivity that we can [composite](https://www.mapbox.com/mapbox-studio/compositing-reference) together with a slick base map.
 
+这样，我们就得到了两个都具有交互能力的MBTiles数据集，并且它们能够与一个平滑底图一起合成。
+
 Here is the final map: \<iframe width='600' height='400' frameBorder='0' src='https://a.tiles.mapbox.com/v3/mapbox.map-4qkj96dp.html#4/40/-98'\> \</iframe\>
 
+最终的地图效果在这里：\<iframe width='600' height='400' frameBorder='0' src='https://a.tiles.mapbox.com/v3/mapbox.map-4qkj96dp.html#4/40/-98'\> \</iframe\>
+
 And the final project CartoCSS code for reference:
+
+用于这幅例子地图的全部CartoCSS代码如下：
 
 	
 	Map {
@@ -263,12 +286,3 @@ And the final project CartoCSS code for reference:
 	  polygon-fill:#fff;
 	}
 	
-
-
-
-
-
-
-
-
-
