@@ -2,11 +2,11 @@
 
 _译注：[原文1](https://www.mapbox.com/tilemill/docs/crashcourse/tooltips/)，[原文2](https://www.mapbox.com/tilemill/docs/guides/advanced-legends)_
 
-##### 简单图例与浮动工具条
+#### 简单图例与浮动工具条
 
 Tooltips and legends allow you to add interactivity, additional information, and context to your maps. Below we’ll walk through how to add each to your map.
 
-###### 浮动工具条（Tooltips）
+##### 浮动工具条（Tooltips）
 
 Tooltips allow you to make maps interactive with dynamic content that appears when a user hovers over or clicks on a map. They can contain HTML and are useful for revealing additional data, images, and other content.
 
@@ -36,7 +36,7 @@ Previously in the Importing data section of this guide, we created a map of eart
 	  
 	![](https://www.mapbox.com/tilemill/assets/pages/tooltips-5.png)  
 
-###### 图例（Legends）
+##### 图例（Legends）
 
 A legend is permanently on a map and is useful for displaying titles, descriptions, and keys for what is being mapped. It can be styled using HTML, or it can simply contain an image.
 
@@ -60,17 +60,17 @@ Let’s add a legend that describes the theme of the map.
 
 For security, unsafe HTML in tooltips and legends are sanitized and JavaScript code is removed. If you want to build sophisticated map interaction with JavaScript on your own website, you can write custom code using the [MapBox.js API](https://www.mapbox.com/mapbox.js/api/v1.4.0/).
 
-##### 高级图例（Advanced Legends）
+#### 高级图例（Advanced Legends）
 
 When designing a legend for TileMill that requires more than plain text, there are a few paths you can take. An image, html/css, or a combination. Both have their advantages and disadvantages.
 
-###### 嵌入图片（Insert an image）
+##### 嵌入图片（Insert an image）
 
 For complex graphics and those that feel more comfortable designing in a graphics editor. This involves creating a PNG or JPG and either serving it on the web and linking to it, or [base64-encoding it directly into the legend](https://www.mapbox.com/tilemill/docs/guides/images-in-tooltips/).
 
 The advantage with images is that you have the ability to design every pixel and they can be as complex as you want. The drawback is that the image is static once it’s in the map, and it may not be as easy to update, as you need the original file and software that can open it.
 
-###### HTML/CSS
+##### HTML/CSS
 
 For simpler, table-like designs and those that feel more comfortable designing with code. This involves creating the layout and styling for the legend elements in the same way one would build a web page.
 
@@ -201,7 +201,7 @@ Copy and paste the block of code directly into TileMill’s legend field. Then f
 	</style>
 	
 
-###### The legend class
+##### The legend class
 
 TileMill legends can be contained within an element with a custom class (e.g. `my-legend`). This is why you see it included in each selector in the above style sections. This class is attributed several default styles, including a `max-width` of 280 pixels and a `max-height` of 400 pixels. Under normal circumstances this should be plenty large enough. You’ll know they’re not if you see a scrollbar in your legend. In case you ever need to change these, here’s how.
 
