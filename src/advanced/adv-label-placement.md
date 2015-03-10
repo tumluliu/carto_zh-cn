@@ -3,13 +3,19 @@
 
 _译注：[原文地址](https://www.mapbox.com/tilemill/docs/guides/labels-advanced/)_
 
-#### Trying multiple positions
+#### 尝试在其它位置标注（Trying multiple positions）
 
 Recent versions of TileMill include two methods to choose for placing labels on points. The choice is made via the `text-placement-type` CartoCSS property. The default, original method is called `none`, and the newer, more advanced method is called `simple`.
 
-The simple method allows the designer to specify multiple potential positions on or around a central point, as well as multiple sizes of text to choose from. If the first attempt at placing a label is blocked by another label that has already been placed, it can look at this list to try the next position.
+CartoCSS通过`text-placement-type`属性支持两种在点符号上面放置标注的方法。其默认值是`none`，除此以外还有个高级方法——`simple`。
+
+The `simple` method allows the designer to specify multiple potential positions on or around a central point, as well as multiple sizes of text to choose from. If the first attempt at placing a label is blocked by another label that has already been placed, it can look at this list to try the next position.
+
+这个`simple`方法允许设计师在原始点的周围为标注另外指定几个候选位置和字号。如果在默认位置渲染某个标注时出现了被其它标注遮挡的情况，那么就会从这些指定的候选位置中逐个尝试绘制。
 
 A full CartoCSS example of the syntax looks like this:
+
+下面是一个较为完整的例子：
 
 	
 	#labels {
@@ -24,9 +30,13 @@ A full CartoCSS example of the syntax looks like this:
 
 This will first attempt to place a label above a point, then below the point, then to the right, and so on with a text size of 16 until it finds a position that fits. If no labels fit at size 16, the positions will all be retried at a text size of 14, and then 12. If none of these fit the label will be skipped.
 
+这段代码的作用是依次在原始点的上方（北方）、下方、右侧等进行尝试，如果位置合适，那么就用16号字绘制标注。如果这些位置都画不出来，那么就换成14号字再试一遍，如果还不行，就再换成12号字试。如果都不行，那么这个标注就会被跳过不画了。
+
 The `text-dx` and `text-dy` properties specify how far away (in pixels) the label should be placed from the point.
 
-#### Improved direction distribution: random approach
+`text-dx`和`text-dy`属性指定了标注位置相对于原始点位置的偏移量（以像素为单位）。
+
+#### 改进标注位置的分布：随机方法（Improved direction distribution: random approach）
 
 It’s great to try different placements for a label, but the previous example will always try the same position (North) first. This may not always be the best choice, even if the label happens to fit there. And it may be better for the overall map design to distribute the different placement positions better, rather than letting a single position dominate.
 
@@ -48,7 +58,7 @@ You could then set up your CartoCSS to favor East placement for the `0`s and Wes
 	}
 	
 
-#### Improved direction distribution: avoiding nearby neighbors
+#### 改进标注位置的分布：邻居别挤（Improved direction distribution: avoiding nearby neighbors）
 
 Using PostGIS its possible to come up with something smarter than random distribution to improve the look of simple label placement. One possibility is to calculate the direction of the nearest object of a certain type, and then try to avoid that. For example you could bias city lable placement away from the next nearest city, or county label placement away from the largest city in the county. These aren’t perfect solutions, but can be a quick way to make your labels more correct in more cases.
 
