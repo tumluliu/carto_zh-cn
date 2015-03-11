@@ -40,13 +40,19 @@ The `text-dx` and `text-dy` properties specify how far away (in pixels) the labe
 
 It’s great to try different placements for a label, but the previous example will always try the same position (North) first. This may not always be the best choice, even if the label happens to fit there. And it may be better for the overall map design to distribute the different placement positions better, rather than letting a single position dominate.
 
+尽管在多个不同的位置尝试放置标注的想法不错，但它的问题在于每次都是从同一个位置开始尝试。这往往不是最好的选择（译注：从地图设计和美观的角度），即使标注可以被绘制在那个位置。将标注位置更合理的分布，而不是总绘制在同一个位置也会带来更好的整体地图设计效果。
+
 Something as simple as randomly assigning a direction bias can help even out the look of the labels. For example, you could create a PostGIS query that creates a column called dir which is randomly assigned a value of either `0` or `1`.
 
+有个很简单的改进方法，就是只要将标注相对于原始点的偏移方向变成随机性的便可以让标注的分布变得美观许多。具体而言，你可以利用一条PostGIS的SQL语句为原始点数据增加一个名为`dir`的新列（译注：注意这不是说要去修改原始数据，而是通过SQL语句生成），它的值是随机生成的`0`或`1`。
+
 	
-	( select *, floor(random()*2) as dir from city_points ) as data
+	(select *, floor(random()*2) as dir from city_points) as data
 	
 
 You could then set up your CartoCSS to favor East placement for the `0`s and West placement for the `1`s.
+
+然后就可以基于`dir`列的值，让每个点的标注在为`0`时向东、为`1`时向西偏移。
 
 	
 	#labels {
@@ -58,7 +64,7 @@ You could then set up your CartoCSS to favor East placement for the `0`s and Wes
 	}
 	
 
-#### 改进标注位置的分布：邻居别挤（Improved direction distribution: avoiding nearby neighbors）
+#### 改进标注位置的分布：邻居们请别挤（Improved direction distribution: avoiding nearby neighbors）
 
 Using PostGIS its possible to come up with something smarter than random distribution to improve the look of simple label placement. One possibility is to calculate the direction of the nearest object of a certain type, and then try to avoid that. For example you could bias city lable placement away from the next nearest city, or county label placement away from the largest city in the county. These aren’t perfect solutions, but can be a quick way to make your labels more correct in more cases.
 
