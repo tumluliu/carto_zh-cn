@@ -171,9 +171,9 @@ We now have two MBTiles with their own interactivity that we can [composite](htt
 
 这样，我们就得到了两个都具有交互能力的MBTiles数据集，并且它们能够与一个平滑底图一起合成。
 
-Here is the final map: \<iframe width='600' height='400' frameBorder='0' src='https://a.tiles.mapbox.com/v3/mapbox.map-4qkj96dp.html#4/40/-98'\> \</iframe\>
+Here is the final map: `<iframe width='600' height='400' frameBorder='0' src='https://a.tiles.mapbox.com/v3/mapbox.map-4qkj96dp.html#4/40/-98'> </iframe>`
 
-最终的地图效果在这里：\<iframe width='600' height='400' frameBorder='0' src='https://a.tiles.mapbox.com/v3/mapbox.map-4qkj96dp.html#4/40/-98'\> \</iframe\>
+最终的地图效果在这里：`<iframe width='600' height='400' frameBorder='0' src='https://a.tiles.mapbox.com/v3/mapbox.map-4qkj96dp.html#4/40/-98'> </iframe>`
 
 And the final project CartoCSS code for reference:
 
