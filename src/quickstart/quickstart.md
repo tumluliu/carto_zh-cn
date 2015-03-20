@@ -18,7 +18,7 @@ CartoCSS可以对地图中各种要素样式的细节进行控制。包括颜色
 
 ![](https://cloud.githubusercontent.com/assets/83384/3870305/ba0d0a6a-20c7-11e4-9454-a751319ca7e2.png)
 
-_图片来源：www.mapbox.com_
+_图片来源：[Mapbox](https://www.mapbox.com/mapbox-studio/style-quickstart/)_
 
 - `#building`标识了需要进行样式配置的图层。
 - `[zoom>=14]`指定了该样式只有在地图缩放级别大于等于14级（缩放级别数字越大，则视点距离观察区域越近，反之越远。1级的时候通常为世界地图视图）的时候才起作用。
@@ -38,7 +38,7 @@ _图片来源：www.mapbox.com_
 
 ![](https://cloud.githubusercontent.com/assets/83384/3870329/bceff796-20c8-11e4-8ff2-23bf7b374bff.png)
 
-_图片来源：www.mapbox.com_
+_图片来源：[Mapbox](https://www.mapbox.com/mapbox-studio/style-quickstart/)_
 
 ### 配置公园样式
 
@@ -65,7 +65,7 @@ _图片来源：www.mapbox.com_
 
 ![](https://cloud.githubusercontent.com/assets/83384/3870363/c7b51674-20c9-11e4-8393-9da2f75b5d67.png)
 
-_图片来源：www.mapbox.com_
+_图片来源：[Mapbox](https://www.mapbox.com/mapbox-studio/style-quickstart/)_
 
 下面逐一介绍其中用到的CartoCSS关键要素：
 
@@ -100,7 +100,7 @@ _图片来源：www.mapbox.com_
 
 ![](https://cloud.githubusercontent.com/assets/83384/3870380/23717e70-20cb-11e4-99f5-68a80914a0ce.png)
 
-_图片来源：www.mapbox.com_
+_图片来源：[Mapbox](https://www.mapbox.com/mapbox-studio/style-quickstart/)_
 
 其中涉及到的主要属性和参数的含义如下：
 
@@ -111,4 +111,4 @@ _图片来源：www.mapbox.com_
 
 ### 参考文献
 
-1. [Mapbox Studio Style Quickstart](https://www.mapbox.com/mapbox-studio/style-quickstart/)
+1. Mapbox, [Mapbox Studio Style Quickstart](https://www.mapbox.com/mapbox-studio/style-quickstart/)
