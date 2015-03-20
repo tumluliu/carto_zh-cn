@@ -2,14 +2,14 @@
 
 ## 前言
 
-这是一份根据[MapBox Studio的在线帮助文档](https://www.mapbox.com/mapbox-studio/style-quickstart/)、[TileMill的帮助文档](https://www.mapbox.com/tilemill/docs/crashcourse/introduction/)以及CartoCSS语言的开源解释器项目[carto](https://github.com/mapbox/carto)的文档（这也是MapBox官方的CartoCSS Reference链接指向的文档）翻译、整理并适当补充和修订之后的中文版CartoCSS指南与语言参考手册。翻译整理的目的是为了方便越来越多的使用CartoCSS进行制图的中文用户了解这种制图样式语言中各种属性的含义及用法。读这份文档需要具有一些的地理信息系统（GIS）、地图制图学（Cartography）方面的背景知识。由于CartoCSS是为[Mapnik](https://github.com/mapnik/mapnik)而设计的，而且其脚本最终会被解译为Mapnik样式并进行制图渲染，所以如果知道并了解Mapnik的工作原理，那么会对CartoCSS的语法要素及工作机理有更深刻的理解，但这不是使用CartoCSS进行制图所必需的。关于背景知识，可以参考Mapnik项目中的[相关文档](https://github.com/mapnik/mapnik/wiki/LearningMapnik)。
+这是一份根据[Mapbox Studio的在线帮助文档](https://www.mapbox.com/mapbox-studio/style-quickstart/)、[TileMill的帮助文档](https://www.mapbox.com/tilemill/docs/crashcourse/introduction/)以及CartoCSS语言的开源解释器项目[carto](https://github.com/mapbox/carto)的文档（这也是Mapbox官方的CartoCSS Reference链接指向的文档）翻译、整理并适当补充和修订之后的中文版CartoCSS指南与语言参考手册。翻译整理的目的是为了方便越来越多的使用CartoCSS进行制图的中文用户了解这种制图样式语言中各种属性的含义及用法。读这份文档需要具有一些的地理信息系统（GIS）、地图制图学（Cartography）方面的背景知识。由于CartoCSS是为[Mapnik](https://github.com/mapnik/mapnik)而设计的，而且其脚本最终会被解译为Mapnik样式并进行制图渲染，所以如果知道并了解Mapnik的工作原理，那么会对CartoCSS的语法要素及工作机理有更深刻的理解，但这不是使用CartoCSS进行制图所必需的。关于背景知识，可以参考Mapnik项目中的[相关文档](https://github.com/mapnik/mapnik/wiki/LearningMapnik)。
 
 看了前面一段，你可能已经被其中出现的除CartoCSS以外的其它几个名词搞晕了。我在这里简单解释一下它们都是什么，以及它们之间是什么关系。
 
 - **Mapnik**是一个开源的地图渲染引擎，用C++语言开发，有Python和node.js接口。它的开发可以追溯到2005年，但直到2008年的0.5版本发布之后才真正展现出它的强大——渲染质量高，而且速度很快。Mapnik有一套基于XML的地图样式描述方法，但在描述较复杂地图样式的时候其XML样式也会变得很长很复杂，难以让人类直接阅读和修改，而这恰恰就是后来CartoCSS这种高级地图样式描述语言出现的一个重要原因。
-- **MapBox**是一个专注于数字化制图服务的公司，成立于2010年。它是目前能紧紧把互联网、云计算、移动计算和传统的地图制图设计结合起来而且结合的最好的公司之一。目前，它已经网罗了该领域中全世界能数的过来的众多牛人，这其中包括Mapnik的作者[Dane Springmeyer](https://github.com/springmeyer)，MBTiles的设计者[Tom MacWright](https://github.com/tmcw)和[Justin Miller](https://github.com/incanus)，其中Tom MacWright也是CartoCSS的设计者，还有OSRM的作者[Dennis Luxen](https://github.com/DennisOSRM)等等，不一而足。目前，MapBox的发展突飞猛进，产品线逐渐拉长，业务范围向企业级私有空间数据基础设施服务等方向推进。这里要强调MapBox的一个很重要的特点，就是它维护着大量的开源项目。注意Mapbox的官方网站在中国大陆地区是被GFW禁止访问的，所以要了解更多关于它的信息请自备梯子。
-- **TileMill**和**MapBox Studio**都是MapBox维护的开源项目，都是跨平台的制图客户端软件，都是用node.js开发的，只是后者是最近发布的，有取代前者的意思，但目前这两个软件都可以使用。在TileMill和MapBox Studio中进行制图需要使用CartoCSS语言，制好的地图可以导出成MBTiles格式的瓦片数据集，或直接连接MapBox账号上传到用户自己的账户空间中。
-- **carto**也是MapBox维护的一个开源项目，它是将CartoCSS脚本解析成Mapnik XML地图样式的解释器，是用node.js开发的。CartoCSS的语言参考手册就在carto项目的wiki中。
+- **Mapbox**是一个专注于数字化制图服务的公司，成立于2010年。它是目前能紧紧把互联网、云计算、移动计算和传统的地图制图设计结合起来而且结合的最好的公司之一。目前，它已经网罗了该领域中全世界能数的过来的众多牛人，这其中包括Mapnik的作者[Dane Springmeyer](https://github.com/springmeyer)，MBTiles的设计者[Tom MacWright](https://github.com/tmcw)和[Justin Miller](https://github.com/incanus)，其中Tom MacWright也是CartoCSS的设计者，还有OSRM的作者[Dennis Luxen](https://github.com/DennisOSRM)等等，不一而足。目前，Mapbox的发展突飞猛进，产品线逐渐拉长，业务范围向企业级私有空间数据基础设施服务等方向推进。这里要强调Mapbox的一个很重要的特点，就是它维护着大量的开源项目。注意Mapbox的官方网站在中国大陆地区是被GFW禁止访问的，所以要了解更多关于它的信息请自备梯子。
+- **TileMill**和**Mapbox Studio**都是Mapbox维护的开源项目，都是跨平台的制图客户端软件，都是用node.js开发的，只是后者是最近发布的，有取代前者的意思，但目前这两个软件都可以使用。在TileMill和Mapbox Studio中进行制图需要使用CartoCSS语言，制好的地图可以导出成MBTiles格式的瓦片数据集，或直接连接Mapbox账号上传到用户自己的账户空间中。
+- **carto**也是Mapbox维护的一个开源项目，它是将CartoCSS脚本解析成Mapnik XML地图样式的解释器，是用node.js开发的。CartoCSS的语言参考手册就在carto项目的wiki中。
 
 我会尽力保证这份文档与官方英文文档同步。github仓库中保存了中文版文档的markdown格式版本，以及通过[Ulysses](http://www.ulyssesapp.com/)和[Marked 2](http://marked2app.com)生成的pdf与html版本。html的在线版本可以直接从[这里](http://luliu.me/projects/carto_zh-cn/)查看，但阅读体验并不好，所以建议阅读[gitbook上的在线版本](http://tumluliu.gitbooks.io/carto_zh-cn/)。
 
