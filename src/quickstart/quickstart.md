@@ -1,8 +1,8 @@
-## 快速入门
+## 2. 快速入门
 
 CartoCSS可以对地图中各种要素样式的细节进行控制。包括颜色、大小、形状等，都可以通过设置CartoCSS的各种属性参数来实现制图样式的配制。为了能让读者快速了解用CartoCSS能制出什么样的地图，以及如何制出这样的地图，我们在本章中以房屋、公园和道路的制图样式配置为例，初步展示一下CartoCSS的制图能力。需要说明的是，本章中的制图示例用到了Mapbox Studio。但这些制图任务并不是仅能够在Mapbox Studio中才能完成。而且这些例子需要有对应的数据准备。我们先假定所需要的数据已经准备好。
 
-### 配置房屋样式
+### 2.1 配置房屋样式
 
 为了对一个表示建筑物轮廓的面要素矢量数据集进行样式配置，可使用以下CartoCSS脚本：
 
@@ -40,7 +40,7 @@ _图片来源：[Mapbox](https://www.mapbox.com/mapbox-studio/style-quickstart/)
 
 _图片来源：[Mapbox](https://www.mapbox.com/mapbox-studio/style-quickstart/)_
 
-### 配置公园样式
+### 2.2 配置公园样式
 
 这次我们试一下对公园这种类别的地块配置样式。
 
@@ -78,7 +78,7 @@ _图片来源：[Mapbox](https://www.mapbox.com/mapbox-studio/style-quickstart/)
 - `text-wrap-width: 60`设置了文本标注中每一行的最大长度。
 - `text-halo-rasterizer: fast`指定使用一种经过优化的快速绘制方法来渲染标注文字的光晕。
 
-### 标注道路
+### 2.3 标注道路
 
 前面两个例子中都是对矢量数据中的面要素类型进行样式配置。在这个例子中，我们以道路为例，看看如何配置线要素标注的样式。
 
