@@ -1,14 +1,14 @@
-### 支持CartoCSS的软件和系统
+### 3.8 支持CartoCSS的软件和系统
 
 #### Mapbox Studio
 
-Mapbox Studio的前身是TileMill，为Mapbox公司的开源地图制图软件，其制图所使用的脚本语言就是CartoCSS。它既有基于Web的在线应用，也有支持各种操作系统平台的客户端软件，基于node.js开发。围绕Mapbox Studio，还有一系列与CartoCSS相关的开源软件。更多信息请参考Mapbox Studio的[官方介绍](https://www.mapbox.com/mapbox-studio)（需要翻墙），以及Mapbox在github上的[开源项目](https://github.com/mapbox)（有时需要翻墙）。
+Mapbox Studio的前身是TileMill，为Mapbox公司的开源地图制图软件，其制图所使用的脚本语言就是CartoCSS。它既有基于Web的在线应用，也有支持各种操作系统平台的客户端软件，使用JavaScript语言，基于node.js开发。围绕Mapbox Studio，还有一系列与CartoCSS相关的开源软件。更多信息请参考Mapbox Studio的[官方介绍](https://www.mapbox.com/mapbox-studio)（需要翻墙），以及Mapbox在github上的[开源项目](https://github.com/mapbox)。
 
 #### CartoDB
 
 [CartoDB](http://cartodb.com/)（需要翻墙）是一个以管理地理空间数据为主要目标，同时也可以将所管理的地理空间数据进行分析、制图渲染并发布的在线系统。从某种意义上说，CartoDB更像是一个GIS，而且是一个没有桌面客户端的在线WebGIS。与Mapbox一样，CartoDB也维护着一系列[开源项目](https://github.com/CartoDB)，而且CartoDB的在线应用本身就是开源的。
 
-更酷的是，CartoDB通过其开源项目[torque](https://github.com/CartoDB/torque)（不是那个HPC资源管理软件[torque](http://www.adaptivecomputing.com/products/open-source/torque/)）实现了对动态过程的可交互式展示，而且动态过程的样式可以通过CartoCSS进行配置。关于torque的更多信息，请参考其[API文档](https://github.com/CartoDB/torque/blob/master/doc/API.md)。
+更酷的是，CartoDB通过其开源项目[torque](https://github.com/CartoDB/torque)（不是那个高性能计算资源管理软件[torque](http://www.adaptivecomputing.com/products/open-source/torque/)）实现了对动态过程的可交互式展示，而且动态过程的样式可以通过CartoCSS进行配置。关于torque的更多信息，请参考其[API文档](https://github.com/CartoDB/torque/blob/master/doc/API.md)。
 
 #### higis
 
