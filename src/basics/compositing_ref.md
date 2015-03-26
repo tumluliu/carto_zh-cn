@@ -1,50 +1,42 @@
-### 关于合成操作（Compositing）
+### 3.7 关于合成操作
 
-_译注：[原文地址](https://www.mapbox.com/mapbox-studio/compositing-reference/)\_
+合成（Compositing）操作是CartoCSS中颇具特色的功能。当然，CartoCSS能支持合成的基础自然是因为作为其底层地图渲染引擎的Mapnik提供了这个强大的能力。Mapnik在从0.7.x版本开始提供了对栅格数据的合成功能，而从2.1.x版本则开始能够支持矢量数据的合成操作，而且是同时能够支持要素级和图层级的合成。
 
-Compositing operations affect the way colors and textures of different elements and styles interact with each other.
+合成这个概念是来自图像处理领域，它还有个名字，叫[Photomontage](http://en.wikipedia.org/wiki/Photomontage)，中文是“蒙太奇照片”，指的是将两幅或更多幅照片通过剪辑、合成等处理生成一幅新的看起来很和谐的图片，有点像电影后期制作中的特效。在很多图像处理软件（例如Adobe Photoshop、Paint.NET、GIMP等）中都直接内置了对图层的合成功能。CartoCSS中的合成操作则是针对地图上的各种制图对象，在对它们进行渲染成最终图片的过程中通过改变不同要素、样式、图层的颜色、纹理之间相互作用的方式（例如在像素级进行各种算术或逻辑运算）来达到一些特殊的视觉效果，让地图上也可以有“特技”的感觉。
 
-合成操作会改变不同要素与样式的颜色、纹理之间相互作用的方式。
+既然是叫“合成”，那么自然至少要涉及到两个参与“合成”的成员。在CartoCSS中，这两个成员分别被称为**源**与**目标**。我们在讨论合成操作的时候，必须明确**源**与**目标**。所谓**源**，就是应用了`comp-op`属性的样式或符号，而所谓**目标**，则是其它那些绘制在它下面的图像。在**源**的上面当然还可能有其它要绘制的部分，但它们都不会受到当前**源**中`comp-op`的影响，该怎么画就还怎么画。在默认情况下，也就是不在**源**上显式指定任何合成操作时，那么它就会被直接覆盖绘制在**目标**之上。而通过使用各种合成操作，我们就改变这种默认绘制行为。
 
-Without any compositing operations on a source it will just be painted directly over the destination – compositing operations allow us to change this. There are 33 compositing operations available in CartoCSS:
-
-如果不在_源_上应用合成操作，那么它就会被直接覆盖绘制在_目标_之上。而合成操作允许我们改变这种绘制行为。CartoCSS一共支持33种合成操作：
+目前，在CartoCSS中一共有33种合成操作：
 
 | CartoCSS支持的合成操作列表    |||
-|-------------|---------------|----------|
-| plus        | difference    | src      |
-| minus       | exclusion     | dst      |
-| multiply    | contrast      | src-over |
-| screen      | invert        | dst-over |
-| overlay     | invert-rgb    | src-in   |
-| darken      | grain-merge   | dst-in   |
-| lighten     | grain-extract | src-out  |
-| color-dodge | hue           | dst-out  |
-| color-burn  | saturation    | src-atop |
-| hard-light  | color         | dst-atop |
-| soft-light  | value         | xor      |
+|---------------|-----------------|------------|
+| `plus`        | `difference`    | `src`      |
+| `minus`       | `exclusion`     | `dst`      |
+| `multiply`    | `contrast`      | `src-over` |
+| `screen`      | `invert`        | `dst-over` |
+| `overlay`     | `invert-rgb`    | `src-in`   |
+| `darken`      | `grain-merge`   | `dst-in`   |
+| `lighten`     | `grain-extract` | `src-out`  |
+| `color-dodge` | `hue`           | `dst-out`  |
+| `color-burn`  | `saturation`    | `src-atop` |
+| `hard-light`  | `color`         | `dst-atop` |
+| `soft-light`  | `value`         | `xor`      |
 
-The operations in the first two columns are color blending modes that provide a variety of ways to control the blending of the colors of objects and layers with each other. The operations in the last column are [Duff-Porter alpha blending modes](http://www.imagemagick.org/Usage/compose/#duff-porter). They provide a variety of ways to fill and mask objects and layers with each other.
+上面的列表中左边两列是22种**色彩混合**。它为对象与对象、图层与图层之间在颜色上如何融合提供了一系列不同方式。而最右边一列中列出的11种[Duff-Porter**透明度混合**](http://www.imagemagick.org/Usage/compose/#duff-porter)则提供了关于填充和遮盖的不同方式。
 
-左边两列是色彩混合模式，它为对象与对象、图层与图层之间在颜色上如何融合提供了一系列不同方式。而最右边一列中的[Duff-Porter透明度混合模式](http://www.imagemagick.org/Usage/compose/#duff-porter)则提供的是一系列关于填充和遮盖的不同方式。
+如果你对图像编辑软件（例如GIMP、Adobe Photoshop）比较熟悉，那么应该能感觉到上面这些模式很多都和这些软件中的图层混色很像。没错，就是很像，但不同的是，CartoCSS中的合成操作却可以不必作用于整个图层。具体而言，CartoCSS的合成操作有两种使用方式：一是通过`comp-op`属性作用于一整块从属样式；二是通过以下这些针对特定符号的合成操作属性作用于某种符号：
 
-If you are familiar with image editors such as the GIMP or PhotoShop you will recognize many of these as layer blending modes. They work much the same way in Mapbox Studio, but do not (necessarily) operate on the layer as a whole. There are two ways to invoke a composite operation - on an entire style attachment via the `comp-op` property, or on a particular symbolizer via a symbolizer-specific property:
+- `line-comp-op`
+- `line-pattern-comp-op`
+- `marker-comp-op`
+- `point-comp-op`
+- `polygon-comp-op`
+- `polygon-pattern-comp-op`
+- `raster-comp-op`
+- `shield-comp-op`
+- `text-comp-op`
 
-如果你对图像编辑软件（比如GIMP、PhotoShop）比较熟悉，那么应该能感觉到上面这些模式很多都和图层混合模式很像。它们的确很相似，但不同的是，CartoCSS中的合成操作却可以不必作用于整个图层。具体而言，CartoCSS的合成操作有两种使用方式：一是通过`comp-op`属性作用于一整个从属样式块；二是通过以下这些针对特定符号的合成操作属性作用于某种符号：
-
-- line-comp-op
-- line-pattern-comp-op
-- marker-comp-op
-- point-comp-op
-- polygon-comp-op
-- polygon-pattern-comp-op
-- raster-comp-op
-- shield-comp-op
-- text-comp-op
-
-There are times when you’ll want to use the style-wide comp-op and times when you’ll want to use the symbolizer-specific properties. It will depend on the results you want to achieve. With the symbolizer-specific approach, overlapping objects in the style will have their compositing operations applied to each other as well as the layers below. With the style-wide approach, the style will be rendered and flattened first.
-
-这两种方式都很常用，具体使用哪种要看用户自己想要得到哪种渲染效果。它们的区别在于：如果采用方式一，那么地图会先按照所定义的样式进行渲染和平坦化（译注：不太确定flattened是个什么处理，达到了什么效果？）；而如果是方式二，那么不仅是样式中那些有重叠部分的对象之间，而且连当前图层下面的图层都会被应用合成操作。两种方式的差异见下面这个例子。
+这两种方式都很常用，具体使用哪种要看用户自己想要得到哪种渲染效果。它们的区别在于：如果采用第一种方式，那么样式块对应的内容会被完全渲染成图，然后再和目标进行合成；而如果采用第二种方式，那么不仅是样式块中那些有重叠部分的对象之间，而且在当前图层与其下方的图层之间都将应用合成操作。两种方式的差异见下面这个例子。
 
 ![](https://cloud.githubusercontent.com/assets/83384/3881031/1d351f02-218a-11e4-8092-10002ca9ff2b.png)
 
@@ -71,29 +63,17 @@ There are times when you’ll want to use the style-wide comp-op and times when 
 	}
 	
 
-_Note_: When we talk about the effects of composite operations, we need to talk about a _source_ and a _destination_. The _source_ is the style or symbolizer that the `comp-op` property is applied to, and the _destination_ is the rest of the image that is drawn below that. There may also be more parts to the image that appear above the _source_; these are not affected by the `comp-op` and are drawn normally.
+#### 色彩混合
 
-_注意：_我们在说合成操作的时候，需要明确_源_与_目标_。所谓_源_，就是应用了`comp-op`属性的样式或符号，而所谓_目标_，则是其它那些绘制在它下面的图像。在_源_的上面当然还可能有其它要绘制的部分，但它们都不会受到当前_源_中`comp-op`的影响，该怎么画就还怎么画。
+色彩混合合成操作一共有22种。这里对其中那些在制图设计中最常用的17种操作进行简单介绍。为了更明显的表现出不同合成操作之间的差异，我们将这些操作应用在两个示例图层和两幅背景图上。
 
-#### 色彩混合（Color Blending）
-
-There are 22 color-blending compositing operations. This section will describe the ones that are most useful for cartographic design in Mapbox Studio. To illustrate the differences between them all, we’ll show how each of them affect a few example layers and backgrounds.
-
-色彩混合合成操作一共有22种。这里对其中那些在制图设计中最常用的进行简单介绍。为了更明显的表现出不同模式之间的差异，我们将这些操作应用在两个示例图层和两幅背景图上。
-
-These are the layers the `comp-op` properties will be applied to:
-
-下面是两个示例图层：
+下面是两个应用`comp-op`的示例图层（也就是**源**）：
 
 ![](https://cloud.githubusercontent.com/assets/83384/3881387/233691b2-218d-11e4-992f-3e58df40febd.png)![](https://cloud.githubusercontent.com/assets/83384/3881393/234c2e32-218d-11e4-846c-e92949653007.png)
 
-These are the backgrounds the `comp-op` layers will be overlaid on:
-
-下面是两幅被`comp-op`图层叠加的背景图：
+下面是两幅被`comp-op`图层叠加的背景图（也就是**目标**）：
 
 ![](https://cloud.githubusercontent.com/assets/83384/3881341/22ac38c8-218d-11e4-8e3a-52f3b5e4e048.png)![](https://cloud.githubusercontent.com/assets/83384/3881342/22ac91d8-218d-11e4-9f95-c5ecf675a608.png)
-
-Here is what the result looks like with no `comp-op` property applied:
 
 下面是在不定义`comp-op`属性时的渲染效果：
 
@@ -314,3 +294,9 @@ The `dst-atop` comp-op will only draw the destination on top of the source, but 
 The `xor` comp-op means ‘exclusive or’. It will only draw parts of the source and destination that do not overlap each other. If either your source or your destination forms a solid layer, neither will be drawn because there are no non-overlapping parts.
 
 `xor`，也就是“异或”操作的效果是只绘制源层与目标层不相交的部分（译注：相交的部分似乎是作全透明处理了，待考证）。如果源层或目标层中有一个是完全不透明的，那么结果将是两个层都不会被画出来，因为二者没有不相交的部分。
+
+#### 参考文献
+
+1. Mapbox, [Mapbox Studio Compositing Reference](https://www.mapbox.com/mapbox-studio/compositing-reference/)
+2. Mapbox, [TileMill Compositing Operations](https://www.mapbox.com/tilemill/docs/guides/comp-op/)
+3. Mapnik, [Compositing](https://github.com/mapnik/mapnik/wiki/Compositing)
