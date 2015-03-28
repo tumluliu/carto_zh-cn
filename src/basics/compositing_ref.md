@@ -79,23 +79,21 @@
 
 ![](https://cloud.githubusercontent.com/assets/83384/3881398/236277aa-218d-11e4-813d-418292c58223.png)![](https://cloud.githubusercontent.com/assets/83384/3881381/2326cb06-218d-11e4-9295-92c99e33eac3.png)
 
+（_译注：在下面的这些操作的翻译中，首先需要统一的就是这个source和destination的译法。在很多情况下，把它们译成“源”和“目标”会感觉很怪异拗口，但译成“源层”、“源图像”又都不准确。叫“源对象”？“合成源”？略感苦闷。。_）
+
 ##### Overlay
 
 ![](https://cloud.githubusercontent.com/assets/83384/3881377/2318eef0-218d-11e4-94c0-0c58a5995a33.png)![](https://cloud.githubusercontent.com/assets/83384/3881381/2326cb06-218d-11e4-9295-92c99e33eac3.png)
 
 The `overlay` comp-op combines the colors from the source image, and also uses them to exaggerate the brightness or darkness of the destination. Overlay is one of a few composite operations that works well for texturing, including using it for terrain data layers.
 
-`overlay`模式采用源图像中的颜色，并用这些颜色去夸大目标图像中的明暗度（译注：十分不确定这句话的意思）。`overlay`模式是几种可良好用于表现纹理的合成操作之一，可用于地形数据图层的样式配置。
+`overlay`操作取源图像中颜色与目标合并，并用源图像的颜色去增强目标图像中的明暗度（译注：把控不好exaggerate的翻译）。`overlay`是几种适用于表现图像纹理特征的合成操作之一。此外，它还可以用于地形数据图层的样式配置。
 
 ##### Multiply
 
 ![](https://cloud.githubusercontent.com/assets/83384/3881379/231d32ee-218d-11e4-9627-cc17d776f0a3.png)![](https://cloud.githubusercontent.com/assets/83384/3881376/23164fba-218d-11e4-9913-7d37b4ce98bd.png)
 
-The `multiply` comp-op multiplies the color of the source and destination, usually resulting in a darkened image tinted to the color of the source. If either the source or destination is solid white, the other will appear unchanged. If either the source or destination is solid black, the result will also be solid black.
-
-`multiply`合成操作将源与目标的颜色进行相乘运算。这种操作得到图像的颜色通常是基于源图像颜色的暗化效果。如果源（或目标）是纯白色的，那么合成的效果就是保持目标（或源）的颜色不变。如果源或目标是纯黑色的，那么合成的效果就是纯黑色。
-
-One of the many uses for multiply is to simulate the way ink colors would blend with each other or with a textured surface. It can also be used for other kinds of texure effects.
+`multiply`操作将源与目标的颜色进行相乘运算。应用`multiply`通常能得到一幅颜色比源图像更暗的图像。如果源（或目标）是纯白色的，那么合成的效果就是保持目标（或源）的颜色不变。如果源或目标是纯黑色的，那么合成的效果就是纯黑色图像。
 
 `multiply`操作的众多应用之一是模拟不同颜色的墨水混合或墨水与带有纹理的表面混合的效果。此外，它还可以用于其它纹理效果。
 
@@ -103,17 +101,15 @@ One of the many uses for multiply is to simulate the way ink colors would blend 
 
 ![](https://cloud.githubusercontent.com/assets/83384/3881330/228f3ea8-218d-11e4-9a26-d9c6c501f4ec.png)![](https://cloud.githubusercontent.com/assets/83384/3881334/2296b2b4-218d-11e4-9ca7-a5ac240da41e.png)
 
-The `color-dodge` comp op brightens the colors of the destination based on the source. The lighter the source, the more intense the effect. You’ll get nicer results when using this on dark to mid-tone colors, otherwise the colors can become too intense.
+`color-dodge`操作以源层为基础提高目标颜色的亮度。源图像的颜色越亮，合成后的效果越刺眼。要想得到比较美观的效果，就要在偏暗的颜色上应用该操作，否则就会得到过于刺眼的合成效果。
 
-`color-dodge`操作以源图像为基础将目标的颜色亮化。源图像的颜色越亮，合成后的效果越刺眼。要想得到比较美观的效果，需要在颜色较暗的颜色上应用该操作，否则就会得到过于刺眼的合成效果。
-
-##### Plus
+##### Plus（译注：求帮忙校对翻译）
 
 ![](https://cloud.githubusercontent.com/assets/83384/3881380/2321f054-218d-11e4-9ca6-94594a077f3a.png)![](https://cloud.githubusercontent.com/assets/83384/3881383/23286c2c-218d-11e4-97ef-c252e411b007.png)
 
 The `plus` comp-op adds the color of the source to the destination. For example, if your source color is dark red, this operation will add a small amount of red color to the destination causing it to brighten and also turn red. The lighter your source color, the lighter your result will be because a lot of color will be added. A completely black source will not affect the destination at all because no color will be added. Using this mode on darker source layers is recommended.
 
-`plus`操作将源的颜色与目标颜色相加。举个例子，如果源的颜色是深红（dark red），那么`plus`操作就会为目标增加少量的红色，使其亮度增加而且颜色偏红。源的颜色越浅，得到结果的颜色也会越浅，因为会有很多颜色被添加（译注：神马意思？？）。纯黑色的源不会对目标产生任何影响，因为没有颜色会被叠加（译注：这里的“颜色”指的是RGB中的颜色分量吗？黑色是#000，所以“no color”；白色是#FFF，所以有“a lot of color”，是这个意思？）。推荐在源图层颜色较深的时候使用这个合成操作。
+`plus`操作将源层的颜色与目标颜色相加。举个例子，如果源的颜色是深红，那么`plus`操作就会为目标增加少量的红色，使其亮度增加而且颜色偏红。源的颜色越浅，得到结果的颜色也会越浅，因为会有很多颜色被添加（译注：神马意思？？）。纯黑色的源层不会对目标产生任何影响，因为没有颜色会被叠加（译注：这里的“颜色”指的是RGB中的颜色分量吗？黑色是#000，所以“no color”；白色是#FFF，所以有“a lot of color”，是这个意思？）。推荐在源层颜色较深的时候使用这个合成操作。
 
 ##### Minus
 
@@ -121,7 +117,7 @@ The `plus` comp-op adds the color of the source to the destination. For example,
 
 The `minus` comp-op subtracts the color of the source from the destination. For example, if your source color is a dark red, this operation will remove a small amount of red color from the destination causing it to darken and turn slightly green/blue. The lighter your source color, the darker your result will be because a lot of color will be subtracted. A completely black source will not affect the destination at all because no color will be removed. Using this mode on darker source layers is recommended.
 
-`minus`操作从目标层的颜色中减去源层的颜色。举个例子，如果源层颜色是深红（dark red），那么这个操作会从目标层中减少一部分红色，使其亮度变暗而且颜色偏绿/蓝。源层颜色越浅，得到的结果颜色越深，因为会有更多的颜色被减掉。纯黑色的源不会对目标产生任何影响，因为没有任何颜色分量被减掉。推荐在源层颜色较深的时候使用这个合成操作。
+`minus`操作从目标层的颜色中减去源层的颜色。举个例子，如果源层颜色是深红，那么这个操作会从目标层中减少一部分红色，使其亮度变暗而且颜色偏绿/蓝。源层颜色越浅，得到的结果颜色越深，因为会有更多的颜色被减掉。纯黑色的源不会对目标产生任何影响，因为没有任何颜色分量被减掉。推荐在源层颜色较深的时候使用这个合成操作。
 
 In the bathymetry example above there are more polygons overlapping each other. The subtraction is run for each overlapping piece, causing areas with a lot of overlap to darken more and shift more to the green spectrum.
 
@@ -300,3 +296,6 @@ The `xor` comp-op means ‘exclusive or’. It will only draw parts of the sourc
 1. Mapbox, [Mapbox Studio Compositing Reference](https://www.mapbox.com/mapbox-studio/compositing-reference/)
 2. Mapbox, [TileMill Compositing Operations](https://www.mapbox.com/tilemill/docs/guides/comp-op/)
 3. Mapnik, [Compositing](https://github.com/mapnik/mapnik/wiki/Compositing)
+4. Ron Brickmann, The Art and Science of Digital Compositing, Second Edition: Techniques for Visual Effects, Animation and Motion Graphics, Morgan Kaufmann, 2008（这本书被称为是数字合成领域中的圣经。[豆瓣链接](http://book.douban.com/subject/3303417/)，[Amazon链接](http://www.amazon.com/Art-Science-Digital-Compositing-Second/dp/0123706386/ref=sr_1_1?s=books&ie=UTF8&qid=1427420729&sr=1-1&keywords=The+Art+and+Science+of+Digital+Compositing)）
+5. 布林克曼（著），谢毓湘 等（译），数字合成的科学与艺术，清华大学出版社，2011（这是上面这本的中译版，但不清楚它的翻译质量。另外，它还有中文引进图书的通病——纸张和印刷质量都比原版差很多，这对于一本讲述色彩、视觉效果的书来说是致命伤。[豆瓣链接](http://book.douban.com/subject/6560313/)，[亚马逊链接](http://www.amazon.cn/mn/detailApp/ref=asc_df_B0058ZO6SO1453169/?asin=B0058ZO6SO&tag=douban-23&creative=2384&creativeASIN=B0058ZO6SO&linkCode=df0)）
+
