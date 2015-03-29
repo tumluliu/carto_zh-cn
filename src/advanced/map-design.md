@@ -1,42 +1,28 @@
-### 高级地图设计
+### 4.1 高级地图设计
 
-_译注：[原文地址](https://www.mapbox.com/tilemill/docs/guides/advanced-map-design/)_
+在本节中，我们会谈到一些运用CartoCSS制图的高级技巧，它们可以让你的地图看起来更加高端大气。本节示例使用的是美国2010年的龙卷风统计数据。关于制图所需数据的准备，有很多途径，比如[利用谷歌文档](https://www.mapbox.com/tilemill/docs/tutorials/google-docs/)来做。
 
-This guide will cover some of the more advanced techniques you can employ in TileMill to take your map to the next level. For demonstration, we will continue to work with the 2010 tornado data from the [preparing data with Google Docs guide](https://www.mapbox.com/tilemill/docs/tutorials/google-docs/).
+#### 不同的级别，不同的样式
 
-这节中的内容包含了能够让你的地图质量提升一个档次的一些技巧。本节中使用的示例数据是2010年的龙卷风统计数据，关于数据准备可参考[“利用谷歌文档准备数据”](https://www.mapbox.com/tilemill/docs/tutorials/google-docs/)。
+交互式地图通过缩放功能提供给用户改变对地图观察尺度的能力。不同的缩放级别对应着地图的不同比例尺或分辨率。在缩放级数较小时，我们观察者距离观测区域较远，视口中的地理范围较大，对应的地图比例尺较小，分辨率也较低；而当缩放级数较大时则是相反的效果。这种能力是目前数字化地图，特别是基于Web的在线地图服务能够提供的最基本的一种交互能力。缩放级别通常是一组离散的数值，这意味着地图的缩放被限制在一组（目前通常最多为20个左右）的固定级别上，而不是连续的“无级变化”。
 
-#### 根据缩放级别调整样式（Styling for Zoom Levels）
-
-Interactive maps give users the ability to change the scale by zooming in or out and we must design them accordingly. Assuming you have [imported your point data](https://www.mapbox.com/tilemill/docs/tutorials/point-data/) and done some initial styling, it is time to start thinking about how your map will look at different **zoom levels**.
-
-交互式地图通过缩放功能提供给用户改变对地图观察尺度的能力。在地图设计的时候，需要针对不同缩放级别考虑不同的样式配置。我们这里假定[有一组点数据已经准备好了](https://www.mapbox.com/tilemill/docs/tutorials/point-data/)，并且配置了一些初始样式。那么现在就考虑一下怎么才能让这张地图在不同的缩放级别具有不同的样式。
-
-Here is the tornado map at **zoom level 4** after sizing the markers based on their intensity (f-scale).
-
-下图是在地图缩放到4级时的龙卷风地图。其中的注记符号根据龙卷风的强度（f-scale）设置了各自的大小。
+在地图设计的时候，可以对同一幅地图在其不同的缩放级别上考虑配置不同的样式。我们这里假定制图所需要的[龙卷风点数据已经准备好了](https://www.mapbox.com/tilemill/docs/tutorials/point-data/)，并且配置了一些初始样式。那么现在就来考虑一下怎样才能让这张地图在不同的级别具有不同的样式。下图是缩放到4级时的龙卷风地图。其中的龙卷风注记符号根据风力（f-scale属性）大小设置了符号的尺寸。
 
 ![](https://www.mapbox.com/tilemill/assets/pages/zoom-styling-1.png)
 
-And here is the same map at **zoom level 7**. Notice that the dots did not scale with the rest of the maps and could be considered too small.
-
-如果把上面的图放大到7级，那么就可以看到那些点不会随着地图放大而放大，因而在这个级别上看起来就太小了（如下图）。
+如果把这张地图放大到7级，那么就可以看到那些点符号并不会随着地图放大而变大，因而在这个级别上看起来就显得太小了（如下图）。
 
 ![](https://www.mapbox.com/tilemill/assets/pages/zoom-styling-2.png)
 
-With some simple CartoCSS, you can solve this by **conditioning your styles based on the zoom level**.
+那么我们此时请出CartoCSS。只需要简单的几行代码，就可以轻松实现让地图在不同的级别下展示出不同的样式。
 
-只需要用一些简单的CartoCSS，就可以轻松实现让地图在不同缩放级别下展示出不同的样式。
-
-The highlighted CartoCSS below is saying to TileMill, “when the zoom level is 7, apply the following style.” You can do this for as many levels as you wish, and include any kind of styling. This is useful for scaling back the number of dots, icons, and labels as you zoom out, and creating a greater level of detail as you zoom in.
-
-下图中高亮部分的CartoCSS代码的意思就是说：“当缩放级别到达7级时，应用下面这段样式。”用户可以根据自己的需要添加任意数量这样的子样式块。有了这种能力，就可以实现随着地图不断放大也让点、图标和标注跟着一起适当放大，从而展示出更多细节的效果。
+下图中高亮部分的CartoCSS代码的含义是说：“当缩放级别到达7级时，应用下面这段样式。”你可以根据自己的需要添加任意数量这样的样式块。这样一来，就可以让地图上的点、图标和标注随着地图放大而适当变大，从而美观的展示出更多细节。
 
 ![](https://www.mapbox.com/tilemill/assets/pages/zoom-styling-3.png)
 
 The following symbols are allowed in conditional statements: `=`, `!=`, `>`, `>=`, `<`, `<=` You can also group by zoom ranges by setting a beginning and an end, like this:
 
-在条件表达式中可以使用这些比较运算符：`=`，`!=`，`>`，`>=`，`<`，`<=`，还可以定义一个缩放级别范围，就像这样：
+在缩放级别过滤器的条件表达式中可以使用比较运算符：`=`，`!=`，`>`，`>=`，`<`，`<=`，还可以定义一个缩放级别范围，就像这样：
 
 	
 	[zoom >= 4][zoom <=8] {
@@ -44,25 +30,17 @@ The following symbols are allowed in conditional statements: `=`, `!=`, `>`, `>=
 	}
 	
 
-**Zoom level conditioning** can also be used to limit the visibility of specific layers to certain zoom ranges, making it possible to “turn them on” or “turn them off” as you zoom in or out. This method is particularly useful for joining multiple geographic levels of data.
+利用缩放级别过滤器还可以控制某些图层在特定级别上的可见性，从而使这些图层随着地图的放大或缩小被“打开”或“关闭”。这个方法对于包含多个地理等级数据（比如多个行政区划等级）的地图的样式配置很有用。
 
-缩放级别条件过滤还可以用来控制某些图层在特定的缩放级别上的可见性，从而使这些图层随着地图的放大或缩小被“打开”或“关闭”。这个方法对于包含多个地理级别数据的地图特别有用。
+还是以龙卷风地图为例。在国家级尺度上，视口部分的地图比例尺很小，因此会出现一些聚在一起的点，它们形成一些杂乱的点团而让人难以辨认那里究竟都有些什么。在这个等级上，可以将每个州按照各自龙卷风的总数统计出来然后只用一个点来表达，并且该点的尺寸与龙卷风总数正相关。而随着用户不断放大地图，从适当的级别开始就不再显示这个国家级尺度的图层，而是可以将原始的独立龙卷风点分别绘制出来。
 
-Take the tornado map for example. At the national level it is quite cluttered and hard to decipher individual points where there are clusters. At this zoom level, one option might be to display a scaled dot for each state that represents total number of tornadoes that occurred in that state. Then, as the user zooms in, the state-level layer goes away and the individual tornado points appear.
-
-还是以龙卷风地图为例，在国家级尺度上，那些聚在一起的点会形成一些杂乱的点团而让人难以辨认那里究竟都有些什么。在这个级别，可以为每个州按照各自龙卷风的总数只绘制一个点，而且点的大小可以与龙卷风总数成一定比例。然后随着用户不断放大地图，就不再显示这个国家级尺度的图层，而是可以将每个独立的龙卷风点绘制出来。
-
-With this particular data we were able to aggregate to the state level using a [pivot table](https://www.mapbox.com/tilemill/docs/tutorials/google-docs/) and then [geocoded](https://www.mapbox.com/tilemill/docs/tutorials/google-docs/) the state points. Add this newly created data to the project as a new layer. Then simply add zoom level conditions after the layer names in your CartoCSS code, and continue to style normally.
-
-基于这个特定的数据集可以利用[数据透视表](https://www.mapbox.com/tilemill/docs/tutorials/google-docs/)聚合出州一级的点数据集，并且对这些点进行[地理编码](https://www.mapbox.com/tilemill/docs/tutorials/google-docs/)。下面要做的就是把这个新生成的数据集作为图层加入，然后就可以继续用缩放级别过滤器为其配置CartoCSS样式了。
+具体的实现方法是，利用[数据透视表](https://www.mapbox.com/tilemill/docs/tutorials/google-docs/)从原始数据集中聚合出州一级的龙卷风统计数据，然后对这个新的数据集[地理编码](https://www.mapbox.com/tilemill/docs/tutorials/google-docs/)，赋予其地理位置信息。接下来要做的就是把这个新的点数据集作为图层加入地图，然后就可以继续用缩放级别过滤器为其配置CartoCSS样式了。
 
 ![](https://www.mapbox.com/tilemill/assets/pages/zoom-styling-4.png)
 
 ![](https://www.mapbox.com/tilemill/assets/pages/zoom-styling-5.png)
 
-You can also use this same syntax to single-out features on the map where a field in your data **meets a certain criteria**. For example, the code below will only show points on the #tornado layer for Oklahoma. “state” is the name of a field in the tornado data that contains state abbreviations.
-
-用户还可以使用与缩放级别过滤器相同的语法来从数据集中基于某些字段设置条件过滤器，从而挑选出一些特定的要素记录。下面的样式语句只显示`#tornadoes`图层中的俄克拉何马州的点数据。其中`"state"`是该图层中的一个包含了各州缩写字母的字段。
+用户还可以使用与缩放级别过滤器相同的语法来从数据集中基于某些字段设置其它的过滤条件，从而筛选出一些满足特定条件的要素记录。下面的样式语句只显示`#tornadoes`图层中俄克拉何马州的数据。其中的`"state"`是该图层属性数据中的一个字段，它包含了各州的缩写。
 
 	
 	#tornadoes [state = "OK"] {
@@ -72,9 +50,7 @@ You can also use this same syntax to single-out features on the map where a fiel
 
 ![](https://www.mapbox.com/tilemill/assets/pages/zoom-styling-6.png)
 
-The reverse is also possible. Show states that are not Oklahoma:
-
-当然，还可以反向选择，例如显示除俄克拉何马以外其它所有州的数据：
+当然，还可以反向选择，例如显示除俄克拉何马以外其它各州的数据：
 
 	
 	#tornadoes [state != "OK"] {
@@ -84,7 +60,7 @@ The reverse is also possible. Show states that are not Oklahoma:
 
 ![](https://www.mapbox.com/tilemill/assets/pages/zoom-styling-7.png)
 
-#### 文本标注（Text Labels）
+#### 文本标注
 
 In order to deliver information on a map more immediately, sometimes it is useful to label your data with the actual number or feature that is being represented. This can be combined with the dot or just be a label on its own.
 
@@ -167,17 +143,7 @@ Next we create and switch the tooltip to the individual dots layer, and export. 
 
 ![](https://www.mapbox.com/tilemill/assets/pages/exporting-in-pieces-3.png)
 
-We now have two MBTiles with their own interactivity that we can [composite](https://www.mapbox.com/mapbox-studio/compositing-reference) together with a slick base map.
-
-这样，我们就得到了两个都具有交互能力的MBTiles数据集，并且它们能够与一个平滑底图一起合成。
-
-Here is the final map: `<iframe width='600' height='400' frameBorder='0' src='https://a.tiles.mapbox.com/v3/mapbox.map-4qkj96dp.html#4/40/-98'> </iframe>`
-
-最终的地图效果在这里：`<iframe width='600' height='400' frameBorder='0' src='https://a.tiles.mapbox.com/v3/mapbox.map-4qkj96dp.html#4/40/-98'> </iframe>`
-
-And the final project CartoCSS code for reference:
-
-用于这幅例子地图的全部CartoCSS代码如下：
+这样，我们就得到了两个都具有交互能力的MBTiles数据集，而且还可以将它们合成（参见3.7节），并叠加到一幅在线底图上。最终的地图效果可从[这里](https://a.tiles.mapbox.com/v3/mapbox.map-4qkj96dp.html)看到。用于这幅地图的完整CartoCSS代码如下：
 
 	
 	Map {
@@ -286,3 +252,7 @@ And the final project CartoCSS code for reference:
 	  polygon-fill:#fff;
 	}
 	
+
+#### 参考文献
+
+1. Mapbox, [Advanced Map Design](https://www.mapbox.com/tilemill/docs/guides/advanced-map-design/)
