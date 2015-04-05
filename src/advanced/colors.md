@@ -1,12 +1,8 @@
-### 色彩使用技巧
+### 4.2 地图配色技巧
 
-_译注：[原文地址](https://www.mapbox.com/tilemill/docs/guides/tips-for-color/)_
+#### 色彩理论与制图
 
-#### 色彩理论与制图（Color Theory and Mapping）
-
-It’s important to realize how much your choice of color on a map can affect the story you are trying to tell with your data. As a brief introduction to some theories behind how to use colors on maps, here are three primary scheming designs for mapping data.
-
-为地图选择的配色方案会在很大程度上影响你利用地图来讲述的关于数据的故事的精彩程度。本节内容是关于地图配色理论的简介，包括了三种用于展示地图数据的基本色彩设计方案。
+一个恰当的配色方案对于一幅地图来说至关重要。作为地图设计师，我们实际上是在通过设计一幅地图来讲述一个故事。而地图的配色将会在很大程度上影响这个故事的精彩程度。本节将简单介绍一些关于如何在地图上运用色彩的理论。我们先来看三种用于制图的基本配色方案。
 
 ##### 连续色方案（译注：还是“渐变色方案”？）（Sequential Schemes）
 
@@ -32,17 +28,15 @@ If you are working with qualitative data, such as ethnicity or religion, you wan
 
 ![](https://www.mapbox.com/tilemill/assets/pages/qualitative.png)
 
-#### 常用的取色工具（Sources for Color-Picking）
+#### 常用的取色工具
 
-Fortunately a number of sites are available to explore color themes. Below are links to some of these with a brief synopsis of their main features that will help you more easily navigate the seas of storytelling via aesthetics. The section ends with two reviews of purchasable tools that you can use from your desktop.
-
-幸运的是，有不少网站和工具可以帮助我们生成配色方案。这里简单介绍几个这样的网站以及其主要功能。它们可以帮助你更方便的在颜色的艺术海洋中找到最适合讲述自己故事的色彩。除了一些网站，最后还会介绍两个桌面应用，不过它们是付费软件。
+有不少工具应用可以辅助我们选择颜色或设计配色方案。这里简单介绍几个典型的工具应用及其主要功能。要想让地图具有更强的表现力，那么利用这些辅助工具可以助你一臂之力。它们可以帮助你设计出恰当的配色方案，让你的地图讲出的故事更加精彩。这些应用中有在线版的，也有桌面版的，最后两个是付费应用。
 
 ##### 0\_255
 
 0\_255 is a great site for picking between different shades of one color, so it’s ideal for sequential schemes. It gives you thirty options for any given color, allowing you to instantly copy the color’s hex code. There is a large grid of colors to select from for an initial color, and then 0\_255 visualizes a range of shades based on that color. If the grid does not have the color you want, you can pick your own color by pasting in the hex code of your chosen color.
 
-0\_255可以在同一色系中选取一组亮度不同的颜色，因此非常适合生成连续色方案。它为任意颜色都提供了30种选项，还可以直接拷贝颜色的十六进制值。用户可以先从一个很大的颜色网格中选取一种初始色，然后0\_255就可以基于这种颜色生成一条亮度渐变的色带。如果在颜色网格中没有用户想要的颜色，那么也可以通过把自定义的十六进制颜色值粘贴进去来选取自己的颜色。
+[0\_255](http://www.0to255.com/)是一个生成渐变色带的在线工具。它可以为同一色系生成一组亮度不同的颜色，因此非常适用于连续色方案。它为任意一种颜色都提供了从全黑（`#000`）到全白（`#FFF`）共32种亮度渐变的不同颜色。对于生成的每种颜色，都可以直接拷贝其十六进制的颜色值。用户可以先从一个很大的颜色网格中选取一种初始色，然后0\_255就可以基于这种颜色生成一条亮度渐变的色带。如果在颜色网格中没有用户想要的颜色，那么也可以通过把自定义的十六进制颜色值粘贴进去来选取自己的颜色。
 
 ![](https://www.mapbox.com/tilemill/assets/pages/0_255_0.jpg)
 
@@ -105,3 +99,7 @@ Pochade是一个取色工具，能够获取屏幕上任意位置的颜色值（R
 ColorSchemer Studio provides three main features: (1) a color class generator (up to 254 - many more than Color Brewer) based on two colors of your choice, (2) a ‘PhotoSchemer’, which allows you to upload a photo and determine up to ten different colors on your chosen photo and (3) integration with colourlovers, including a color browser and the ability to load colors into the first tool to manipulate on your own. ColorSchemer is a powerful tool for your desktop, available for the slightly higher price of $49.99.
 
 ColorSchemer Studio主要有三个功能：(1) 基于两种预选颜色的色系生成器（支持最多254种颜色，远远多于Colorbrewer）；(2) “PhotoSchemer”可以从一张现有的图片中提取色系；(3) 与Colour Lovers集成，包括一个颜色浏览器和向第一个工具（译注：first tool指的是什么？）中加载颜色的能力。ColorSchemer是个强大的桌面应用，但价格稍贵，要49.99美元。
+
+#### 参考文献
+
+1. Mapbox, [Tips for using color in maps](https://www.mapbox.com/tilemill/docs/guides/tips-for-color/)
