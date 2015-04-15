@@ -1,19 +1,11 @@
 
-### 高级标注方法
+### 4.3 高级标注方法
 
-_译注：[原文地址](https://www.mapbox.com/tilemill/docs/guides/labels-advanced/)_
+#### 试探标注位置
 
-#### 尝试在其它位置标注（Trying multiple positions）
+在默认情况下，如果对一个点符号进行文本标注，那么标注将被绘制在原始几何点的位置处。这在大部分情况下没什么问题，但有的时候我们会希望从地图总体设计的角度去考虑标注的摆放问题，比如在标注比较密集的地方让它们向周围散一散，让POI的标注尽量避开主干道路网，等等。在这种时候，我们希望允许标注可以不必精确绘制在原始点的位置，而是可以稍有偏移。这种需求在CartoCSS中是可以实现的。在CartoCSS中，标注的位置可以通过`text-placement-type`属性来配置，它目前能够支持两种标注方案：一是`none`（该属性的默认值），效果是将标注标在原始点处；二是`simple`，别看它名字叫“simple”，实际上却是个高级标注方法。
 
-Recent versions of TileMill include two methods to choose for placing labels on points. The choice is made via the `text-placement-type` CartoCSS property. The default, original method is called `none`, and the newer, more advanced method is called `simple`.
-
-CartoCSS通过`text-placement-type`属性支持两种在点符号上面放置标注的方法。其默认值是`none`，除此以外还有个高级方法——`simple`。
-
-The `simple` method allows the designer to specify multiple potential positions on or around a central point, as well as multiple sizes of text to choose from. If the first attempt at placing a label is blocked by another label that has already been placed, it can look at this list to try the next position.
-
-这个`simple`方法允许设计师在原始点的周围为标注另外指定几个候选位置和字号。如果在默认位置渲染某个标注时出现了被其它标注遮挡的情况，那么就会从这些指定的候选位置中逐个尝试绘制。
-
-A full CartoCSS example of the syntax looks like this:
+`simple`方法允许设计师在原始点的周围为标注另外指定几个候选的摆放位置和字号大小。如果在默认位置渲染标注时会与现有的其它标注冲突，那么就从这些指定的其它候选位置中逐个尝试绘制，直到可以把标注绘制出来为止。而如果在所有候选位置都无法绘制，那就不画它了。
 
 下面是一个较为完整的例子：
 
@@ -28,31 +20,23 @@ A full CartoCSS example of the syntax looks like this:
 	}
 	
 
-This will first attempt to place a label above a point, then below the point, then to the right, and so on with a text size of 16 until it finds a position that fits. If no labels fit at size 16, the positions will all be retried at a text size of 14, and then 12. If none of these fit the label will be skipped.
-
-这段代码的作用是依次在原始点的上方（北方）、下方、右侧等进行尝试，如果位置合适，那么就用16号字绘制标注。如果这些位置都画不出来，那么就换成14号字再试一遍，如果还不行，就再换成12号字试。如果都不行，那么这个标注就会被跳过不画了。
-
-The `text-dx` and `text-dy` properties specify how far away (in pixels) the label should be placed from the point.
+这段代码的意思是依次在原始点的上方（北方）、下方、右侧、左侧等八个位置尝试以16号字绘制标注。如果这些位置都不行，那么就换成14号字再试一遍，如果还不行，就再换成12号字试。如果上面这些尝试都画不出来，那么就跳过不画这个标注了。
 
 `text-dx`和`text-dy`属性指定了标注位置相对于原始点位置的偏移量（以像素为单位）。
 
-#### 改进标注位置的分布：随机法（Improved direction distribution: random approach）
+#### 改进标注的排布：随机法
 
-It’s great to try different placements for a label, but the previous example will always try the same position (North) first. This may not always be the best choice, even if the label happens to fit there. And it may be better for the overall map design to distribute the different placement positions better, rather than letting a single position dominate.
-
-尽管在多个不同的位置尝试放置标注的想法不错，但它的问题在于每次都是从同一个位置开始尝试。这往往不是最好的选择（译注：从地图设计和美观的角度），即使标注可以被绘制在那个位置。将标注位置更合理的分布，而不是总绘制在同一个位置也会带来更好的整体地图设计效果。
+尽管前面这个在多个位置尝试绘制标注的想法不错，但它的问题在于每次的试探位置序列都是完全一样的，例如在上面的例子中就是`N,S,E,W,NE,SE,NW,SW `这个顺序。从地图整体美感的角度来看，这通常不是最好的方案，即使标注都能找到自己在地图上的“容身之所”。那么为了能从地图总体设计的角度来将所有的标注合理排布，我们需要考虑另外的试探绘制方法，比如不总是按照同样的位置序列来尝试画标注。
 
 Something as simple as randomly assigning a direction bias can help even out the look of the labels. For example, you could create a PostGIS query that creates a column called dir which is randomly assigned a value of either `0` or `1`.
 
-有个很简单的改进方法，就是只要将标注相对于原始点的偏移方向变成随机性的便可以让标注的分布变得美观许多。具体而言，你可以利用一条PostGIS的SQL语句为原始点数据增加一个名为`dir`的新列（译注：注意这不是说要去修改原始数据，而是通过SQL语句生成），它的值是随机生成的`0`或`1`。
+有个很简单的改进方法，就是只要将试探绘制的位置序列由固定的改为随机的便可以让标注的分布变得美观许多。具体而言，你可以利用一条PostGIS的SQL语句为原始点数据增加一个名为`dir`的新列（译注：注意这不是说要去修改原始数据，而是通过SQL语句生成一个临时的属性列），它的值是随机生成的`0`或`1`。
 
 	
 	(select *, floor(random()*2) as dir from city_points) as data
 	
 
-You could then set up your CartoCSS to favor East placement for the `0`s and West placement for the `1`s.
-
-然后就可以基于`dir`列的值，让每个点的标注在为`0`时向东、为`1`时向西偏移。
+然后就可以基于`dir`的值，让每个点的标注试探位置序列分别在`dir`等于`0`时为`E,NE,SE,W,NW,SW`；等于`1`时为`W,NW,SW,E,NE,SE`。
 
 	
 	#labels {
@@ -64,35 +48,19 @@ You could then set up your CartoCSS to favor East placement for the `0`s and Wes
 	}
 	
 
-#### 改进标注位置的分布：邻居避让法（Improved direction distribution: avoiding nearby neighbors）
+#### 改进标注的排布：邻居避让法
 
-Using PostGIS its possible to come up with something smarter than random distribution to improve the look of simple label placement. One possibility is to calculate the direction of the nearest object of a certain type, and then try to avoid that. For example you could bias city lable placement away from the next nearest city, or county label placement away from the largest city in the county. These aren’t perfect solutions, but can be a quick way to make your labels more correct in more cases.
+前面我们稍稍利用了一下PostGIS和SQL，就得到了一种让标注排布更加合理的方案。其实那只是PostGIS和SQL强大能力的冰山一角。现在就让我们再深入一点，利用它们实现一种比随机法更加美观合理的标注排布方案——邻居避让法。在这种方法中，先找到距离当前标注点最近的邻居对象，看看它的标注是向哪偏移。然后在绘制标注时尽量避开这个最近邻居的标注。例如，在为城市标注名称时，可以让每个城市的名称都稍作偏移以避开离它最近的另一个城市，而在标注地区名称时则尽量让其避开该地区中最大城市的名字，以防止出现标注冲突导致的无法绘制。这些方法和实践未必是最佳方案，但对于大多数情况来说可以让你的标注排布更加合理。
 
-利用PostGIS可以得到比随机方法更加美观合理的标注排布。一种方法是先找到当前标注点的特定类型的最近邻对象，看看它的标注偏移方向，然后在绘制标注时尽量避开最近的邻居。例如在标注城市名称时，可以让每个城市的名字标注都稍作偏移以避开其最近的其它城市，而标注地区名称时则尽量让其避开该地区中最大城市的名字。这些方法和实践未必是最佳方案，但对于大多数情况来说可以让你的标注排布更加合理。
+这里我们讨论一个应用邻居避让法的典型场景。对于那些正好位于[城市街区](https://zh.wikipedia.org/wiki/%E8%A1%97%E5%8D%80)边缘附近的兴趣点，它们的名称完全可以尽量标注在街区覆盖的区域中，而避开其临近的城区街道。将这些标注置于街区区域还可以保持街道名称和通行方向等道路标注信息清晰可见。那么如何达到这种效果呢？思路并不复杂。对于每个点标注，找到距离它最近的城市街道以及这条街道相对于它的方位。在搜索最近邻街道的时候可以忽略一些低等级道路（例如OpenStreetMap数据集中的service streets、tracks、footways和cycleways等），但也可以根据实际情况对避让策略进行调整。在大部分时候，将标注置于一条小巷或公园小路上是可以接受的，但城市主干道不应该被其附近的点标注压盖。
 
-For labels on points-of-interest along a city block at high zoom level, the area most likely to have room for the label is away from the street. Placing labels here also keeps the street clear for its own labels and one-way arrows.
+那么又如何利用PostGIS和SQL来具体实现呢？在PostGIS中，有一系列空间操作函数，可以帮助我们实现上面的避让策略：
 
-_译注：第一句没看明白意思。前半句里的along a city block是个什么东东？想象不出来。后半句的意思应该是：最有可能放得下标注的地方（正好）远离道路。_所以，将标注置于这里还可以保持道路自己的名字和通行方向等清晰可见。
+- [`ST_Distance`](http://www.postgis.org/docs/ST_Distance.html)函数可以帮助我们找到距离一个兴趣点最近的道路
+- [`ST_ClosestPoint`](http://www.postgis.org/docs/ST_ClosestPoint.html)函数则可以找到在最近的道路上的最近的几何形点
+- [`ST_Azimuth`](http://www.postgis.org/docs/ST_Azimuth.html)函数可以帮助我们计算从当前兴趣点到其最近形点的方位夹角
 
-So for each label we need to find the nearest city street and its direction relative to the point. Service streets, tracks, footways, and cycleways will be ignored for this logic, but you could adjust it to account for whatever you feel is appropriat. For a basic use case fine if our label sits on top of an alley or park path; the goal is to avoid the main city grid.
-
-因而对于每个点标注，我们应该找到距离它最近的城市街道以及这条街道相对于原始点的方位。对于一些低等级道路（例如OpenStreetMap数据集中的service streets、tracks、footways和cycleways等），可以不用考虑，但也可以根据实际情况对标注的避让策略进行调整。通常情况下，点的标注被置于一条小巷或公园中的小路上是可以接受的，但城市的主干道不应该被点标注压盖。
-
-Here are some of the spatial functions of PostGIS that will help determine this information:
-
-以下是一些PostGIS中的空间操作函数，可以辅助实现上面的避让策略：
-
-- [ST\_Distance](http://www.postgis.org/docs/ST_Distance.html) will help us find the closest street to a POI
-- [ST\_ClosestPoint](http://www.postgis.org/docs/ST_ClosestPoint.html) will tell us the closest point along the closest street, and
-- [ST\_Azimuth](http://www.postgis.org/docs/ST_Azimuth.html) will help us determine the angle between the POI and the closest point.
-
-- [ST\_Distance](http://www.postgis.org/docs/ST_Distance.html)函数可以帮助我们找到距离一个兴趣点最近的道路
-- [ST\_ClosestPoint](http://www.postgis.org/docs/ST_ClosestPoint.html)函数则可以找到在最近的道路上的最近的几何形点
-- [ST\_Azimuth](http://www.postgis.org/docs/ST_Azimuth.html)函数可以帮助我们计算从当前兴趣点到其最近形点的方位夹角
-
-We can put all these together as a user-defined PostreSQL function:
-
-所有这些都可以写在一个PostgreSQL函数中：
+利用这些函数，我们可以写一个PostgreSQL函数。但需要特别说明的是，这个函数假设你已经通过[`osm2pgsql`](http://wiki.openstreetmap.org/wiki/Osm2pgsql)准备好了一个标准的OpenStreetMap数据库，其中的属性和值都是针对OpenStreetMap数据结构的。你当然可以对它进行修改以适应其它的数据库结构。
 
 	
 	create or replace function poi_ldir(geometry)
@@ -110,19 +78,13 @@ We can put all these together as a user-defined PostreSQL function:
 	stable;
 	
 
-This particular function assumes you are working with a standard OpenStreetMap rendering database generated by [osm2pgsql](http://wiki.openstreetmap.org/wiki/Osm2pgsql) (you can adjust it to be used with other schemas). The first two lines set up a function with a name, argument, and return value. `$$` starts the function. The result of the function, when given a point geometry as an argument, will be a number between 0 and 360 representing the angle between that point and the nearest street of any of the types defined in the `where` clause. (`ST_Azimuth()` returns a value in radians, but we convert that to degrees to make it easier to work with in CartoCSS.)
+函数最前面的两行定义了名称`poi_ldir`、参数和返回值。函数体从`$$`符号处开始。调用`poi_ldir`时需要传入一个几何点要素作为参数，而后将距离这个几何点最近的道路（道路类型由`where`子句确定）与该点之间夹角的角度算出并返回，结果的取值范围为`0`到`360`度。（注：`ST_Azimuth()`函数本来返回的是弧度，但为了在CartoCSS中方便使用，我们将其转成了角度值。）
 
-上面这个函数假设你已经通过[osm2pgsql](http://wiki.openstreetmap.org/wiki/Osm2pgsql)准备好了一个标准的OpenStreetMap数据库（你可以对它进行修改以适应其它的数据库结构）。最前面两行定义了函数的名称`poi_ldir`、参数和返回值。函数体从`$$`符号处开始。调用`poi_ldir`时需要传入一个几何点要素作为参数，而后将距离这个几何点最近的道路（道路类型由`where`子句确定）与该点之间的夹角以角度计算并返回，取值范围为0到360度。（`ST_Azimuth()`函数本来返回的是弧度，但为了在CartoCSS中方便使用，我们将其转成了角度值。）
-
-To use the above function to your database, copy its contents to a file (for example, `poi_ldir.sql` on your Desktop). Then run a command from the terminal to load it into your database:
-
-要使用上面这个函数，只需要把它存入一个文本文件（例如以`poi_ldir.sql`文件保存在桌面上）并在终端中执行以下命令即可：
+如何让这个函数在数据库中可用呢？很简单，只要把它先存入一个文本文件（例如以`poi_ldir.sql`文件保存在桌面上）然后在终端中执行以下命令（译注：当然这里假定你使用的是Mac OS或Linux等\*nix类型的系统，如果是MS Windows则需要调整文件路径），那么这个函数就被创建在你的数据库`your_database_name `中了。当然，通过一些PostgreSQL的图形化客户端（例如pgAdmin、phppgsql等）可以利用菜单项中的创建函数功能来实现。
 
 	
 	psql -f ~/Desktop/poi_ldir.sql -d <your_database_name>
 	
-
-You can then use the function in your TileMill select statements. This selection will retrieve all amenity and shop points from the database, their names, and column named `ldir` that is the result of the `poi_ldir` function on the geometry for each point.
 
 然后在制图过程中就可以使用这个函数了。以下这个查询语句将数据库中所有的设施和商店点要素取出来，结果中包括了每个要素的名称和名为`ldir`的属性列。`ldir`属性列就是通过`poi_ldir`函数计算出来的结果。
 
@@ -133,9 +95,7 @@ You can then use the function in your TileMill select statements. This selection
 	) as pois
 	
 
-To use the `ldir` column in a stylesheet, set up a label style with the simple text placement type and nest some filters within that that adjust the `text-placements` parameter depending on the `ldir` value. This example will only try each label at one position:
-
-接下来，在CartoCSS样式表中怎么使用`ldir`属性列呢？在将`text-placement-type`属性设置为`simple`之后，内嵌一组基于`ldir`值的过滤器以调整`text-placements`属性的值。在下面的样式表例子中，每个标注就只需要一个在一个位置尝试放置了。
+接下来，在CartoCSS样式表中怎么使用`ldir`属性列呢？在将`text-placement-type`属性设置为`simple`之后，内嵌一组基于`ldir`值的过滤器以调整`text-placements`属性的值。在下面的样式表例子中，每个标注只需在一个候选位置尝试绘制。
 
 	
 	#poi[zoom > 15] {
@@ -158,12 +118,10 @@ To use the `ldir` column in a stylesheet, set up a label style with the simple t
 	}
 	
 
-After integrating this style into a more complete OSM stylesheet you can see that most of the point labels are now avoiding the roads.
-
-将上面这段样式应用在一个完整的OSM数据样式表中之后，可以看到其中绝大部分的点标注都避开了道路网。
+将上面这段样式应用在一段完整的OpenStreetMap数据样式表中之后，可以看到其中绝大部分的点标注都避开了道路网。
 
 ![](https://www.mapbox.com/tilemill/assets/pages/labels-ldir.png)
 
+#### 参考文献
 
-
-
+1. Mapbox, [Advanced Label Placement](https://www.mapbox.com/tilemill/docs/guides/labels-advanced/)
