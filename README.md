@@ -46,4 +46,4 @@
 如果对翻译有任何问题或建议请到项目的仓库中[提交issue](https://github.com/tumluliu/carto_zh-cn/issues)，或者直接与该项目的负责人[Lu Liu](http://www.github.com/@tumluliu)联系：
 
 - 邮箱：nudtlliu#gmail.com
-- 网站：[luliu.me](luliu.me)　
+- 网站：[luliu.me](http://luliu.me)　
